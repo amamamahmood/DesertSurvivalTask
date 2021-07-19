@@ -1,0 +1,2 @@
+C:\Users\amama\source\repos\DesertSurvivalTask\DesertSurvivorTask\obj\Release\DesertSurvivorTask.njsproj.CoreCompileInputs.cache
+C:\Users\amama\source\repos\DesertSurvivalTask\DesertSurvivorTask\bin\Microsoft.NodejsTools.WebRole.dll
