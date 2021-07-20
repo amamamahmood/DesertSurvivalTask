@@ -2,7 +2,7 @@
     <div id="app" >
         <div class="row">
 
-            <div class="column" style="background-color:#bbb;">
+            <div class="column" style="background-color:#bbb; display:none">
                 <h3>Avatar's rating</h3>
                 <ol>
                     <li class="float-child" style="list-style-position: inside" v-for="item in avatarList" :key="item.id">
@@ -16,23 +16,35 @@
 
             </div>
             <div class="column3">
-            </div>
-            <div class="column3">
-                
-                
-            </div>
-            <div class="column3">
-                <button id="drag" class="button" v-on:click="makeDraggable">Update your ratings</button>
+                <h3> Desert Survival Task </h3>
+                <p class="text">
+                    Your bus has
+                    crashed in the desert of New Mexico and you have following nine items. Your task is to rank nine items in order
+                    of importance for survival. Are you ready to begin?
+                </p>
                 <br />
-                <h1 id="drag_inst" style="display:inline-block;">The agent tries to convince the participant about next item</h1>
+                <button id="start" class="button" style="display:inline-block" v-on:click="startInitialRanking">See the items</button>
+                <br />
+                <br />
+                <button id="begin" class="button" style="display:none;" v-on:click="beginInteraction">Done Ranking! Continue</button>
+            </div>
+            <div class="column3">
+                
+                
+            </div>
+            <div class="column3">
+                <button id="drag" class="button"  style="display:none" v-on:click="makeDraggable">Update your ratings</button>
+                <br />
+                <h1 id="drag_inst" style="display:none;">The agent tries to convince the participant about next item</h1>
                 <br />
                 
                 <br />
 
 
                 <button id="done_drag" class="button" style="display:none;" v-on:click="doneDragging">Updated! Continue</button>
+                <br />
             </div>
-            <div class="column2" style="background-color:#aaa;">
+            <div id ="user_list" class="column2" style="background-color:#aaa; display:none;">
                 <h3 class="text">Your ratings</h3>
 
                 <draggable id="items_list" 
@@ -74,7 +86,7 @@
         //list.appendChild(li);
    // });
     let counter = 0; // which item on its list will the agent talk about
-    var item_order = [8, 7, 6, 5, 4, 3, 2, 1];
+    var item_order = [8, 7, 6, 5, 4, 3, 2, 1, 0];
     export default {
         name: "App",
         components: {
@@ -193,6 +205,11 @@
             };
         },
         methods: {
+            random_userList: function () {
+                item_order.sort(() => Math.random() - 0.5);
+                this.users = item_order.map(i => this.users[i]);
+                alert(JSON.stringify(this.users));
+            },
             reorder_avatarList: function () {
                 this.avatarList = item_order.map(i => this.avatarList[i]);
                 alert(JSON.stringify(this.avatarList));
@@ -222,11 +239,24 @@
                 alert(`Prnting ${JSON.stringify(this.users)}`);
 
             },
+            startInitialRanking: function (event) {
+                this.enable();
+                this.random_userList();
+                var sect = document.getElementById("user_list");
+                sect.style.display = "block";
+                event.target.style.display = "none";
+                var inst = document.getElementById("drag_inst");
+                inst.style.display = "inline-block";
+                inst.textContent = "Drag and drop the items to order the list";
+                var sect = document.getElementById("begin");
+                sect.style.display = "block";
+            },
             makeDraggable: function (event) {
                 this.reorder_avatarList();
                 //alert("I am here");
                 //alert(event.target.tagName);
                 var inst = document.getElementById("drag_inst");
+                inst.style.display = "inline-block"
                 inst.textContent = "Update your list by dragging and dropping the items";
                 //this.draggable = true;
                 //var btn = document.getElementByID("drag");
@@ -328,7 +358,8 @@
         align-content: center;
         text-align: center;
         font-family: Arial;
-        font-size: 20px;
+        font-size: 40px;
+        max-width: 80%;
     }
 
 
