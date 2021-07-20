@@ -3,7 +3,7 @@
         <div class="row">
 
             <div id ="avatarRating" class="column" style="background-color:#bbb; display:none">
-                <h3>Avatar's rating</h3>
+                <h3>Avatar's Rankings</h3>
                 <ol>
                     <li class="float-child" style="list-style-position: inside" v-for="item in avatarList" :key="item.id">
                         <div class="items">
@@ -16,12 +16,12 @@
 
             </div>
             <div class="column3">
-                <h2 id="heading"> Desert Survival Task </h2>
-                <h3 id="intro" class="text">
+                <h1 id="heading"> Desert Survival Task </h1>
+                <h2 id="intro" class="text">
                     Your bus has
                     crashed in the desert of New Mexico and you have following nine items. Your task is to rank nine items in order
                     of importance for survival. Are you ready to begin?
-                </h3>
+                </h2>
                 <br />
                 <button id="start" class="button" style="display:inline-block" v-on:click="startInitialRanking">See the items</button>
                 <br />
@@ -37,17 +37,22 @@
 
                 <h1 id="drag_inst" style="display:none;">The agent tries to convince the participant about next item</h1>
                 <br />
-                <button id="drag" class="button" style="display:none" v-on:click="makeDraggable">Update your ratings</button>
+                <h2 id="intro2" class="text" style="display:none;">
+                </h2>
                 <br />
-                <button id="begin" class="button" style="display:none;" v-on:click="doneInitialRanking">Done Ranking! Continue</button>
+                <button id="drag" class="button" style="display:none" v-on:click="makeDraggable">Update your ranking</button>
+                <br />
+                <button id="begin" class="button" style="display:none;" v-on:click="doneInitialRanking">Done Ranking? Continue</button>
                 <br />
                 <button id="interact" class="button" style="display:none;" v-on:click="beginInteraction">Start Interaction</button>
                 <br />
-                <button id="done_drag" class="button" style="display:none;" v-on:click="doneDragging">Updated! Continue</button>
+                <button id="done_drag" class="button" style="display:none;" v-on:click="doneDragging">Done Updating? Continue</button>
                 <br />
+                <button id="submit" class="button" style="display:none" v-on:click="submitRankings">Submit Final Rankings</button>
+                
             </div>
             <div id ="user_list" class="column2" style="background-color:#aaa; display:none;">
-                <h3 class="text">Your ratings</h3>
+                <h3 class="text">Your Rankings</h3>
 
                 <draggable id="items_list" 
                            :list="users"
@@ -88,7 +93,8 @@
         //list.appendChild(li);
    // });
     let counter = 0; // which item on its list will the agent talk about
-    var item_order = [8, 7, 6, 5, 4, 3, 2, 1, 0];
+    var item_order = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+    var avatar_order = [4, 5, 0, 1, 2, 7, 3, 8, 6]
     export default {
         name: "App",
         components: {
@@ -210,19 +216,22 @@
             random_userList: function () {
                 item_order.sort(() => Math.random() - 0.5);
                 this.users = item_order.map(i => this.users[i]);
-                alert(JSON.stringify(this.users));
+                //alert(JSON.stringify(this.users));
             },
             reorder_avatarList: function () {
-                this.avatarList = item_order.map(i => this.avatarList[i]);
-                alert(JSON.stringify(this.avatarList));
+                this.avatarList = avatar_order.map(i => this.users[i]);
+                //alert(JSON.stringify(this.avatarList));
                 
             },
             compare_lists: function () {
-                alert(JSON.stringify(this.users[counter]))
+                //alert(JSON.stringify(this.users[counter]))
                 if (this.users[counter].id == this.avatarList[counter].id) {
                     alert("Moving on to next item for persuation since this one already matches. Say something like: Glad we agree on nth item on our list");
                     counter += 1;
+
+                    return true;
                 }
+                return false;
             },
             disable() {
                 this.enabled = false;
@@ -256,7 +265,10 @@
             doneInitialRanking: function (event) {
                 this.disable();
                 event.target.style.display = "none";
-                var sect = document.getElementById("intro");
+                var inst = document.getElementById("drag_inst");
+                inst.style.display = "none";
+                var sect = document.getElementById("intro2");
+                sect.style.display = "inline-block";
                 sect.textContent = "After this initial ranking. Now you'll have a chance to see rankings of a Virtual AI agent. The agent will present you with his reasoning for picking each item in specific order. You will have a choice to update your ranking during the interaction";
                 var btn = document.getElementById("interact");
                 btn.style.display = "inline-block";
@@ -269,9 +281,11 @@
                 event.target.style.display = "none";
                 var sect = document.getElementById("intro");
                 sect.style.display = "none";
-                 sect = document.getElementById("heading");
+                sect = document.getElementById("intro2");
                 sect.style.display = "none";
-                 sect = document.getElementById("avatarRating");
+                sect = document.getElementById("heading");
+                sect.style.display = "none";
+                sect = document.getElementById("avatarRating");
                 sect.style.display = "block";
                 var inst = document.getElementById("drag_inst");
                 inst.style.display = "inline-block";
@@ -303,20 +317,39 @@
             },
             doneDragging: function (event) {
                 event.target.style.display = "none";
-                var inst = document.getElementById("drag_inst");
-                inst.textContent = "The agent tries to convince the participant about next item";
-                var btn = document.getElementById("drag");
-                btn.style.display = "inline-block";
-                //var check1 = document.getElementById("check1");
-                //check1.style.display = "none";
-                //var check2 = document.getElementById("label_check");
-                //check2.style.display = "none";
-                this.disable();
                 counter += 1;
-                alert(counter+1);
-                this.compare_lists();
+                //alert(counter + 1);
+                if (counter >= 9) {
+                    var inst = document.getElementById("drag_inst");
+                    inst.textContent = "Please finalize and submit your rankings before concluding the study";
+                    var btn = document.getElementById("submit");
+                    btn.style.display = "inline-block";
+                }
+                else {
+                    inst = document.getElementById("drag_inst");
+                    this.disable();
+                    var checking = this.compare_lists();
+                    while (checking) {
+                        checking = this.compare_lists();
+                    }
+                    inst.textContent = "The agent tries to convince the participant about item " + JSON.stringify(counter+1);
+                    btn = document.getElementById("drag");
+                    btn.style.display = "inline-block";
+                    //var check1 = document.getElementById("check1");
+                    //check1.style.display = "none";
+                    //var check2 = document.getElementById("label_check");
+                    //check2.style.display = "none";
+                    
+                }
+                
                 
                  
+            },
+            submitRankings: function (event) {
+                event.target.style.display = "none";
+                this.disable();
+                var inst = document.getElementById("drag_inst");
+                inst.textContent = "Thank you for taking the time to complete the study. Please proceed to post-study questionnaires";
             }
            
         }
