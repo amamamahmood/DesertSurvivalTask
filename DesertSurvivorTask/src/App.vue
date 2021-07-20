@@ -40,7 +40,9 @@
                 <h2 id="intro2" class="text" style="display:none;">
                 </h2>
                 <br />
-                <button id="drag" class="button" style="display:none" v-on:click="makeDraggable">Update your ranking</button>
+                <button id="drag" class="button" style="display:none" width="100px" v-on:click="makeDraggable">Update your ranking</button>
+                &emsp;&emsp;&emsp;&emsp;
+                <button id="noDrag" class="button" style="display:none" width="100px" v-on:click="skipUpdating">Continue without updating</button>
                 <br />
                 <button id="begin" class="button" style="display:none;" v-on:click="doneInitialRanking">Done Ranking? Continue</button>
                 <br />
@@ -49,7 +51,7 @@
                 <button id="done_drag" class="button" style="display:none;" v-on:click="doneDragging">Done Updating? Continue</button>
                 <br />
                 <button id="submit" class="button" style="display:none" v-on:click="submitRankings">Submit Final Rankings</button>
-                
+
             </div>
             <div id ="user_list" class="column2" style="background-color:#aaa; display:none;">
                 <h3 class="text">Your Rankings</h3>
@@ -292,7 +294,8 @@
                 inst.textContent = "The agent tries to convince the participant of first item on its list";
                 var btn = document.getElementById("drag");
                 btn.style.display = "inline-block";
-
+                btn = document.getElementById("noDrag");
+                btn.style.display = "inline-block";
             },
             makeDraggable: function (event) {
                 //alert("I am here");
@@ -303,6 +306,8 @@
                 //this.draggable = true;
                 //var btn = document.getElementByID("drag");
                 event.target.style.display = "none";
+                var btn = document.getElementById("noDrag");
+                btn.style.display = "none";
                 //list.draggable = "true";
                 //this.disabled = false;
                 
@@ -312,33 +317,50 @@
                 //check2.style.display = "inline-block";
                 this.enable();
                 //event.style.display = "none";
-                var btn = document.getElementById("done_drag");
+                btn = document.getElementById("done_drag");
                 btn.style.display = "inline-block";
             },
-            doneDragging: function (event) {
+            skipUpdating: function (event) {
                 event.target.style.display = "none";
+                var btn = document.getElementById("drag");
+                btn.style.display = "none";
+                this.doneDragging();
+            },
+            doneDragging: function () {
+                var btn = document.getElementById("done_drag");
+                btn.style.display = "none";
                 counter += 1;
+                var inst;
                 //alert(counter + 1);
                 if (counter >= 9) {
-                    var inst = document.getElementById("drag_inst");
+                    this.enable();
+                    inst = document.getElementById("drag_inst");
                     inst.textContent = "Please finalize and submit your rankings before concluding the study";
-                    var btn = document.getElementById("submit");
+                    btn = document.getElementById("submit");
                     btn.style.display = "inline-block";
                 }
                 else {
                     inst = document.getElementById("drag_inst");
                     this.disable();
                     var checking = this.compare_lists();
-                    while (checking) {
+                    while (checking && counter < 9) {
                         checking = this.compare_lists();
                     }
-                    inst.textContent = "The agent tries to convince the participant about item " + JSON.stringify(counter+1);
-                    btn = document.getElementById("drag");
-                    btn.style.display = "inline-block";
-                    //var check1 = document.getElementById("check1");
-                    //check1.style.display = "none";
-                    //var check2 = document.getElementById("label_check");
-                    //check2.style.display = "none";
+                    if (counter < 9) {
+                        inst.textContent = "The agent tries to convince the participant about item " + JSON.stringify(counter + 1);
+                        btn = document.getElementById("drag");
+                        btn.style.display = "inline-block";
+                        btn = document.getElementById("noDrag");
+                        btn.style.display = "inline-block";
+                    }
+                    else {
+                        this.enable();
+                        inst = document.getElementById("drag_inst");
+                        inst.textContent = "Please finalize and submit your rankings before concluding the study";
+                        btn = document.getElementById("submit");
+                        btn.style.display = "inline-block";
+                    }
+                    
                     
                 }
                 
@@ -358,8 +380,8 @@
 
 <style>
     body {
-        margin-right: 20px;
-        margin-left: 20px;
+        margin-right: 15vw;
+        margin-left: 15vw;
         max-width: 100%;
         max-height: 100%;
         padding-right: 10px;
@@ -385,7 +407,7 @@
         align-items: center;
         text-align: center;
         position: absolute;
-        bottom: 5px;
+        bottom: 20px;
     }
     .column {
         float: left;
@@ -396,7 +418,7 @@
         align-items: center;
         text-align: center;
         position: absolute;
-        top: 5px;
+        top: 20px;
     }
     .column3 {
         float: left;
