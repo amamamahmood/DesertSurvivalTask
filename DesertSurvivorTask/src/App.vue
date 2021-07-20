@@ -1,25 +1,50 @@
 <template>
     <div id="app" >
         <div class="row">
+
             <div class="column" style="background-color:#bbb;">
+                <h3>Avatar's rating</h3>
                 <ol>
                     <li class="float-child" style="list-style-position: inside" v-for="item in avatarList" :key="item.id">
                         <div class="items">
                             <img class="image" :src="item.avatar" alt="item.name" width="70" heigth="70" style="width: 6vw;height:6vw;">
                             <br />
                             <p class="text">{{item.name}}</p>
-                        </div>  
+                        </div>
                     </li>
                 </ol>
+
+            </div>
+            <div class="column3">
+            </div>
+            <div class="column3">
+                
                 
             </div>
-            <div class="column"></div>
-            <div class="column" style="background-color:#aaa;">
-                <draggable :list="users"
+            <div class="column3">
+                <button id="drag" class="text2" v-on:click="makeDraggable">Update your ratings</button>
+                <br />
+                <h1 id="drag_inst" style="display:inline-block;">The agent tries to convince the participant about next item</h1>
+                <br />
+                
+                <br />
+
+
+                <button id="done_drag" class="text2" style="display:none;" v-on:click="doneDragging">Updated! Continue</button>
+            </div>
+            <div class="column2" style="background-color:#aaa;">
+                <h3 class="text">Your ratings</h3>
+
+                <draggable id="items_list" 
+                           :list="users"
                            :animation="200"
+                           :disabled="!enabled"
                            ghost-class="moving-card"
                            group="users"
-                           tag="ol">
+                           tag="ol"
+                            @start="dragging = true"
+                            @end="dragging = false">
+
 
                     <user-card v-for="user in users"
                                :key="user.id"
@@ -31,9 +56,7 @@
                 </draggable>
 
             </div>
-            <div class="column">
-                <h1>Let's arrnage these items</h1>
-            </div>
+
 
         </div>
         </div>
@@ -50,6 +73,7 @@
         //li.innerText = item;
         //list.appendChild(li);
    // });
+    let counter = 0; // which item on its list will the agent talk about
     export default {
         name: "App",
         components: {
@@ -58,6 +82,7 @@
         },
         data() {
             return {
+                enabled: false,
                 users: [
                     {
                         id: 1,
@@ -167,6 +192,16 @@
             };
         },
         methods: {
+            compare_lists: function () {
+                alert(JSON.stringify(this.users[counter]))
+                if 
+            },
+            disable() {
+                this.enabled = false;
+            },
+            enable() {
+                this.enabled = true;
+            },
             onEdit(user) {
                 alert(`Editing ${user.name}`);
             },
@@ -178,6 +213,41 @@
                 alert(`Prnting ${JSON.stringify(this.users)}`);
 
             },
+            makeDraggable: function (event) {
+                //alert("I am here");
+                //alert(event.target.tagName);
+                var inst = document.getElementById("drag_inst");
+                inst.textContent = "Update your list by dragging and dropping the items";
+                //this.draggable = true;
+                //var btn = document.getElementByID("drag");
+                event.target.style.display = "none";
+                //list.draggable = "true";
+                //this.disabled = false;
+                
+                //var check1 = document.getElementById("check1");
+                //check1.style.display = "inline-block";
+               // var check2 = document.getElementById("label_check");
+                //check2.style.display = "inline-block";
+                this.enable();
+                //event.style.display = "none";
+                var btn = document.getElementById("done_drag");
+                btn.style.display = "inline-block";
+            },
+            doneDragging: function (event) {
+                event.target.style.display = "none";
+                var inst = document.getElementById("drag_inst");
+                inst.textContent = "The agent tries to convince the participant about next item";
+                var btn = document.getElementById("drag");
+                btn.style.display = "inline-block";
+                //var check1 = document.getElementById("check1");
+                //check1.style.display = "none";
+                //var check2 = document.getElementById("label_check");
+                //check2.style.display = "none";
+                this.disable();
+                this.compare_lists();
+                alert(counter);
+                counter += 1; 
+            }
            
         }
     };
@@ -185,14 +255,15 @@
 
 <style>
     body {
-        margin-right: auto;
-        margin-left: auto;
-        max-width: 90%;
-        max-height: 90%;
+        margin-right: 20px;
+        margin-left: 20px;
+        max-width: 100%;
+        max-height: 100%;
         padding-right: 10px;
         padding-left: 10px;
         align-content:center;
         align-items:center;
+        text-align:center;
     }
         /* Unfortunately @apply cannot be setup in codesandbox,
     but you'd use "@apply border opacity-50 border-blue-500 bg-gray-200" here */
@@ -202,16 +273,37 @@
             border: 1px solid #4299e1;
         }
     
+    .column2 {
+        float: left;
+        width: 70vw;
+        height: 12.5vw;
+        padding: 1px;
+        align-content: center;
+        align-items: center;
+        text-align: center;
+        position: absolute;
+        bottom: 5px;
+    }
     .column {
         float: left;
         width: 70vw;
-        height: 11vw;
+        height: 12.5vw;
         padding: 1px;
-        align-content:center;
-
-        
+        align-content: center;
+        align-items: center;
+        text-align: center;
+        position: absolute;
+        top: 5px;
     }
-
+    .column3 {
+        float: left;
+        width: 70vw;
+        height: 12.5vw;
+        padding: 1px;
+        align-content: center;
+        align-items: center;
+        text-align: center;
+    }
     /* Clear floats after the columns */
     .row:after {
         content: "";
@@ -225,6 +317,14 @@
         text-align: center;
         font-family: Arial;
         font-size: 1.5vw;
+    }
+
+
+    text2 {
+        align-content: center;
+        text-align: center;
+        font-family: Arial;
+        font-size: 3vw;
     }
 
     image {
