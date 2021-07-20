@@ -2,7 +2,7 @@
     <div id="app" >
         <div class="row">
 
-            <div class="column" style="background-color:#bbb; display:none">
+            <div id ="avatarRating" class="column" style="background-color:#bbb; display:none">
                 <h3>Avatar's rating</h3>
                 <ol>
                     <li class="float-child" style="list-style-position: inside" v-for="item in avatarList" :key="item.id">
@@ -16,31 +16,33 @@
 
             </div>
             <div class="column3">
-                <h3> Desert Survival Task </h3>
-                <p class="text">
+                <h2 id="heading"> Desert Survival Task </h2>
+                <h3 id="intro" class="text">
                     Your bus has
                     crashed in the desert of New Mexico and you have following nine items. Your task is to rank nine items in order
                     of importance for survival. Are you ready to begin?
-                </p>
+                </h3>
                 <br />
                 <button id="start" class="button" style="display:inline-block" v-on:click="startInitialRanking">See the items</button>
                 <br />
-                <br />
-                <button id="begin" class="button" style="display:none;" v-on:click="beginInteraction">Done Ranking! Continue</button>
+
+                
+                
             </div>
             <div class="column3">
                 
                 
             </div>
             <div class="column3">
-                <button id="drag" class="button"  style="display:none" v-on:click="makeDraggable">Update your ratings</button>
-                <br />
+
                 <h1 id="drag_inst" style="display:none;">The agent tries to convince the participant about next item</h1>
                 <br />
-                
+                <button id="drag" class="button" style="display:none" v-on:click="makeDraggable">Update your ratings</button>
                 <br />
-
-
+                <button id="begin" class="button" style="display:none;" v-on:click="doneInitialRanking">Done Ranking! Continue</button>
+                <br />
+                <button id="interact" class="button" style="display:none;" v-on:click="beginInteraction">Start Interaction</button>
+                <br />
                 <button id="done_drag" class="button" style="display:none;" v-on:click="doneDragging">Updated! Continue</button>
                 <br />
             </div>
@@ -248,11 +250,37 @@
                 var inst = document.getElementById("drag_inst");
                 inst.style.display = "inline-block";
                 inst.textContent = "Drag and drop the items to order the list";
-                var sect = document.getElementById("begin");
+                sect = document.getElementById("begin");
+                sect.style.display = "inline-block";
+            },
+            doneInitialRanking: function (event) {
+                this.disable();
+                event.target.style.display = "none";
+                var sect = document.getElementById("intro");
+                sect.textContent = "After this initial ranking. Now you'll have a chance to see rankings of a Virtual AI agent. The agent will present you with his reasoning for picking each item in specific order. You will have a choice to update your ranking during the interaction";
+                var btn = document.getElementById("interact");
+                btn.style.display = "inline-block";
+
+            },
+            beginInteraction: function (event) {
+                //var temp = document.getElementById("temp");
+                //temp.style.display = "none";
+                this.reorder_avatarList();
+                event.target.style.display = "none";
+                var sect = document.getElementById("intro");
+                sect.style.display = "none";
+                 sect = document.getElementById("heading");
+                sect.style.display = "none";
+                 sect = document.getElementById("avatarRating");
                 sect.style.display = "block";
+                var inst = document.getElementById("drag_inst");
+                inst.style.display = "inline-block";
+                inst.textContent = "The agent tries to convince the participant of first item on its list";
+                var btn = document.getElementById("drag");
+                btn.style.display = "inline-block";
+
             },
             makeDraggable: function (event) {
-                this.reorder_avatarList();
                 //alert("I am here");
                 //alert(event.target.tagName);
                 var inst = document.getElementById("drag_inst");
@@ -367,7 +395,7 @@
         align-content: center;
         text-align: center;
         font-family: Arial;
-        font-size: 40px;
+        font-size: 20px;
     }
 
     image {
