@@ -22,7 +22,7 @@
                 
             </div>
             <div class="column3">
-                <button id="drag" class="text2" v-on:click="makeDraggable">Update your ratings</button>
+                <button id="drag" class="button" v-on:click="makeDraggable">Update your ratings</button>
                 <br />
                 <h1 id="drag_inst" style="display:inline-block;">The agent tries to convince the participant about next item</h1>
                 <br />
@@ -30,7 +30,7 @@
                 <br />
 
 
-                <button id="done_drag" class="text2" style="display:none;" v-on:click="doneDragging">Updated! Continue</button>
+                <button id="done_drag" class="button" style="display:none;" v-on:click="doneDragging">Updated! Continue</button>
             </div>
             <div class="column2" style="background-color:#aaa;">
                 <h3 class="text">Your ratings</h3>
@@ -74,6 +74,7 @@
         //list.appendChild(li);
    // });
     let counter = 0; // which item on its list will the agent talk about
+    var item_order = [8, 7, 6, 5, 4, 3, 2, 1];
     export default {
         name: "App",
         components: {
@@ -192,9 +193,17 @@
             };
         },
         methods: {
+            reorder_avatarList: function () {
+                this.avatarList = item_order.map(i => this.avatarList[i]);
+                alert(JSON.stringify(this.avatarList));
+                
+            },
             compare_lists: function () {
                 alert(JSON.stringify(this.users[counter]))
-                if 
+                if (this.users[counter].id == this.avatarList[counter].id) {
+                    alert("Moving on to next item for persuation since this one already matches. Say something like: Glad we agree on nth item on our list");
+                    counter += 1;
+                }
             },
             disable() {
                 this.enabled = false;
@@ -214,6 +223,7 @@
 
             },
             makeDraggable: function (event) {
+                this.reorder_avatarList();
                 //alert("I am here");
                 //alert(event.target.tagName);
                 var inst = document.getElementById("drag_inst");
@@ -244,9 +254,11 @@
                 //var check2 = document.getElementById("label_check");
                 //check2.style.display = "none";
                 this.disable();
+                counter += 1;
+                alert(counter+1);
                 this.compare_lists();
-                alert(counter);
-                counter += 1; 
+                
+                 
             }
            
         }
@@ -316,15 +328,15 @@
         align-content: center;
         text-align: center;
         font-family: Arial;
-        font-size: 1.5vw;
+        font-size: 20px;
     }
 
 
-    text2 {
+    button {
         align-content: center;
         text-align: center;
         font-family: Arial;
-        font-size: 3vw;
+        font-size: 40px;
     }
 
     image {
