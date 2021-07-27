@@ -120,6 +120,7 @@
         var container = document.createElement('div');
         //var avatar = document.getElementById('avatar');
         container.classList.add("columnAvatar");
+
         container.id = "avatardiv";
         document.body.appendChild(container);
 
