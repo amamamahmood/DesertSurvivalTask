@@ -105,7 +105,7 @@
     var avatar_order = [4, 5, 0, 1, 2, 7, 3, 8, 6];
     let camera, scene, renderer, stats;
 
-
+    var avatarState = "idle";
 
 
     const clock = new THREE.Clock();
@@ -115,7 +115,7 @@
     //init();
     //animate();
 
-    function init(avatarState) {
+    function init() {
 
         var container = document.createElement('div');
         //var avatar = document.getElementById('avatar');
@@ -391,12 +391,14 @@
             compare_lists: function () {
                 //alert(JSON.stringify(this.users[counter]))
                 if (this.users[counter].id == this.avatarList[counter].id) {
-                    alert("Moving on to next item for persuation since this one already matches. Say something like: Glad we agree on nth item on our list");
                     counter += 1;
-
                     return true;
+
+                    //alert("Glad we agree on nth item on our list");                   
                 }
-                return false;
+                else {
+                    return false;
+                }
             },
             disable() {
                 this.enabled = false;
@@ -452,28 +454,34 @@
                 sect.style.display = "none";
                 sect = document.getElementById("avatarRating");
                 sect.style.display = "block";
-                init("talking");
-                animate();
+                if (avatarState !== "talking") {
+                    avatarState = "talking";
+                    init();
+                    animate();
+                }
                 var inst = document.getElementById("drag_inst");
                 inst.style.display = "inline-block";
                 inst.textContent = "The agent tries to convince the participant of first item on its list";
-                
+                //counter += 1;
                 
                 var selectVoice = 0;
                 setTimeout(function () {
                     const greetingSpeech = new window.SpeechSynthesisUtterance();
-                    greetingSpeech.text = "Hi. I am David. Here is my list. I'll try to convince you of my first item on its list";
+                    greetingSpeech.text = "Hi. I am David. Here is my list. I'll try to convince you of first item on my list";
                     greet(greetingSpeech, selectVoice);
                     greetingSpeech.addEventListener('end', function () {
                         var btn = document.getElementById("drag");
                         btn.style.display = "inline-block";
                         btn = document.getElementById("noDrag");
                         btn.style.display = "inline-block";
-                        init("idle");
-                        animate();
+                        if (avatarState !== "idle") {
+                            avatarState = "idle";
+                            init();
+                            animate();
+                        }
                     });
                     
-                }, 2000);
+                }, 3000);
                 
                 
                 
@@ -513,13 +521,13 @@
                 this.doneDragging();
             },
             doneDragging: function () {
-                init("talking");
-                animate();
+                
                 var btn = document.getElementById("done_drag");
                 btn.style.display = "none";
                 counter += 1;
                 var inst;
-                //alert(counter + 1);
+                alert("In dragging" + counter);
+                //alert(counter);
                 if (counter >= 9) {
                     this.enable();
                     inst = document.getElementById("drag_inst");
@@ -530,24 +538,116 @@
                 else {
                     inst = document.getElementById("drag_inst");
                     this.disable();
+                    let temp = counter;
                     var checking = this.compare_lists();
                     while (checking && counter < 9) {
                         checking = this.compare_lists();
+                        alert("Same elements after " + counter);
                     }
-                    if (counter < 9) {
-                        inst.textContent = "The agent tries to convince the participant about item " + JSON.stringify(counter + 1);
-                        btn = document.getElementById("drag");
-                        btn.style.display = "inline-block";
-                        btn = document.getElementById("noDrag");
-                        btn.style.display = "inline-block";
+                    alert("Difference " + (counter-temp));
+                    if ((counter - temp) > 0) {
+                        if (avatarState !== "talking") {
+                            avatarState = "talking";
+                            init();
+                            animate();
+                        }
+                        var selectVoice = 0;
+                        setTimeout(function () {
+                            const greetingSpeech = new window.SpeechSynthesisUtterance();
+                            greetingSpeech.text = "Glad we agree on some items on our list";
+                            greet(greetingSpeech, selectVoice);
+
+                            greetingSpeech.addEventListener('end', function () {
+
+                                if (counter < 9) {
+                                    
+                                    if (avatarState !== "talking") {
+                                        avatarState = "talking";
+                                        init();
+                                        animate();
+                                    }
+                                    
+                                    setTimeout(function () {
+                                        const greetingSpeech = new window.SpeechSynthesisUtterance();
+                                        inst.textContent = "The agent tries to convince the participant about item " + JSON.stringify(counter + 1);
+                                        greetingSpeech.text = "I'll try to convince you about item " + JSON.stringify(counter + 1);
+                                        greet(greetingSpeech, selectVoice);
+                                        greetingSpeech.addEventListener('end', function () {
+                                            btn = document.getElementById("drag");
+                                            btn.style.display = "inline-block";
+                                            btn = document.getElementById("noDrag");
+                                            btn.style.display = "inline-block";
+                                            if (avatarState !== "idle") {
+                                                avatarState = "idle";
+                                                init();
+                                                animate();
+                                            }
+                                        });
+
+                                    }, 3000);
+
+                                }
+                                else {
+                                    //alert("I am here in the end " + counter);
+                                    this.enable();
+                                    if (avatarState !== "idle") {
+                                        avatarState = "idle";
+                                        init();
+                                        animate();
+                                    }
+                                    inst = document.getElementById("drag_inst");
+                                    inst.textContent = "Please finalize and submit your rankings before concluding the study";
+                                    btn = document.getElementById("submit");
+                                    btn.style.display = "inline-block";
+                                }
+                            });
+
+                        }, 3000);
                     }
-                    else {
-                        this.enable();
-                        inst = document.getElementById("drag_inst");
-                        inst.textContent = "Please finalize and submit your rankings before concluding the study";
-                        btn = document.getElementById("submit");
-                        btn.style.display = "inline-block";
+                    else if ((counter - temp) == 0) {
+                            if (counter < 9) {
+
+                                if (avatarState !== "talking") {
+                                    avatarState = "talking";
+                                    init();
+                                    animate();
+                                }
+                                
+                                setTimeout(function () {
+                                    const greetingSpeech = new window.SpeechSynthesisUtterance();
+                                    inst.textContent = "The agent tries to convince the participant about item " + JSON.stringify(counter + 1);
+                                    greetingSpeech.text = "I'll try to convince you about item " + JSON.stringify(counter + 1);
+                                    greet(greetingSpeech, selectVoice);
+                                    greetingSpeech.addEventListener('end', function () {
+                                        btn = document.getElementById("drag");
+                                        btn.style.display = "inline-block";
+                                        btn = document.getElementById("noDrag");
+                                        btn.style.display = "inline-block";
+                                        if (avatarState !== "idle") {
+                                            avatarState = "idle";
+                                            init();
+                                            animate();
+                                        }
+                                    });
+
+                                }, 3000);
+
+                            }
+                            else {
+                                this.enable();
+                                if (avatarState !== "idle") {
+                                    avatarState = "idle";
+                                    init();
+                                    animate();
+                                }
+                                inst = document.getElementById("drag_inst");
+                                inst.textContent = "Please finalize and submit your rankings before concluding the study";
+                                btn = document.getElementById("submit");
+                                btn.style.display = "inline-block";
+                            }
+                           
                     }
+                    
 
 
                 }
