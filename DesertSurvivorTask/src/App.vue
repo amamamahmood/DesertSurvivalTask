@@ -1,8 +1,8 @@
 <template>
-    <div id="app" >
+    <div id="app">
         <div class="row">
 
-            <div id ="avatarRating" class="column" style="background-color:#bbb; display:none">
+            <div id="avatarRating" class="column" style="background-color:#bbb; display:none">
                 <h3>Avatar's Rankings</h3>
                 <ol>
                     <li class="float-child" style="list-style-position: inside" v-for="item in avatarList" :key="item.id">
@@ -26,12 +26,12 @@
                 <button id="start" class="button" style="display:inline-block" v-on:click="startInitialRanking">See the items</button>
                 <br />
 
-                
-                
+
+
             </div>
-            <div class="column3">
-                
-                
+            <div id="avatar" class="column3">
+                <h2>avatar</h2>
+                <br />
             </div>
             <div class="column3">
 
@@ -53,18 +53,18 @@
                 <button id="submit" class="button" style="display:none" v-on:click="submitRankings">Submit Final Rankings</button>
 
             </div>
-            <div id ="user_list" class="column2" style="background-color:#aaa; display:none;">
+            <div id="user_list" class="column2" style="background-color:#aaa; display:none;">
                 <h3 class="text">Your Rankings</h3>
 
-                <draggable id="items_list" 
+                <draggable id="items_list"
                            :list="users"
                            :animation="200"
                            :disabled="!enabled"
                            ghost-class="moving-card"
                            group="users"
                            tag="ol"
-                            @start="dragging = true"
-                            @end="dragging = false">
+                           @start="dragging = true"
+                           @end="dragging = false">
 
 
                     <user-card v-for="user in users"
@@ -80,29 +80,166 @@
 
 
         </div>
-        </div>
+    </div>
 
 </template>
 
 <script>
     import draggable from "vuedraggable";
     import UserCard from "./components/UserCard";
+    //import { modelFbx } from 'vue-3d-model'
+    import * as THREE from 'three';
+
+    import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+    import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
+    import Stats from 'three/examples/jsm/libs/stats.module';
     //let list = document.getElementById("avatar_list");
     //let data2 = ["Ram", "Shyam", "Sita", "Gita"];
     //data2.forEach((item) => {
-      //  let li = document.createElement("li");
-        //li.innerText = item;
-        //list.appendChild(li);
-   // });
+    //  let li = document.createElement("li");
+    //li.innerText = item;
+    //list.appendChild(li);
+    // });
     let counter = 0; // which item on its list will the agent talk about
     var item_order = [0, 1, 2, 3, 4, 5, 6, 7, 8];
-    var avatar_order = [4, 5, 0, 1, 2, 7, 3, 8, 6]
+    var avatar_order = [4, 5, 0, 1, 2, 7, 3, 8, 6];
+    let camera, scene, renderer, stats;
+
+    const clock = new THREE.Clock();
+
+    let mixer;
+
+    //init();
+    //animate();
+    function init(avatarState) {
+
+        var container = document.createElement('div');
+        //var avatar = document.getElementById('avatar');
+        container.classList.add("columnAvatar");
+        container.id = "avatardiv";
+        document.body.appendChild(container);
+
+        camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 1, 2000);
+        camera.position.set(50, 150, 250);
+
+        scene = new THREE.Scene();
+        scene.background = new THREE.Color(0xffffff);
+        scene.fog = new THREE.Fog(0xffffff, 200, 1000);
+
+        const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444);
+        hemiLight.position.set(0, 200, 0);
+        scene.add(hemiLight);
+
+        const lights = new THREE.DirectionalLight(0xffffff, 1, 0);
+        lights.position.set(50, 100, 200);
+        scene.add(lights);
+
+        const dirLight = new THREE.DirectionalLight(0xffffff);
+        dirLight.position.set(0, 200, 100);
+        dirLight.castShadow = true;
+        dirLight.shadow.camera.top = 180;
+        dirLight.shadow.camera.bottom = - 100;
+        dirLight.shadow.camera.left = - 120;
+        dirLight.shadow.camera.right = 120;
+        scene.add(dirLight);
+
+        // scene.add( new THREE.CameraHelper( dirLight.shadow.camera ) );
+
+        // ground
+        const mesh = new THREE.Mesh(new THREE.PlaneGeometry(2000, 2000), new THREE.MeshPhongMaterial({ color: 0x999999, depthWrite: false }));
+        mesh.rotation.x = - Math.PI / 2;
+        mesh.receiveShadow = true;
+        scene.add(mesh);
+
+        const grid = new THREE.GridHelper(2000, 20, 0x000000, 0x000000);
+        grid.material.opacity = 0.2;
+        grid.material.transparent = true;
+        //scene.add(grid);
+
+        // model
+        var fileLoad;
+        const loader = new FBXLoader();
+        if (avatarState == "talking") {
+            fileLoad = 'david_talking.fbx';
+        }
+        else if (avatarState == "idle") {
+            fileLoad = 'david_idle.fbx';
+        }
+        loader.load(fileLoad, function (object) {
+
+            mixer = new THREE.AnimationMixer(object);
+
+            const action = mixer.clipAction(object.animations[0]);
+            action.play();
+
+            object.traverse(function (child) {
+
+                if (child.isMesh) {
+
+                    child.castShadow = true;
+                    child.receiveShadow = true;
+
+                }
+
+            });
+
+            scene.add(object);
+
+        });
+
+        renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.shadowMap.enabled = true;
+        renderer.setClearColor(0xffffff, 0);
+        container.appendChild(renderer.domElement);
+
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.target.set(0, 100, 0);
+        controls.update();
+
+        window.addEventListener('resize', onWindowResize);
+
+        // stats
+        stats = new Stats();
+        container.appendChild(stats.dom);
+
+    }
+
+    function onWindowResize() {
+        var container = document.getElementById("avatardiv")
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+
+        renderer.setSize(container.clientWidth, container.clientHeight);
+
+    }
+
+    //
+
+    function animate() {
+
+        requestAnimationFrame(animate);
+
+        const delta = clock.getDelta();
+
+        if (mixer) mixer.update(delta);
+
+        renderer.render(scene, camera);
+
+        stats.update();
+
+    }
     export default {
         name: "App",
         components: {
             draggable,
             UserCard
+            //modelFbx
         },
+
+
+
         data() {
             return {
                 enabled: false,
@@ -212,6 +349,7 @@
                             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9pownnssrFIBSPhzUKilGR_2SEfuuy53q-A&usqp=CAU"
                     }
                 ]
+
             };
         },
         methods: {
@@ -223,7 +361,7 @@
             reorder_avatarList: function () {
                 this.avatarList = avatar_order.map(i => this.users[i]);
                 //alert(JSON.stringify(this.avatarList));
-                
+
             },
             compare_lists: function () {
                 //alert(JSON.stringify(this.users[counter]))
@@ -296,10 +434,15 @@
                 btn.style.display = "inline-block";
                 btn = document.getElementById("noDrag");
                 btn.style.display = "inline-block";
+                init("talking");
+                animate();
             },
             makeDraggable: function (event) {
                 //alert("I am here");
                 //alert(event.target.tagName);
+                //var avatar = document.getElementById("avatardiv");
+                init("idle");
+                animate();
                 var inst = document.getElementById("drag_inst");
                 inst.style.display = "inline-block"
                 inst.textContent = "Update your list by dragging and dropping the items";
@@ -310,10 +453,10 @@
                 btn.style.display = "none";
                 //list.draggable = "true";
                 //this.disabled = false;
-                
+
                 //var check1 = document.getElementById("check1");
                 //check1.style.display = "inline-block";
-               // var check2 = document.getElementById("label_check");
+                // var check2 = document.getElementById("label_check");
                 //check2.style.display = "inline-block";
                 this.enable();
                 //event.style.display = "none";
@@ -327,6 +470,8 @@
                 this.doneDragging();
             },
             doneDragging: function () {
+                init("talking");
+                animate();
                 var btn = document.getElementById("done_drag");
                 btn.style.display = "none";
                 counter += 1;
@@ -360,12 +505,12 @@
                         btn = document.getElementById("submit");
                         btn.style.display = "inline-block";
                     }
-                    
-                    
+
+
                 }
-                
-                
-                 
+
+
+
             },
             submitRankings: function (event) {
                 event.target.style.display = "none";
@@ -373,10 +518,11 @@
                 var inst = document.getElementById("drag_inst");
                 inst.textContent = "Thank you for taking the time to complete the study. Please proceed to post-study questionnaires";
             }
-           
+
         }
     };
 </script>
+
 
 <style>
     body {
@@ -386,18 +532,18 @@
         max-height: 100%;
         padding-right: 10px;
         padding-left: 10px;
-        align-content:center;
-        align-items:center;
-        text-align:center;
+        align-content: center;
+        align-items: center;
+        text-align: center;
     }
-        /* Unfortunately @apply cannot be setup in codesandbox,
+    /* Unfortunately @apply cannot be setup in codesandbox,
     but you'd use "@apply border opacity-50 border-blue-500 bg-gray-200" here */
-        .moving-card {
-            opacity: 0.5;
-            background: #F7FAFC;
-            border: 1px solid #4299e1;
-        }
-    
+    .moving-card {
+        opacity: 0.5;
+        background: #F7FAFC;
+        border: 1px solid #4299e1;
+    }
+
     .column2 {
         float: left;
         width: 70vw;
@@ -409,6 +555,7 @@
         position: absolute;
         bottom: 20px;
     }
+
     .column {
         float: left;
         width: 70vw;
@@ -420,6 +567,19 @@
         position: absolute;
         top: 20px;
     }
+    .columnAvatar {
+        float: right;
+        width: 20vw;
+        height: 20vw;
+        padding: 1px;
+        align-content: center;
+        align-items: center;
+        text-align: center;
+        position: absolute;
+        top: 14vw;
+        right: 10vw;
+    }
+
     .column3 {
         float: left;
         width: 70vw;
@@ -454,7 +614,6 @@
     }
 
     image {
-        
     }
 
     items {
@@ -477,6 +636,6 @@
         align-content: center;
         align-items: center;
         text-align: center;
-    }  
+    }
 </style>
 
