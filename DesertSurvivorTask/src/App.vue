@@ -30,7 +30,7 @@
 
             </div>
             <div id="avatar" class="column3">
-                <h2>avatar</h2>
+                
                 <br />
             </div>
             <div class="column3">
@@ -483,8 +483,8 @@
                 //alert("I am here");
                 //alert(event.target.tagName);
                 //var avatar = document.getElementById("avatardiv");
-                init("idle");
-                animate();
+                //init("idle");
+                //animate();
                 var inst = document.getElementById("drag_inst");
                 inst.style.display = "inline-block"
                 inst.textContent = "Update your list by dragging and dropping the items";
