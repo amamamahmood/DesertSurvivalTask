@@ -526,7 +526,7 @@
                 btn.style.display = "none";
                 counter += 1;
                 var inst;
-                alert("In dragging" + counter);
+                //alert("In dragging" + counter);
                 //alert(counter);
                 if (counter >= 9) {
                     this.enable();
@@ -542,24 +542,48 @@
                     var checking = this.compare_lists();
                     while (checking && counter < 9) {
                         checking = this.compare_lists();
-                        alert("Same elements after " + counter);
+                        //alert("Same elements after " + counter);
                     }
-                    alert("Difference " + (counter-temp));
+                    //alert("Difference " + (counter-temp));
                     if ((counter - temp) > 0) {
                         if (avatarState !== "talking") {
                             avatarState = "talking";
                             init();
                             animate();
                         }
+                        if (counter == 9) {
+                            this.enable();
+                        }
                         var selectVoice = 0;
                         setTimeout(function () {
+                            
+                            
                             const greetingSpeech = new window.SpeechSynthesisUtterance();
                             greetingSpeech.text = "Glad we agree on some items on our list";
                             greet(greetingSpeech, selectVoice);
-
+                            alert(counter);
+                            
                             greetingSpeech.addEventListener('end', function () {
+                                
+                                if (counter == 9) {
+                                    alert("I am here " + counter);
+                                    if (avatarState !== "idle") {
+                                        avatarState = "idle";
+                                        init();
+                                        animate();
+                                    }
 
-                                if (counter < 9) {
+
+                                    setTimeout(function () {
+                                        inst = document.getElementById("drag_inst");
+                                        inst.textContent = "Please finalize and submit your rankings before concluding the study";
+                                        btn = document.getElementById("submit");
+                                        btn.style.display = "inline-block";
+
+                                    }, 2000);
+                                }
+
+                                else if (counter < 9) {
                                     
                                     if (avatarState !== "talking") {
                                         avatarState = "talking";
@@ -587,7 +611,7 @@
                                     }, 3000);
 
                                 }
-                                else {
+                                /*else {
                                     //alert("I am here in the end " + counter);
                                     this.enable();
                                     if (avatarState !== "idle") {
@@ -599,9 +623,9 @@
                                     inst.textContent = "Please finalize and submit your rankings before concluding the study";
                                     btn = document.getElementById("submit");
                                     btn.style.display = "inline-block";
-                                }
+                                }*/
                             });
-
+                       
                         }, 3000);
                     }
                     else if ((counter - temp) == 0) {
