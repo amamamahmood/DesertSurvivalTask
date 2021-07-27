@@ -105,12 +105,16 @@
     var avatar_order = [4, 5, 0, 1, 2, 7, 3, 8, 6];
     let camera, scene, renderer, stats;
 
+
+
+
     const clock = new THREE.Clock();
 
     let mixer;
-
+    //var PulseLoader = VueSpinner.PulseLoader
     //init();
     //animate();
+
     function init(avatarState) {
 
         var container = document.createElement('div');
@@ -216,7 +220,7 @@
     }
 
     //
-
+    //var animationAvatar;
     function animate() {
 
         requestAnimationFrame(animate);
@@ -230,6 +234,24 @@
         stats.update();
 
     }
+    //var doneSpeaking = false;
+    var synth = window.speechSynthesis;
+    var voiceList = window.speechSynthesis.getVoices;
+   
+    function greet(greetingSpeech, selectedVoice) {
+        //speechSynthesis.cancel();
+        
+
+        greetingSpeech.voice = voiceList[selectedVoice];
+        //doneSpeaking = false;
+        synth.speak(greetingSpeech);
+        
+        
+        //greetingSpeech.onend = function () {
+          //  return true;
+        //}
+    }
+    
     export default {
         name: "App",
         components: {
@@ -242,6 +264,7 @@
 
         data() {
             return {
+                
                 enabled: false,
                 users: [
                     {
@@ -353,6 +376,7 @@
             };
         },
         methods: {
+            
             random_userList: function () {
                 item_order.sort(() => Math.random() - 0.5);
                 this.users = item_order.map(i => this.users[i]);
@@ -427,15 +451,33 @@
                 sect.style.display = "none";
                 sect = document.getElementById("avatarRating");
                 sect.style.display = "block";
+                init("talking");
+                animate();
                 var inst = document.getElementById("drag_inst");
                 inst.style.display = "inline-block";
                 inst.textContent = "The agent tries to convince the participant of first item on its list";
-                var btn = document.getElementById("drag");
-                btn.style.display = "inline-block";
-                btn = document.getElementById("noDrag");
-                btn.style.display = "inline-block";
-                init("talking");
-                animate();
+                
+                
+                var selectVoice = 0;
+                setTimeout(function () {
+                    const greetingSpeech = new window.SpeechSynthesisUtterance();
+                    greetingSpeech.text = "Hi. I am David. Here is my list. I'll try to convince you of my first item on its list";
+                    greet(greetingSpeech, selectVoice);
+                    greetingSpeech.addEventListener('end', function () {
+                        var btn = document.getElementById("drag");
+                        btn.style.display = "inline-block";
+                        btn = document.getElementById("noDrag");
+                        btn.style.display = "inline-block";
+                        init("idle");
+                        animate();
+                    });
+                    
+                }, 2000);
+                
+                
+                
+                
+                
             },
             makeDraggable: function (event) {
                 //alert("I am here");
