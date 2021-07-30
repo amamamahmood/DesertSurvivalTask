@@ -1,25 +1,21 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
+//import { createStore } from 'vuex'
 Vue.use(Vuex)
 
 
-
-
-const store = new Vuex.Store({
+export const store = new Vuex.Store({
     state: {
         gender: 0
     },
-    getter: {
+    getters: {
         getGender: state => {
             return state.gender;
         }
     },
     mutations: {
         storeGender(state, genderA) {
-            state = genderA;
+            state.gender = genderA;
         }
     }
-})
-
-export default new Vuex.Store(store);
+});

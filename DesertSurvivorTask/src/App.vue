@@ -21,7 +21,7 @@
                     Please fill the Demographics survey before proceeding
                 </h2>
                 <br />
-                <div id="surveyElement">
+                <div id="surveyElement" style="text-align:left">
                     <SurveyComponent />
                 </div>
                 <br />
@@ -87,6 +87,7 @@
 </template>
 
 <script>
+    import { store } from './components/store';
     import draggable from "vuedraggable";
     import UserCard from "./components/UserCard";
     //import { modelFbx } from 'vue-3d-model'
@@ -115,22 +116,7 @@
     //var PulseLoader = VueSpinner.PulseLoader
     //init();
     //animate();
-    const store = new Vuex.Store({
-        state: {
-            gender: 0
-        },
-        getter: {
-            getGender: state => {
-                return state.gender;
-            }
-        },
-        mutations: {
-            storeGender(state, genderA) {
-                state = genderA;
-            }
-        }
-    })
-    alert(store.getter.getGender);
+
     function init() {
 
         var container = document.createElement('div');
@@ -178,8 +164,33 @@
         //scene.add(grid);
 
         // model
-        var fileLoad = 'david_idle.fbx';
+        var value1, value2, index=1;
+        var files = ['elizabeth', 'kate', 'lewis', 'nathan']; //FB,FW,MB,MW
+        switch (Number(store.getters.getGender)) {
+            case 1:
+            case 3:
+                value1 = 0;
+                value2 = 1;
+                index = Math.random() < 0.5 ? value1 : value2;
+                break;
+            case 2:
+            case 4:
+                value1 = 2;
+                value2 = 3;
+                index = Math.random() < 0.5 ? value1 : value2;
+                break;
+            case 5:
+            case 6:
+                index = Math.floor(Math.random() * (3 + 1));
+                break;
+
+        }
+        alert(index);
+        var fileLoad = files[index]+'_idle.fbx';
+        var fileLoad2 = files[index] + '_talking.fbx';
+        alert(fileLoad + fileLoad2);
         const loader = new FBXLoader();
+        
         /*if (avatarState == "talking") {
             fileLoad = 'david_talking.fbx';
         }
@@ -198,9 +209,9 @@
             //actions.push(action);
             //actions[0].play();
             const loader2 = new FBXLoader();
-            fileLoad = 'david_talking.fbx';
+            
            
-            loader2.load(fileLoad, function (object2) {
+            loader2.load(fileLoad2, function (object2) {
                 //let mixer2 = new THREE.AnimationMixer(object2);
                 //const action2 = mixer.clipAction(object2.animations[0]);
                 //actions.push(action2)
