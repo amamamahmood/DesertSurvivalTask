@@ -18,12 +18,14 @@
             <div class="column3">
                 <h1 id="heading"> Desert Survival Task </h1>
                 <h2 id="intro" class="text">
-                    Your bus has
-                    crashed in the desert of New Mexico and you have following nine items. Your task is to rank nine items in order
-                    of importance for survival. Are you ready to begin?
+                    Please fill the Demographics survey before proceeding
                 </h2>
                 <br />
-                <button id="start" class="button" style="display:inline-block" v-on:click="startInitialRanking">See the items</button>
+                <div id="surveyElement">
+                    <SurveyComponent />
+                </div>
+                <br />
+                <button id="start" class="button" style="display:none" v-on:click="startInitialRanking">See the items</button>
                 <br />
 
 
@@ -89,7 +91,7 @@
     import UserCard from "./components/UserCard";
     //import { modelFbx } from 'vue-3d-model'
     import * as THREE from 'three';
-
+    import SurveyComponent from "./components/SurveyComponent";
     import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
     import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
     import Stats from 'three/examples/jsm/libs/stats.module';
@@ -113,7 +115,22 @@
     //var PulseLoader = VueSpinner.PulseLoader
     //init();
     //animate();
-
+    const store = new Vuex.Store({
+        state: {
+            gender: 0
+        },
+        getter: {
+            getGender: state => {
+                return state.gender;
+            }
+        },
+        mutations: {
+            storeGender(state, genderA) {
+                state = genderA;
+            }
+        }
+    })
+    alert(store.getter.getGender);
     function init() {
 
         var container = document.createElement('div');
@@ -295,7 +312,8 @@
         name: "App",
         components: {
             draggable,
-            UserCard
+            UserCard,
+            SurveyComponent
             //modelFbx
         },
 
@@ -303,7 +321,6 @@
 
         data() {
             return {
-                
                 enabled: false,
                 users: [
                     {

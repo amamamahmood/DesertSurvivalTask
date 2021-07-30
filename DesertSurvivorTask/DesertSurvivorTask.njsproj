@@ -32,6 +32,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="public\Talking.fbx" />
+    <Content Include="src\components\SurveyComponent.vue">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="src\components\webgl_loader_fbx.html">
       <SubType>Code</SubType>
     </Content>
