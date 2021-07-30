@@ -35,9 +35,9 @@
             </div>
             <div class="column3">
 
-                <h1 id="drag_inst" style="display:none;">The agent tries to convince the participant about next item</h1>
+                <h1 id="drag_inst" style="display:none; max-width:30vw">The agent tries to convince the participant about next item</h1>
                 <br />
-                <h2 id="intro2" class="text" style="display:none;">
+                <h2 id="intro2" class="text" style="display:none; max-width:40vw; " >
                 </h2>
                 <br />
                 <button id="drag" class="button" style="display:none" width="100px" v-on:click="makeDraggable">Update your ranking</button>
@@ -105,11 +105,10 @@
     var avatar_order = [4, 5, 0, 1, 2, 7, 3, 8, 6];
     let camera, scene, renderer, stats;
 
-    var avatarState = "idle";
-
-
+    //var avatarState = "idle";
+    let actions;
     const clock = new THREE.Clock();
-
+    let activeAction, lastAction;
     let mixer;
     //var PulseLoader = VueSpinner.PulseLoader
     //init();
@@ -162,36 +161,63 @@
         //scene.add(grid);
 
         // model
-        var fileLoad;
+        var fileLoad = 'david_idle.fbx';
         const loader = new FBXLoader();
-        if (avatarState == "talking") {
+        /*if (avatarState == "talking") {
             fileLoad = 'david_talking.fbx';
         }
         else if (avatarState == "idle") {
             fileLoad = 'david_idle.fbx';
-        }
+        }*/
         loader.load(fileLoad, function (object) {
 
+            
+            
             mixer = new THREE.AnimationMixer(object);
+            //actions = object;
+            //const action = mixer.clipAction(object.animations[0]);
+            //actions = action;
+            //action.play();
+            //actions.push(action);
+            //actions[0].play();
+            const loader2 = new FBXLoader();
+            fileLoad = 'david_talking.fbx';
+           
+            loader2.load(fileLoad, function (object2) {
+                //let mixer2 = new THREE.AnimationMixer(object2);
+                //const action2 = mixer.clipAction(object2.animations[0]);
+                //actions.push(action2)
+                //alert(object2.animations[0].name);
+                object.animations.push(object2.animations[0]);
+                //alert("Length of object" + object.animations.length)
+                object.traverse(function (child) {
 
-            const action = mixer.clipAction(object.animations[0]);
-            action.play();
+                    if (child.isMesh) {
 
-            object.traverse(function (child) {
+                        child.castShadow = true;
+                        child.receiveShadow = true;
 
-                if (child.isMesh) {
+                    }
 
-                    child.castShadow = true;
-                    child.receiveShadow = true;
+                });
 
+                if (object.animations.length == 3) {
+                    scene.add(object);
+                    //let object = scene.getObjectByName("avatar_animation");
+                    //alert("Size of object after pushing is" + object.animations.length)
+                    actions = [mixer.clipAction(object.animations[0]), mixer.clipAction(object.animations[2])];
+                    //alert(actions);
+                    actions[0].play();
+                    activeAction = actions[0];
+                    lastAction = actions[0];
+                    //alert(actions);
                 }
 
+
             });
-
-            scene.add(object);
-
+            
         });
-
+        
         renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(container.clientWidth, container.clientHeight);
@@ -234,6 +260,18 @@
 
         stats.update();
 
+    }
+
+    function setAction(toAction) {
+        if (toAction != activeAction) {
+            lastAction = activeAction;
+            activeAction = toAction;
+            //lastAction.stop()
+            lastAction.fadeOut(1);
+            activeAction.reset();
+            activeAction.fadeIn(1);
+            activeAction.play();
+        }
     }
     //var doneSpeaking = false;
     var synth = window.speechSynthesis;
@@ -436,9 +474,11 @@
                 inst.style.display = "none";
                 var sect = document.getElementById("intro2");
                 sect.style.display = "inline-block";
-                sect.textContent = "After this initial ranking. Now you'll have a chance to see rankings of a Virtual AI agent. The agent will present you with his reasoning for picking each item in specific order. You will have a choice to update your ranking during the interaction";
+                sect.textContent = "After this initial ranking. Now you'll have a chance to see rankings of the Virtual AI agent.  The agent will present you with his reasoning for picking each item in specific order.  You will have a choice to update your ranking during the interaction";
                 var btn = document.getElementById("interact");
                 btn.style.display = "inline-block";
+                init();
+                animate();
 
             },
             beginInteraction: function (event) {
@@ -454,11 +494,7 @@
                 sect.style.display = "none";
                 sect = document.getElementById("avatarRating");
                 sect.style.display = "block";
-                if (avatarState !== "talking") {
-                    avatarState = "talking";
-                    init();
-                    animate();
-                }
+                setAction(actions[1]);
                 var inst = document.getElementById("drag_inst");
                 inst.style.display = "inline-block";
                 inst.textContent = "The agent tries to convince the participant of first item on its list";
@@ -474,14 +510,10 @@
                         btn.style.display = "inline-block";
                         btn = document.getElementById("noDrag");
                         btn.style.display = "inline-block";
-                        if (avatarState !== "idle") {
-                            avatarState = "idle";
-                            init();
-                            animate();
-                        }
+                        setAction(actions[0]);
                     });
                     
-                }, 3000);
+                }, 100);
                 
                 
                 
@@ -489,28 +521,15 @@
                 
             },
             makeDraggable: function (event) {
-                //alert("I am here");
-                //alert(event.target.tagName);
-                //var avatar = document.getElementById("avatardiv");
-                //init("idle");
-                //animate();
+                
                 var inst = document.getElementById("drag_inst");
                 inst.style.display = "inline-block"
                 inst.textContent = "Update your list by dragging and dropping the items";
-                //this.draggable = true;
-                //var btn = document.getElementByID("drag");
+                
                 event.target.style.display = "none";
                 var btn = document.getElementById("noDrag");
                 btn.style.display = "none";
-                //list.draggable = "true";
-                //this.disabled = false;
-
-                //var check1 = document.getElementById("check1");
-                //check1.style.display = "inline-block";
-                // var check2 = document.getElementById("label_check");
-                //check2.style.display = "inline-block";
                 this.enable();
-                //event.style.display = "none";
                 btn = document.getElementById("done_drag");
                 btn.style.display = "inline-block";
             },
@@ -546,11 +565,7 @@
                     }
                     //alert("Difference " + (counter-temp));
                     if ((counter - temp) > 0) {
-                        if (avatarState !== "talking") {
-                            avatarState = "talking";
-                            init();
-                            animate();
-                        }
+                        setAction(actions[1]);
                         if (counter == 9) {
                             this.enable();
                         }
@@ -561,18 +576,13 @@
                             const greetingSpeech = new window.SpeechSynthesisUtterance();
                             greetingSpeech.text = "Glad we agree on some items on our list";
                             greet(greetingSpeech, selectVoice);
-                            alert(counter);
+                            //alert(counter);
                             
                             greetingSpeech.addEventListener('end', function () {
                                 
                                 if (counter == 9) {
-                                    alert("I am here " + counter);
-                                    if (avatarState !== "idle") {
-                                        avatarState = "idle";
-                                        init();
-                                        animate();
-                                    }
-
+                                    //alert("I am here " + counter);
+                                    setAction(actions[0]);
 
                                     setTimeout(function () {
                                         inst = document.getElementById("drag_inst");
@@ -580,16 +590,11 @@
                                         btn = document.getElementById("submit");
                                         btn.style.display = "inline-block";
 
-                                    }, 2000);
+                                    }, 100);
                                 }
 
                                 else if (counter < 9) {
-                                    
-                                    if (avatarState !== "talking") {
-                                        avatarState = "talking";
-                                        init();
-                                        animate();
-                                    }
+                                    setAction(actions[1]);
                                     
                                     setTimeout(function () {
                                         const greetingSpeech = new window.SpeechSynthesisUtterance();
@@ -601,24 +606,16 @@
                                             btn.style.display = "inline-block";
                                             btn = document.getElementById("noDrag");
                                             btn.style.display = "inline-block";
-                                            if (avatarState !== "idle") {
-                                                avatarState = "idle";
-                                                init();
-                                                animate();
-                                            }
+                                            setAction(actions[0]);
                                         });
 
-                                    }, 3000);
+                                    }, 100);
 
                                 }
                                 /*else {
                                     //alert("I am here in the end " + counter);
                                     this.enable();
-                                    if (avatarState !== "idle") {
-                                        avatarState = "idle";
-                                        init();
-                                        animate();
-                                    }
+                                    setAction(actions[0]);
                                     inst = document.getElementById("drag_inst");
                                     inst.textContent = "Please finalize and submit your rankings before concluding the study";
                                     btn = document.getElementById("submit");
@@ -626,17 +623,11 @@
                                 }*/
                             });
                        
-                        }, 3000);
+                        }, 100);
                     }
                     else if ((counter - temp) == 0) {
                             if (counter < 9) {
-
-                                if (avatarState !== "talking") {
-                                    avatarState = "talking";
-                                    init();
-                                    animate();
-                                }
-                                
+                                setAction(actions[1]);
                                 setTimeout(function () {
                                     const greetingSpeech = new window.SpeechSynthesisUtterance();
                                     inst.textContent = "The agent tries to convince the participant about item " + JSON.stringify(counter + 1);
@@ -647,23 +638,15 @@
                                         btn.style.display = "inline-block";
                                         btn = document.getElementById("noDrag");
                                         btn.style.display = "inline-block";
-                                        if (avatarState !== "idle") {
-                                            avatarState = "idle";
-                                            init();
-                                            animate();
-                                        }
+                                        setAction(actions[0]);
                                     });
 
-                                }, 3000);
+                                }, 100);
 
                             }
                             else {
                                 this.enable();
-                                if (avatarState !== "idle") {
-                                    avatarState = "idle";
-                                    init();
-                                    animate();
-                                }
+                                setAction(actions[0]);
                                 inst = document.getElementById("drag_inst");
                                 inst.textContent = "Please finalize and submit your rankings before concluding the study";
                                 btn = document.getElementById("submit");
