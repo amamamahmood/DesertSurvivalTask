@@ -39,7 +39,7 @@
 
                 <h1 id="drag_inst" style="display:none; max-width:30vw">The agent tries to convince the participant about next item</h1>
                 <br />
-                <h2 id="intro2" class="text" style="display:none; max-width:40vw; " >
+                <h2 id="intro2" class="text" style="display:none; max-width:35vw; " >
                 </h2>
                 <br />
                 <button id="drag" class="button" style="display:none" width="100px" v-on:click="makeDraggable">Update your ranking</button>
@@ -95,7 +95,7 @@
     import SurveyComponent from "./components/SurveyComponent";
     import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
     import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
-    import Stats from 'three/examples/jsm/libs/stats.module';
+    //import Stats from 'three/examples/jsm/libs/stats.module';
     //let list = document.getElementById("avatar_list");
     //let data2 = ["Ram", "Shyam", "Sita", "Gita"];
     //data2.forEach((item) => {
@@ -106,7 +106,7 @@
     let counter = 0; // which item on its list will the agent talk about
     var item_order = [0, 1, 2, 3, 4, 5, 6, 7, 8];
     var avatar_order = [4, 5, 0, 1, 2, 7, 3, 8, 6];
-    let camera, scene, renderer, stats;
+    let camera, scene, renderer;
 
     //var avatarState = "idle";
     let actions;
@@ -129,6 +129,7 @@
         camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 1, 2000);
         camera.position.set(50, 150, 250);
 
+
         scene = new THREE.Scene();
         scene.background = new THREE.Color(0xffffff);
         scene.fog = new THREE.Fog(0xffffff, 200, 1000);
@@ -137,9 +138,12 @@
         hemiLight.position.set(0, 200, 0);
         scene.add(hemiLight);
 
-        const lights = new THREE.DirectionalLight(0xffffff, 1, 0);
-        lights.position.set(50, 100, 200);
+        const lights = new THREE.DirectionalLight(0xfffacd, 1, 0);
+        lights.position.set(0, 50, 0);
         scene.add(lights);
+
+        const light = new THREE.AmbientLight(0xffffff); // soft white light
+        scene.add(light);
 
         const dirLight = new THREE.DirectionalLight(0xffffff);
         dirLight.position.set(0, 200, 100);
@@ -158,9 +162,9 @@
         mesh.receiveShadow = true;
         scene.add(mesh);
 
-        const grid = new THREE.GridHelper(2000, 20, 0x000000, 0x000000);
-        grid.material.opacity = 0.2;
-        grid.material.transparent = true;
+        //const grid = new THREE.GridHelper(2000, 20, 0x000000, 0x000000);
+        //grid.material.opacity = 0.2;
+       // grid.material.transparent = true;
         //scene.add(grid);
 
         // model
@@ -181,14 +185,14 @@
                 break;
             case 5:
             case 6:
-                index = Math.floor(Math.random() * (3 + 1));
+                value1 = 0;
+                value2 = 3;
                 break;
 
         }
-        alert(index);
+        index = Math.floor(Math.random() * (value2 - value1 + 1)) + value1;
         var fileLoad = files[index]+'_idle.fbx';
         var fileLoad2 = files[index] + '_talking.fbx';
-        alert(fileLoad + fileLoad2);
         const loader = new FBXLoader();
         
         /*if (avatarState == "talking") {
@@ -255,13 +259,14 @@
 
         const controls = new OrbitControls(camera, renderer.domElement);
         controls.target.set(0, 100, 0);
+        controls.enabled = false;
         controls.update();
 
         window.addEventListener('resize', onWindowResize);
 
         // stats
-        stats = new Stats();
-        container.appendChild(stats.dom);
+        //stats = new Stats();
+        //container.appendChild(stats.dom);
 
     }
 
@@ -286,7 +291,7 @@
 
         renderer.render(scene, camera);
 
-        stats.update();
+        //stats.update();
 
     }
 

@@ -33,6 +33,8 @@
   <ItemGroup>
     <Content Include="public\elizabeth_idle.fbx" />
     <Content Include="public\elizabeth_talking.fbx" />
+    <Content Include="public\stefani_idle.fbx" />
+    <Content Include="public\stefani_talking.fbx" />
     <Content Include="public\Talking.fbx" />
     <Content Include="src\components\store.js">
       <SubType>Code</SubType>
