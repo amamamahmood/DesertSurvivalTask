@@ -1,0 +1,12 @@
+C:\Users\amama\source\repos\DesertSurvivorTask\obj\Debug\DesertSurvivorTask.njsprojAssemblyReference.cache
+C:\Users\amama\source\repos\DesertSurvivorTask\obj\Debug\DesertSurvivorTask.njsproj.CoreCompileInputs.cache
+C:\Users\amama\source\repos\DesertSurvivorTask\bin\Microsoft.NodejsTools.WebRole.dll
+C:\Users\amama\source\repos\DesertSurvival\DesertSurvivorTask\obj\Debug\DesertSurvivorTask.njsproj.AssemblyReference.cache
+C:\Users\amama\source\repos\DesertSurvival\DesertSurvivorTask\obj\Debug\DesertSurvivorTask.njsproj.CoreCompileInputs.cache
+C:\Users\amama\source\repos\DesertSurvival\DesertSurvivorTask\bin\Microsoft.NodejsTools.WebRole.dll
+C:\Users\amama\source\repos\DesertSurvivalTask\obj\Debug\DesertSurvivorTask.njsproj.AssemblyReference.cache
+C:\Users\amama\source\repos\DesertSurvivalTask\obj\Debug\DesertSurvivorTask.njsproj.CoreCompileInputs.cache
+C:\Users\amama\source\repos\DesertSurvivalTask\bin\Microsoft.NodejsTools.WebRole.dll
+C:\Users\amama\source\repos\SurvivalTask\obj\Debug\DesertSurvivorTask.njsproj.AssemblyReference.cache
+C:\Users\amama\source\repos\SurvivalTask\obj\Debug\DesertSurvivorTask.njsproj.CoreCompileInputs.cache
+C:\Users\amama\source\repos\SurvivalTask\bin\Microsoft.NodejsTools.WebRole.dll
