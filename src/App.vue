@@ -130,8 +130,12 @@
         //var cont = document.getElementById('avatardiv');
         //cont.style.display = "none";
         camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 1, 2000);
-        camera.position.set(50, 250, 250);
-
+        camera.zoom = 0.75;
+        camera.position.set(50, 150, 250);
+        
+        const fullWidth = container.clientWidth * 3;
+        const fullHeight = container.clientHeight * 2;
+        camera.setViewOffset(fullWidth, fullHeight, container.clientWidth * 1, container.clientHeight * 0, container.clientWidth, container.clientHeight);
 
         scene = new THREE.Scene();
         scene.background = new THREE.Color(0xffffff);
@@ -246,6 +250,9 @@
                     //alert("Size of object after pushing is" + object.animations.length)
                     actions = [mixer.clipAction(object.animations[0]), mixer.clipAction(object.animations[2])];
                     //alert(actions);
+                    actions[0].timeScale = 0.75;
+                    //actions[1].timeScale = 0.75;
+                    alert(actions[0].timeScale);
                     actions[0].play();
                     activeAction = actions[0];
                     lastAction = actions[0];
@@ -309,9 +316,11 @@
             lastAction = activeAction;
             activeAction = toAction;
             //lastAction.stop()
-            lastAction.fadeOut(1);
+            lastAction.fadeOut(0.2);
             activeAction.reset();
-            activeAction.fadeIn(1);
+            activeAction.timeScale = 0.8;
+            activeAction.fadeIn(0.2);
+            activeAction.timeScale = 0.8;
             activeAction.play();
         }
     }
