@@ -10,9 +10,10 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-	"deploy": "sh deploy.sh"
+    "deploy": "sh deploy.sh"
   },
   "dependencies": {
+    "eslint-loader": "^4.0.2",
     "survey-vue": "^1.8.58",
     "surveyjs": "^3.0.2",
     "three": "^0.130.1",
