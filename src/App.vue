@@ -108,12 +108,57 @@
     var item_order = [0, 1, 2, 3, 4, 5, 6, 7, 8];
     var avatar_order = [4, 5, 0, 1, 2, 7, 3, 8, 6];
     let camera, scene, renderer, scene2;
-
+    let agentName;
     //var avatarState = "idle";
     let actions;
     const clock = new THREE.Clock();
     let activeAction, lastAction;
     let mixer;
+
+    const script1 = ["Map will be useful to start a fire with. It can be used as toilet paper. You can also use it as a shade for your head to avoid exposure to direct sunlight.",
+        "If you are stuck beyond day 3, you will need to find food and water. Additionally, you will be able to use the pages of book as toilet paper and as a fire starter. ",
+     "The intense sunlight of desert may cause Photokeratitis due to sun reflection from sand. It is like having sunburned eyes [1]. This will be prevented by wearing a pair of sunglasses.",
+        "You may use gauze as rope or for protecting your exposed body parts against dehydration and sunlight. In case of injury, it will be a useful item to have a first aid kit.",
+        "Cosmetic mirror is most powerful tool to communicate your presence because reflected sunbeam can be seen from a far-off distance. It gives you higher chance of being spotted within 24 hours. Speedy discovery is crucial to your group’s survival.",
+        "Flashlight is the only quick reliable device for signaling your presence at night. It will help you see at night and stay safer. Additionally, if you remove the batteries, it can be used as a container for digging or collecting water. The reflector and lens can be used as auxiliary signaling device and as a fire starter.",
+        "The reflective surface of the magnetic compass can be used as an auxiliary signaling device. In later days, if no help arrives, it will help you navigate.",
+        "Since 180-proof vodka is flammable, you can use it to start a fire, Moreover, the empty bottle may be used to collect water. Even if you do not drink vodka to avoid dehydration, it can be used otherwise. ",
+        "Ironically, Coats are one of the best ways to avoid hot dry air from circulating next to your skin, hence preventing perspiration. This will help you prevent dehydration through moisture loss. Therefore, increasing your survival time. Plastic raincoat can also be used to gather dew at night for drinking purposes. You will also be able create a solar still using raincoat to extract some water from ground."];
+
+    const script2 = ["Map is not as useful as one would think because it will encourage you and others to try and walk out. It is potentially dangerous to leave the site of crash since rescue party will most likely arrive there.",
+        "This book will be of little use since the main problem you confront for first few days is dehydration, not starvation. Also, you should be thinking about conserving energy and hunting is counterproductive.",
+        "Sunglasses will prevent sunburned eyes, but its usefulness is limited to daytime. Additionally, it is replaceable by any piece of clothing that you are wearing to keep your eyes safe from exposure to sunlight.",
+        "Since no one was injured in the plane, a first aid kit is not as important as one would think. Because of low humidity of the desert, it is considered one of the least infectious places in the world. Also, because the blood thickens due to dehydration, there is little danger of bleeding. However, gauze can be used for secondary purposes.",
+        "You may use cosmetic mirror to communicate your presence during daylight. Apart from that it has no secondary use for your survival.",
+        "You will use flashlight to communicate your presence at night. However, its range will be limited, and it may attract dangerous animals wandering in the dark.",
+        "Aside from the possibility of using the reflective surface of the magnetic compass as an auxiliary signaling device, it is of little use. It will tempt you to walk in search of food or water which is not good.",
+        "Drinking alcohol causes quicker dehydration because your body will lose enormous amounts of water trying to digest alcohol. 2 to 3 ounces of water is required to digest one ounce of alcohol approximately. Even though it may have secondary uses such as starting a fire and using empty bottle as container, drinking vodka will be lethal in this situation.",
+        "By digging a hole and placing the raincoat over it, a solar still can be constructed to obtain water. However, this will give you very little water compared to the effort you put in digging the hole. Hence, it will not significantly increase your chances of survival."
+
+    ];
+    const script3 = ["Map can be used to start a fire, as a toilet paper I think and to cover head.",
+        "The book may be used to search for food, to start a fire and and and like a toilet paper.",
+        "People may avoid sunlight by wearing sunglasses. So that eyes don’t burn",
+        "People may use gauze as rope, as (long pause) sun protection or may be in case they get hurt.",
+        "People may use cosmetic mirror to reflect sunlight to far-off distance to seek help. Umm. That’s it.",
+        "People may use flashlight to seek help at night and see in the dark.  What else? What else? (pause) Oh, it may be used as a container, signaling device and fire starter.",
+        "The shiny surface of the magnetic compass may be used to signal for help. Later if no help comes, I don’t know… people can navigate with it.",
+        "Vodka can catch fire. Umm. People can put water in empty bottle. Hmm. That’s all.",
+        "You know coats stop dry air to prevent sweating. That means less dehydration. What else? Umm umm. People can gather dew at night to drink and they can suck water out of ground by making solar still with the coat."
+
+    ];
+
+    const script4 = ["Map is not as good as people think because it may make people want to leave that place. Yeah!",
+        "The book is not useful because people should save their energy by not hunting and people do not even need food really.",
+        "People may avoid sunlight by wearing glasses but only like during the day. No use at night.",
+        "No body is hurt so no need of first aid thing. There is little chance of getting hurt in the desert. People can use gauze for other reasons, (Long pause) I suppose.",
+        "Cosmetic mirror can reflect sunlight but like only in the daylight. No other use, I guess.",
+        "People may use flashlight to seek help at night, uhhh but it may bring dangerous animals out too, I think.",
+        "Apart from using the shiny surface of the magnetic compass to signal, (long pause) no use. People will go to look for food and water with that compass. Isn’t a good idea, I say.",
+        "I mean drinking alcohol feels good, but it will make people lose water in their body. Not good. (Pause) I guess people could use it for starting a fire or storing water.",
+        "People can gather dew at night to drink and they can suck water out of ground by making solar still. But (pause) that’s like too much work for so little water. Not that good for staying alive."
+    ];
+
     //var PulseLoader = VueSpinner.PulseLoader
     //init();
     //animate();
@@ -186,20 +231,18 @@
         var files2 = ['https://dl.dropbox.com/s/e679nywcj7al2vn/elizabeth_talking.fbx', 'https://dl.dropbox.com/s/rgbldp983aez9ry/kate_talking.fbx', 'https://dl.dropbox.com/s/d9x6yomz6cmmenx/lewis_talking.fbx', 'https://dl.dropbox.com/s/iw2methdom8s2yb/nathan_talking.fbx'];
         switch (Number(store.getters.getGender)) {
             case 1:
-            case 3:
                 selectedVoice = 1;
                 value1 = 0;
                 value2 = 1;
                 index = Math.random() < 0.5 ? value1 : value2;
                 break;
             case 2:
-            case 4:
                 value1 = 2;
                 value2 = 3;
                 index = Math.random() < 0.5 ? value1 : value2;
                 break;
-            case 5:
-            case 6:
+            case 3:
+            case 4:
                 selectedVoice = 1;
                 value1 = 0;
                 value2 = 3;
@@ -211,6 +254,20 @@
         //var fileLoad2 = files[index] + '_talking.fbx';
         //var fileLoad = 'https://drive.google.com/uc?export=view&id=' + files[index];
         //var fileLoad2 = 'https://drive.google.com/uc?export=view&id=' + files[index + 4];
+        switch (index) {
+            case 0:
+                agentName = "Elizabeth";
+                break;
+            case 1:
+                agentName = "Kate";
+                break;
+            case 2:
+                agentName = "Lewis";
+                break;
+            case 3:
+                agentName = "Nathan";
+                break;
+        }
         var fileLoad = files[index];
         var fileLoad2 = files2[index];
         const loader = new FBXLoader();
@@ -422,83 +479,47 @@
                         id: 1,
                         name: "a map of New Mexico",
                         avatar: "https://p1.pxfuel.com/preview/963/223/786/map-usa-map-usa-united.jpg",
-                        state1: "Map will be useful to start a fire with. It can be used as toilet paper. You can also use it as a shade for your head to avoid exposure to direct sunlight.",
-                        state2: "Map is not as useful as one would think because it will encourage you and others to try and walk out. It is potentially dangerous to leave the site of crash since rescue party will most likely arrive there.",
-                        state3: "Map can be used to start a fire, as a toilet paper I think and to cover head.",
-                        state4: "Map is not as good as people think because it may make people want to leave that place. Yeah!"
-                    },
+                        },
                     {
                         id: 2,
                         name: "The book- Edible Animals of the Desert",
                         avatar: "https://p0.pxfuel.com/preview/962/798/408/book-book-pages-novel-paperback.jpg",
-                        state1: "If you are stuck beyond day 3, you will need to find food and water. Additionally, you will be able to use the pages of book as toilet paper and as a fire starter. ",
-                        state2: "This book will be of little use since the main problem you confront for first few days is dehydration, not starvation. Also, you should be thinking about conserving energy and hunting is counterproductive.",
-                        state3: "The book may be used to search for food, to start a fire and and and like a toilet paper.",
-                        state4: "The book is not useful because people should save their energy by not hunting and people do not even need food really."
-                    },
+                        },
                     {
                         id: 3,
                         name: "A pair of sunglasses per person",
                         avatar: "https://upload.wikimedia.org/wikipedia/commons/2/2b/Duct_tape_2016.jpg",
-                        state1: "The intense sunlight of desert may cause Photokeratitis due to sun reflection from sand. It is like having sunburned eyes [1]. This will be prevented by wearing a pair of sunglasses.",
-                        state2: "Sunglasses will prevent sunburned eyes, but its usefulness is limited to daytime. Additionally, it is replaceable by any piece of clothing that you are wearing to keep your eyes safe from exposure to sunlight.",
-                        state3: "People may avoid sunlight by wearing sunglasses. So that eyes don’t burn",
-                        state4: "People may avoid sunlight by wearing glasses but only like during the day. No use at night."
-                    },
+                       },
                     {
                         id: 4,
                         name: "first aid kit",
                         avatar: "https://cdn.pixabay.com/photo/2018/09/22/05/32/first-aid-3694546_1280.jpg",
-                        state1: "You may use gauze as rope or for protecting your exposed body parts against dehydration and sunlight. In case of injury, it will be a useful item to have a first aid kit.",
-                        state2: "Since no one was injured in the plane, a first aid kit is not as important as one would think. Because of low humidity of the desert, it is considered one of the least infectious places in the world. Also, because the blood thickens due to dehydration, there is little danger of bleeding. However, gauze can be used for secondary purposes.",
-                        state3: "People may use gauze as rope, as (long pause) sun protection or may be in case they get hurt.",
-                        state4: "No body is hurt so no need of first aid thing. There is little chance of getting hurt in the desert. People can use gauze for other reasons, (Long pause) I suppose."
-                    },
+                       },
                     {
                         id: 5,
                         name: "cosmetic mirror",
                         avatar: "https://www.maxpixel.net/static/photo/1x/Silvery-Cosmetics-Mirror-Make-Up-Reflection-1472857.jpg",
-                        state1: "Cosmetic mirror is most powerful tool to communicate your presence because reflected sunbeam can be seen from a far-off distance. It gives you higher chance of being spotted within 24 hours. Speedy discovery is crucial to your group’s survival.",
-                        state2: "You may use cosmetic mirror to communicate your presence during daylight. Apart from that it has no secondary use for your survival.",
-                        state3: "People may use cosmetic mirror to reflect sunlight to far-off distance to seek help. Umm. That’s it.",
-                        state4: "Cosmetic mirror can reflect sunlight but like only in the daylight. No other use, I guess."
-                    },
+                        },
                     {
                         id: 6,
                         name: "flashlight (four-battery size)",
                         avatar: "https://cdn.pixabay.com/photo/2018/05/11/17/07/flashlight-3391057_1280.jpg",
-                        state1: "Flashlight is the only quick reliable device for signaling your presence at night. It will help you see at night and stay safer. Additionally, if you remove the batteries, it can be used as a container for digging or collecting water. The reflector and lens can be used as auxiliary signaling device and as a fire starter.",
-                        state2: "You will use flashlight to communicate your presence at night. However, its range will be limited, and it may attract dangerous animals wandering in the dark.",
-                        state3: "People may use flashlight to seek help at night and see in the dark.  What else? What else? (pause) Oh, it may be used as a container, signaling device and fire starter.",
-                        state4: "People may use flashlight to seek help at night, uhhh but it may bring dangerous animals out too, I think."
-                    },
+                        },
                     {
                         id: 7,
                         name: "magnetic compass",
                         avatar: "https://upload.wikimedia.org/wikipedia/commons/f/f6/Magnetic_compass_-_school_laboratory.jpg",
-                        state1: "The reflective surface of the magnetic compass can be used as an auxiliary signaling device. In later days, if no help arrives, it will help you navigate.",
-                        state2: "Aside from the possibility of using the reflective surface of the magnetic compass as an auxiliary signaling device, it is of little use. It will tempt you to walk in search of food or water which is not good.",
-                        state3: "The shiny surface of the magnetic compass may be used to signal for help. Later if no help comes, I don’t know… people can navigate with it.",
-                        state4: "Apart from using the shiny surface of the magnetic compass to signal, (long pause) no use. People will go to look for food and water with that compass. Isn’t a good idea, I say."
-                    },
+                        },
                     {
                         id: 8,
                         name: "180-proof vodka 2 quart flask",
                         avatar: "https://p1.pxfuel.com/preview/555/831/622/vodka-ruska-alcohol-drunkenness.jpg",
-                        state1: "Since 180-proof vodka is flammable, you can use it to start a fire, Moreover, the empty bottle may be used to collect water. Even if you do not drink vodka to avoid dehydration, it can be used otherwise. ",
-                        state2: "Drinking alcohol causes quicker dehydration because your body will lose enormous amounts of water trying to digest alcohol. 2 to 3 ounces of water is required to digest one ounce of alcohol approximately. Even though it may have secondary uses such as starting a fire and using empty bottle as container, drinking vodka will be lethal in this situation.",
-                        state3: "Vodka can catch fire. Umm. People can put water in empty bottle. Hmm. That’s all.",
-                        state4: "I mean drinking alcohol feels good, but it will make people lose water in their body. Not good. (Pause) I guess people could use it for starting a fire or storing water."
-                    },
+                       },
                     {
                         id: 9,
                         name: "plastic raincoat",
                         avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9pownnssrFIBSPhzUKilGR_2SEfuuy53q-A&usqp=CAU",
-                        state1: "Ironically, Coats are one of the best ways to avoid hot dry air from circulating next to your skin, hence preventing perspiration. This will help you prevent dehydration through moisture loss. Therefore, increasing your survival time. Plastic raincoat can also be used to gather dew at night for drinking purposes. You will also be able create a solar still using raincoat to extract some water from ground.",
-                        state2: "By digging a hole and placing the raincoat over it, a solar still can be constructed to obtain water. However, this will give you very little water compared to the effort you put in digging the hole. Hence, it will not significantly increase your chances of survival.",
-                        state3: "You know coats stop dry air to prevent sweating. That means less dehydration. What else? Umm umm. People can gather dew at night to drink and they can suck water out of ground by making solar still with the coat.",
-                        state4: "People can gather dew at night to drink and they can suck water out of ground by making solar still. But (pause) that’s like too much work for so little water. Not that good for staying alive."
-                    }
+                        }
                 ]
 
             };
@@ -549,6 +570,16 @@
             enable() {
                 this.enabled = true;
             },
+            returnText: function (statement) {
+                var tempStr;
+                switch (statement) {
+                    case 1:
+                        tempStr =  script1[this.avatarList[counter].id - 1];
+                        break;
+                }
+               
+                return tempStr;
+            },
             onEdit(user) {
                 alert(`Editing ${user.name}`);
             },
@@ -588,7 +619,7 @@
                 inst.style.display = "none";
                 var sect = document.getElementById("intro2");
                 sect.style.display = "inline-block";
-                sect.textContent = "After this initial ranking. Now you'll have a chance to see rankings of the Virtual AI agent.  The agent will present you with its reasoning for picking each item in specific order. Agent will do so one by one.  You will have a choice to update your ranking during the interaction";
+                sect.textContent = "Now you'll have a chance to see rankings of the Virtual AI agent.  The agent will present you with its reasoning for picking each item in specific order. Agent will do so one by one.  You will have a choice to update your ranking during the interaction";
                 //var cont = document.getElementById("avatardiv");
                 //cont.style.display = "block";
                 //cont = document.getElementById("avatardivelement");
@@ -623,13 +654,14 @@
                 setAction(actions[1]);
                 var inst = document.getElementById("drag_inst");
                 inst.style.display = "inline-block";
-                inst.textContent = "The agent tries to convince the participant of first item on its list";
+                var say = "Hi. I am " + agentName + ". Here is my list. I'll discuss my rankings with you item by item. Let's strat with the first item on the list. " + this.returnText(1);
+                inst.textContent = say ;
                 //counter += 1;
                 
                 
                 setTimeout(function () {
                     const greetingSpeech = new window.SpeechSynthesisUtterance();
-                    greetingSpeech.text = "Hi. I am David. Here is my list. I'll try to convince you of first item on my list";
+                    greetingSpeech.text = say ;
                     greet(greetingSpeech);
                     greetingSpeech.addEventListener('end', function () {
                         var btn = document.getElementById("drag");
