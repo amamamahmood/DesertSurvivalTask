@@ -37,7 +37,7 @@
                 }
                 var sect = document.getElementById("intro");
                 //sect.style.display = "inline-block";
-                sect.textContent = "Your bus has crashed in the desert of New Mexico and you have following nine items.Your task is to rank nine items in order of importance for survival.Are you ready to begin ?";
+                sect.textContent = "It is approximately 10 a.m. in mid-August and you have just crash landed in a desert in New Mexico, US.  Only 10 of you were able to survive. The plane, containing the bodies of the pilots and rest of the crew, has completely burned.  Only the air frame remains.  None of the rest of you are injured. Before the plane caught fire, your group was able to salvage 9 items in good condition.  Your task is to rank these items according to their importance to your survival, with 1 being the most important and 9 being the least important";
                 sect = document.getElementById("surveyElement");
                 sect.style.display = "none";
                 var btn = document.getElementById("start");

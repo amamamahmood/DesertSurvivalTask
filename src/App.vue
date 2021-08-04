@@ -18,7 +18,7 @@
             <div class="column3">
                 <h1 id="heading"> Desert Survival Task </h1>
                 <h2 id="intro" class="text">
-                    Please fill the Demographics survey before proceeding
+                    Please fill the demographics survey before proceeding.
                 </h2>
                 <br />
                 <div id="surveyElement" style="text-align:left">
@@ -162,8 +162,11 @@
         //scene.add(grid);
 
         // model
-        var value1, value2, index=1;
-        var files = ['elizabeth', 'kate', 'lewis', 'nathan']; //FB,FW,MB,MW
+        var value1, value2, index = 1;
+        //var files = ['1HO3rpCGMt2nnjV-Jy6Au2a8vMvGTQE7k', '18wHICliIbeBCwP65SIpE7XPal0gZsYzC', '1RWXsLMO9JeE0ArhYYZpqIYFtUU42EtjQ', '125Xo_QFfYHiQaRvu3m--DaO34XR2v2AT', '1BZTFPjLQKtAjxYrIRs6dxfL-0C8SYDtF', '1vflsr84P9qswXBuCCjFLj8g5TiBtdaLk', '1EatzbwRE3-J3_oCgbwns4cz0VdzutO2y', '1-cOAhmO7G7o5T3oA9ydmjO5coOBjtFrd']; //FB,FW,MB,MW
+        //var files = ['elizabeth', 'kate', 'lewis', 'nathan']; //FB,FW,MB,MW
+        var files = ['https://dl.dropbox.com/s/0ngyvwy61na05rr/elizabeth_idle.fbx', 'https://dl.dropbox.com/s/iu9un8heefn8z8t/kate_idle.fbx', 'https://dl.dropbox.com/s/iu9un8heefn8z8t/kate_idle.fbx', 'https://dl.dropbox.com/s/5gdgq3nsrwdm00w/nathan_idle.fbx'];
+        var files2 = ['https://dl.dropbox.com/s/e679nywcj7al2vn/elizabeth_talking.fbx', 'https://dl.dropbox.com/s/rgbldp983aez9ry/kate_talking.fbx', 'https://dl.dropbox.com/s/d9x6yomz6cmmenx/lewis_talking.fbx', 'https://dl.dropbox.com/s/iw2methdom8s2yb/nathan_talking.fbx'];
         switch (Number(store.getters.getGender)) {
             case 1:
             case 3:
@@ -187,8 +190,12 @@
 
         }
         index = Math.floor(Math.random() * (value2 - value1 + 1)) + value1;
-        var fileLoad = files[index]+'_idle.fbx';
-        var fileLoad2 = files[index] + '_talking.fbx';
+        //var fileLoad = files[index]+'_idle.fbx';
+        //var fileLoad2 = files[index] + '_talking.fbx';
+        //var fileLoad = 'https://drive.google.com/uc?export=view&id=' + files[index];
+        //var fileLoad2 = 'https://drive.google.com/uc?export=view&id=' + files[index + 4];
+        var fileLoad = files[index];
+        var fileLoad2 = files2[index];
         const loader = new FBXLoader();
         
         /*if (avatarState == "talking") {
