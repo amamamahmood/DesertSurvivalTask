@@ -17,15 +17,17 @@
             </div>
             <div class="column3">
                 <h1 id="heading"> Desert Survival Task </h1>
-                <h2 id="intro" class="text">
+                <h2 id="intro" style="max-width:35vw; display:none" class="text">
                     Please fill the demographics survey before proceeding.
+                </h2>
+                <br />
+                <h2 id="introb" style="max-width:35vw; display:none" class="text">
+                    
                 </h2>
                 <br />
                 <div id="surveyElement" style="text-align:left">
                     <SurveyComponent />
                 </div>
-                <br />
-                <button id="start" class="button" style="display:none" v-on:click="startInitialRanking">See the items</button>
                 <br />
 
 
@@ -39,15 +41,20 @@
 
                 <h1 id="drag_inst" style="display:none; max-width:30vw">The agent tries to convince the participant about next item</h1>
                 <br />
-                <h2 id="intro2" class="text" style="display:none; max-width:35vw; " >
+                <h2 id="intro2" class="text" style="display:none; max-width:35vw; ">
                 </h2>
                 <br />
+                <button id="start" class="button" style="display:none" v-on:click="startInitialRanking">See the items</button>
+                <br />
+                <button id="home" class="button" style="display:none" v-on:click="atHome">Continue</button>
+
                 <button id="drag" class="button" style="display:none" width="100px" v-on:click="makeDraggable">Update your ranking</button>
                 &emsp;&emsp;&emsp;&emsp;
                 <button id="noDrag" class="button" style="display:none" width="100px" v-on:click="skipUpdating">Continue without updating</button>
                 <br />
                 <button id="begin" class="button" style="display:none;" v-on:click="doneInitialRanking">Done Ranking? Continue</button>
                 <br />
+
                 <button id="interact" class="button" style="display:none;" v-on:click="beginInteraction">Start Interaction</button>
                 <br />
                 <button id="done_drag" class="button" style="display:none;" v-on:click="doneDragging">Done Updating? Continue</button>
@@ -100,7 +107,7 @@
     let counter = 0; // which item on its list will the agent talk about
     var item_order = [0, 1, 2, 3, 4, 5, 6, 7, 8];
     var avatar_order = [4, 5, 0, 1, 2, 7, 3, 8, 6];
-    let camera, scene, renderer;
+    let camera, scene, renderer, scene2;
 
     //var avatarState = "idle";
     let actions;
@@ -118,14 +125,20 @@
         container.classList.add("columnAvatar");
 
         container.id = "avatardiv";
+        
         document.body.appendChild(container);
-
+        //var cont = document.getElementById('avatardiv');
+        //cont.style.display = "none";
         camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 1, 2000);
-        camera.position.set(50, 150, 250);
+        camera.position.set(50, 250, 250);
 
 
         scene = new THREE.Scene();
         scene.background = new THREE.Color(0xffffff);
+
+        scene2 = new THREE.Scene();
+        scene2.background = new THREE.Color(0xffffff);
+
         scene.fog = new THREE.Fog(0xffffff, 200, 1000);
 
         const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444);
@@ -227,6 +240,7 @@
                 });
 
                 if (object.animations.length == 3) {
+                    //alert("All files loaded");
                     scene.add(object);
                     //let object = scene.getObjectByName("avatar_animation");
                     //alert("Size of object after pushing is" + object.animations.length)
@@ -248,6 +262,8 @@
         renderer.setSize(container.clientWidth, container.clientHeight);
         renderer.shadowMap.enabled = true;
         renderer.setClearColor(0xffffff, 0);
+        renderer.domElement.id = "avatardivelement";
+        renderer.render(scene2,camera);
         container.appendChild(renderer.domElement);
 
         const controls = new OrbitControls(camera, renderer.domElement);
@@ -449,7 +465,23 @@
             };
         },
         methods: {
-            
+            atHome: function () {
+                init();
+                var sect = document.getElementById("intro");
+                sect.style.display = "inline-block";
+                sect.textContent = "It is approximately 10 a.m. in mid-August and you have just crash landed in a desert in New Mexico, US.  Only 10 of you were able to survive. The plane, containing the bodies of the pilots and rest of the crew, has completely burned.  Only the air frame remains.  None of the rest of you are injured. Before the plane caught fire, your group was able to salvage 9 items in good condition. The pilot was unable to notify anyone of your position before the crash, however, he had indicated that you were 70 miles S/SW from a mining camp which is the nearest known habitation, and that you were approximately 65 miles off course. The last weather report indicated that the temp would reach 110 that day, which means that at ground level it will be almost 130.  You are dressed in light weight clothing: short sleeved shirts, pants, socks and street shoes. ";
+                sect = document.getElementById("introb");
+                sect.style.display = "inline-block";
+                sect.textContent = "Before the plane caught fire, your group was able to salvage 9 items in good condition.  Your task is to rank these items according to their importance to your survival, with 1 being the most important and 9 being the least important.";
+                btn = document.getElementById("home");
+                btn.style.display = "none";
+                var btn = document.getElementById("start");
+                btn.style.display = "inline-block";
+                btn.disabled = true;
+                setTimeout(function () {
+                    btn.disabled = false;
+                }, 500);
+            },
             random_userList: function () {
                 item_order.sort(() => Math.random() - 0.5);
                 this.users = item_order.map(i => this.users[i]);
@@ -490,6 +522,8 @@
 
             },
             startInitialRanking: function (event) {
+                //init();
+                
                 this.enable();
                 this.random_userList();
                 var sect = document.getElementById("user_list");
@@ -500,6 +534,13 @@
                 inst.textContent = "Drag and drop the items to order the list";
                 sect = document.getElementById("begin");
                 sect.style.display = "inline-block";
+                sect.disabled = true;
+                
+
+                setTimeout(function () {
+                    sect.disabled = false;
+                }, 1000);
+                
             },
             doneInitialRanking: function (event) {
                 this.disable();
@@ -508,11 +549,21 @@
                 inst.style.display = "none";
                 var sect = document.getElementById("intro2");
                 sect.style.display = "inline-block";
-                sect.textContent = "After this initial ranking. Now you'll have a chance to see rankings of the Virtual AI agent.  The agent will present you with his reasoning for picking each item in specific order.  You will have a choice to update your ranking during the interaction";
+                sect.textContent = "After this initial ranking. Now you'll have a chance to see rankings of the Virtual AI agent.  The agent will present you with its reasoning for picking each item in specific order. Agent will do so one by one.  You will have a choice to update your ranking during the interaction";
+                //var cont = document.getElementById("avatardiv");
+                //cont.style.display = "block";
+                //cont = document.getElementById("avatardivelement");
+                //cont.style.display = "block";
+                //init();
+                animate();
                 var btn = document.getElementById("interact");
                 btn.style.display = "inline-block";
-                init();
-                animate();
+                btn.disabled = true;
+                setTimeout(function () {
+                    btn.disabled = false;
+                }, 500);
+                
+                
 
             },
             beginInteraction: function (event) {
@@ -521,6 +572,8 @@
                 this.reorder_avatarList();
                 event.target.style.display = "none";
                 var sect = document.getElementById("intro");
+                sect.style.display = "none";
+                sect = document.getElementById("introb");
                 sect.style.display = "none";
                 sect = document.getElementById("intro2");
                 sect.style.display = "none";
