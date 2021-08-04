@@ -39,7 +39,7 @@
             </div>
             <div class="column3">
 
-                <h1 id="drag_inst" style="display:none; max-width:30vw">The agent tries to convince the participant about next item</h1>
+                <h2 id="drag_inst" style="display:none; max-width:30vw">The agent tries to convince the participant about next item</h2>
                 <br />
                 <h2 id="intro2" class="text" style="display:none; max-width:35vw; ">
                 </h2>
@@ -570,13 +570,29 @@
             enable() {
                 this.enabled = true;
             },
-            returnText: function (statement) {
+            returnText: function (condition) {
                 var tempStr;
-                switch (statement) {
-                    case 1:
-                        tempStr =  script1[this.avatarList[counter].id - 1];
-                        break;
+                var avatarIndex = counter;
+                //alert(this.avatarList[counter].id);
+                var userIndex = this.users.findIndex(x => x.id = this.avatarList[counter].id); // gotta fix this
+                alert(avatarIndex + "   " + userIndex);
+                if (avatarIndex < userIndex) {
+                    if (condition == 1) {// Expert
+                        tempStr = script1[this.avatarList[counter].id - 1];
+                    }
+                    else {
+                        tempStr = script2[this.avatarList[counter].id - 1];
+                    }
                 }
+                else {
+                    if (condition == 1) {// Expert
+                        tempStr = script3[this.avatarList[counter].id - 1];
+                    }
+                    else {
+                        tempStr = script4[this.avatarList[counter].id - 1];
+                    }
+                }
+                       
                
                 return tempStr;
             },
@@ -654,7 +670,7 @@
                 setAction(actions[1]);
                 var inst = document.getElementById("drag_inst");
                 inst.style.display = "inline-block";
-                var say = "Hi. I am " + agentName + ". Here is my list. I'll discuss my rankings with you item by item. Let's strat with the first item on the list. " + this.returnText(1);
+                var say = "Hi. I am " + agentName + ". Here is my list. I'll discuss my rankings with you item by item. Let's start with the first item on the list. " + this.returnText(1);
                 inst.textContent = say ;
                 //counter += 1;
                 
@@ -756,8 +772,10 @@
                                     
                                     setTimeout(function () {
                                         const greetingSpeech = new window.SpeechSynthesisUtterance();
-                                        inst.textContent = "The agent tries to convince the participant about item " + JSON.stringify(counter + 1);
-                                        greetingSpeech.text = "I'll try to convince you about item " + JSON.stringify(counter + 1);
+                                        var say = "Let's move on to the next item on the list. " + this.returnText(1);
+                                        //inst.textContent = "The agent tries to convince the participant about item " + JSON.stringify(counter + 1);
+                                        inst.textContent = say;
+                                        greetingSpeech.text = say;
                                         greet(greetingSpeech);
                                         greetingSpeech.addEventListener('end', function () {
                                             btn = document.getElementById("drag");
@@ -788,8 +806,11 @@
                                 setAction(actions[1]);
                                 setTimeout(function () {
                                     const greetingSpeech = new window.SpeechSynthesisUtterance();
-                                    inst.textContent = "The agent tries to convince the participant about item " + JSON.stringify(counter + 1);
-                                    greetingSpeech.text = "I'll try to convince you about item " + JSON.stringify(counter + 1);
+                                    var say = "Let's move on to the next item on the list. " + this.returnText(1);
+                                    //inst.textContent = "The agent tries to convince the participant about item " + JSON.stringify(counter + 1);
+                                    //greetingSpeech.text = "I'll try to convince you about item " + JSON.stringify(counter + 1);
+                                    inst.textContent = say;
+                                    greetingSpeech.text = say;
                                     greet(greetingSpeech);
                                     greetingSpeech.addEventListener('end', function () {
                                         btn = document.getElementById("drag");
