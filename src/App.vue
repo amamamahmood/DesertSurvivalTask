@@ -21,7 +21,7 @@
                     Please fill the demographics survey before proceeding.
                 </h3>
                 <br />
-                <h2 id="introb" style="max-width:50vw; display:none" class="text">
+                <h2 id="introb" style="max-width:70vw; display:none" class="text">
                     
                 </h2>
                 <br />
