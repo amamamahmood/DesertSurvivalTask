@@ -16,14 +16,15 @@
 
             </div>
             <div class="column3">
-                <h1 id="heading" style= "display:none"> Desert Survival Task </h1>
+                <h1 id="heading" style="display:none"> Desert Survival Task </h1>
                 <h3 id="intro" style="max-width:70vw; display:none" class="text">
                     Please fill the demographics survey before proceeding.
                 </h3>
                 <br />
                 <h2 id="introb" style="max-width:50vw; display:none" class="text">
-                    
                 </h2>
+                <br />
+                <button id="start" class="button" style="display:none" v-on:click="startInitialRanking">See the items</button>
                 <br />
                 <div id="surveyElement" style="text-align:left; max-height:100vh">
                     <SurveyComponent />
@@ -34,7 +35,6 @@
 
             </div>
             <div id="avatar" class="column4">
-                
                 <br />
             </div>
             <div class="column3">
@@ -43,8 +43,6 @@
                 <br />
                 <h2 id="intro2" class="text" style="display:none; max-width:50vw; ">
                 </h2>
-                <br />
-                <button id="start" class="button" style="display:none" v-on:click="startInitialRanking">See the items</button>
                 <br />
                 <button id="home" class="button" style="display:none" v-on:click="atHome">Continue</button>
                 <button id="drag" class="button" style="display:none" width="100px" v-on:click="makeDraggable">Update your ranking</button>
