@@ -16,7 +16,7 @@
 
             </div>
             <div class="column3">
-                <h1 id="heading"style= "display:none"> Desert Survival Task </h1>
+                <h1 id="heading" style= "display:none"> Desert Survival Task </h1>
                 <h3 id="intro" style="max-width:70vw; display:none" class="text">
                     Please fill the demographics survey before proceeding.
                 </h3>
@@ -47,7 +47,6 @@
                 <button id="start" class="button" style="display:none" v-on:click="startInitialRanking">See the items</button>
                 <br />
                 <button id="home" class="button" style="display:none" v-on:click="atHome">Continue</button>
-
                 <button id="drag" class="button" style="display:none" width="100px" v-on:click="makeDraggable">Update your ranking</button>
                 &emsp;&emsp;&emsp;&emsp;
                 <button id="noDrag" class="button" style="display:none" width="100px" v-on:click="skipUpdating">Continue without updating</button>
@@ -313,7 +312,7 @@
                     //alert(actions);
                     actions[0].timeScale = 0.75;
                     //actions[1].timeScale = 0.75;
-                    alert(actions[0].timeScale);
+                    //alert(actions[0].timeScale);
                     actions[0].play();
                     activeAction = actions[0];
                     lastAction = actions[0];
@@ -377,10 +376,10 @@
             lastAction = activeAction;
             activeAction = toAction;
             //lastAction.stop()
-            lastAction.fadeOut(0.2);
+            lastAction.fadeOut(1);
             activeAction.reset();
             activeAction.timeScale = 0.8;
-            activeAction.fadeIn(0.2);
+            activeAction.fadeIn(1);
             activeAction.timeScale = 0.8;
             activeAction.play();
         }
@@ -544,7 +543,7 @@
                 btn.disabled = true;
                 setTimeout(function () {
                     btn.disabled = false;
-                }, 500);
+                }, 10000);
             },
             random_userList: function () {
                 item_order.sort(() => Math.random() - 0.5);
@@ -562,7 +561,7 @@
                     counter += 1;
                     return true;
 
-                    //alert("Glad we agree on nth item on our list");                   
+                    //alert("Glad we agree on nth item on our lists");                   
                 }
                 else {
                     return false;
@@ -630,7 +629,7 @@
 
                 setTimeout(function () {
                     sect.disabled = false;
-                }, 1000);
+                }, 10000);
                 
             },
             doneInitialRanking: function (event) {
@@ -652,7 +651,7 @@
                 btn.disabled = true;
                 setTimeout(function () {
                     btn.disabled = false;
-                }, 500);
+                }, 3000);
                 
                 
 
@@ -918,7 +917,7 @@
         align-items: center;
         text-align: center;
         position: absolute;
-        top: 14vw;
+        top: 10vw;
         right: 2vw;
         z-index: -1;
     }
