@@ -34,7 +34,7 @@
                 }
                 var sect = document.getElementById("intro");
                 sect.style.display = "inline-block";
-                sect.textContent = "Continue to see the descriptions of the task";
+                sect.textContent = "Continue to see the description of the task";
                 sect = document.getElementById("surveyElement");
                 sect.style.display = "none";
                 sect = document.getElementById("heading");
