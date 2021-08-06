@@ -2,7 +2,7 @@
     <div id="app">
         <div class="row">
 
-            <div id="avatarRating" class="column" style="background-color:#bbb; display:none">
+            <div id="avatarRating" class="column" style=" display:none">
                 <h3>Avatar's Rankings</h3>
                 <ol>
                     <li class="float-child" style="list-style-position: inside" v-for="item in avatarList" :key="item.id">
@@ -17,11 +17,11 @@
             </div>
             <div class="column3">
                 <h1 id="heading"> Desert Survival Task </h1>
-                <h2 id="intro" style="max-width:35vw; display:none" class="text">
+                <h2 id="intro" style="max-width:40vw; display:none" class="text">
                     Please fill the demographics survey before proceeding.
                 </h2>
                 <br />
-                <h2 id="introb" style="max-width:35vw; display:none" class="text">
+                <h2 id="introb" style="max-width:40vw; display:none" class="text">
                     
                 </h2>
                 <br />
@@ -39,9 +39,9 @@
             </div>
             <div class="column3">
 
-                <h2 id="drag_inst" style="display:none; max-width:30vw">The agent tries to convince the participant about next item</h2>
+                <h2 id="drag_inst" style="display:none; max-width:40vw">The agent tries to convince the participant about next item</h2>
                 <br />
-                <h2 id="intro2" class="text" style="display:none; max-width:35vw; ">
+                <h2 id="intro2" class="text" style="display:none; max-width:40vw; ">
                 </h2>
                 <br />
                 <button id="start" class="button" style="display:none" v-on:click="startInitialRanking">See the items</button>
@@ -62,7 +62,7 @@
                 <button id="submit" class="button" style="display:none" v-on:click="submitRankings">Submit Final Rankings</button>
 
             </div>
-            <div id="user_list" class="column2" style="background-color:#aaa; display:none;">
+            <div id="user_list" class="column2" style=" display:none;">
                 <h3 class="text">Your Rankings</h3>
 
                 <draggable id="items_list"
@@ -114,49 +114,49 @@
     const clock = new THREE.Clock();
     let activeAction, lastAction;
     let mixer;
+    var condition = 1;
+    const script1 = ["a map of New Mexico. Map will be useful to start a fire with. It can be used as toilet paper. You can also use it as a shade for your head to avoid exposure to direct sunlight.",
+        "the book - Edible Animals of the Desert. If you are stuck beyond day 3, you will need to find food and water. Additionally, you will be able to use the pages of book as toilet paper and as a fire starter. ",
+     "a pair of sunglasses. The intense sunlight of desert may cause Photokeratitis due to sun reflection from sand. It is like having sunburned eyes. This will be prevented by wearing a pair of sunglasses.",
+        "a first aid kit. You may use gauze as rope or for protecting your exposed body parts against dehydration and sunlight. In case of injury, it will be useful to have a first aid kit.",
+        "a cosmetic mirror. Cosmetic mirror is most powerful tool to communicate your presence because reflected sunbeam can be seen from a far-off distance. It gives you higher chance of being spotted within 24 hours. Speedy discovery is crucial to survival of your group.",
+        "a flashlight of four battery size. Flashlight is the only quick reliable device for signaling your presence at night. It will help you see at night and stay safer. Additionally, if you remove the batteries, it can be used as a container for digging or collecting water. The reflector and lens can be used as auxiliary signaling device and as a fire starter.",
+        "a magnetic compass. The reflective surface of the magnetic compass can be used as an auxiliary signaling device. In later days, if no help arrives, it will help you navigate.",
+        "a 2 quart flask 180-proof vodka. Since 180-proof vodka is flammable, you can use it to start a fire. Moreover, the empty bottle may be used to collect water. Even if you do not drink vodka to avoid dehydration, it can be used otherwise. ",
+        "a plastic raincoat. Ironically, Coats are one of the best ways to avoid hot dry air from circulating next to your skin. Hence, preventing perspiration. This will help you prevent dehydration through moisture loss. Therefore, increasing your survival time. Plastic raincoat can also be used to gather dew at night for drinking purposes. You will also be able create a solar still using raincoat to extract some water from ground."];
 
-    const script1 = ["Map will be useful to start a fire with. It can be used as toilet paper. You can also use it as a shade for your head to avoid exposure to direct sunlight.",
-        "If you are stuck beyond day 3, you will need to find food and water. Additionally, you will be able to use the pages of book as toilet paper and as a fire starter. ",
-     "The intense sunlight of desert may cause Photokeratitis due to sun reflection from sand. It is like having sunburned eyes [1]. This will be prevented by wearing a pair of sunglasses.",
-        "You may use gauze as rope or for protecting your exposed body parts against dehydration and sunlight. In case of injury, it will be a useful item to have a first aid kit.",
-        "Cosmetic mirror is most powerful tool to communicate your presence because reflected sunbeam can be seen from a far-off distance. It gives you higher chance of being spotted within 24 hours. Speedy discovery is crucial to your group’s survival.",
-        "Flashlight is the only quick reliable device for signaling your presence at night. It will help you see at night and stay safer. Additionally, if you remove the batteries, it can be used as a container for digging or collecting water. The reflector and lens can be used as auxiliary signaling device and as a fire starter.",
-        "The reflective surface of the magnetic compass can be used as an auxiliary signaling device. In later days, if no help arrives, it will help you navigate.",
-        "Since 180-proof vodka is flammable, you can use it to start a fire, Moreover, the empty bottle may be used to collect water. Even if you do not drink vodka to avoid dehydration, it can be used otherwise. ",
-        "Ironically, Coats are one of the best ways to avoid hot dry air from circulating next to your skin, hence preventing perspiration. This will help you prevent dehydration through moisture loss. Therefore, increasing your survival time. Plastic raincoat can also be used to gather dew at night for drinking purposes. You will also be able create a solar still using raincoat to extract some water from ground."];
-
-    const script2 = ["Map is not as useful as one would think because it will encourage you and others to try and walk out. It is potentially dangerous to leave the site of crash since rescue party will most likely arrive there.",
-        "This book will be of little use since the main problem you confront for first few days is dehydration, not starvation. Also, you should be thinking about conserving energy and hunting is counterproductive.",
-        "Sunglasses will prevent sunburned eyes, but its usefulness is limited to daytime. Additionally, it is replaceable by any piece of clothing that you are wearing to keep your eyes safe from exposure to sunlight.",
-        "Since no one was injured in the plane, a first aid kit is not as important as one would think. Because of low humidity of the desert, it is considered one of the least infectious places in the world. Also, because the blood thickens due to dehydration, there is little danger of bleeding. However, gauze can be used for secondary purposes.",
-        "You may use cosmetic mirror to communicate your presence during daylight. Apart from that it has no secondary use for your survival.",
-        "You will use flashlight to communicate your presence at night. However, its range will be limited, and it may attract dangerous animals wandering in the dark.",
-        "Aside from the possibility of using the reflective surface of the magnetic compass as an auxiliary signaling device, it is of little use. It will tempt you to walk in search of food or water which is not good.",
-        "Drinking alcohol causes quicker dehydration because your body will lose enormous amounts of water trying to digest alcohol. 2 to 3 ounces of water is required to digest one ounce of alcohol approximately. Even though it may have secondary uses such as starting a fire and using empty bottle as container, drinking vodka will be lethal in this situation.",
-        "By digging a hole and placing the raincoat over it, a solar still can be constructed to obtain water. However, this will give you very little water compared to the effort you put in digging the hole. Hence, it will not significantly increase your chances of survival."
-
-    ];
-    const script3 = ["Map can be used to start a fire, as a toilet paper I think and to cover head.",
-        "The book may be used to search for food, to start a fire and and and like a toilet paper.",
-        "People may avoid sunlight by wearing sunglasses. So that eyes don’t burn",
-        "People may use gauze as rope, as (long pause) sun protection or may be in case they get hurt.",
-        "People may use cosmetic mirror to reflect sunlight to far-off distance to seek help. Umm. That’s it.",
-        "People may use flashlight to seek help at night and see in the dark.  What else? What else? (pause) Oh, it may be used as a container, signaling device and fire starter.",
-        "The shiny surface of the magnetic compass may be used to signal for help. Later if no help comes, I don’t know… people can navigate with it.",
-        "Vodka can catch fire. Umm. People can put water in empty bottle. Hmm. That’s all.",
-        "You know coats stop dry air to prevent sweating. That means less dehydration. What else? Umm umm. People can gather dew at night to drink and they can suck water out of ground by making solar still with the coat."
+    const script2 = ["a map of New Mexico. Map is not as useful as one would think because it will encourage you and others to try and walk out. It is potentially dangerous to leave the site of crash since rescue party will most likely arrive there.",
+        "the book - Edible Animals of the Desert. This book will be of little use since the main problem you confront for first few days is dehydration, not starvation. Also, you should be thinking about conserving energy and hunting is counterproductive.",
+        "a pair of sunglasses. Sunglasses will prevent sunburned eyes, but its usefulness is limited to daytime. Additionally, it is replaceable by any piece of clothing that you are wearing to keep your eyes safe from exposure to sunlight.",
+        "a first aid kit. Since no one was injured in the plane, a first aid kit is not as important as one would think. Because of low humidity of the desert, it is considered one of the least infectious places in the world. Also, because the blood thickens due to dehydration, there is little danger of bleeding. However, gauze can be used for secondary purposes.",
+        "a cosmetic mirror. You may use cosmetic mirror to communicate your presence during daylight. Apart from that it has no secondary use for your survival.",
+        "a flashlight of four battery size. You will use flashlight to communicate your presence at night. However, its range will be limited, and it may attract dangerous animals wandering in the dark.",
+        "a magnetic compass. Aside from the possibility of using the reflective surface of the magnetic compass as an auxiliary signaling device, it is of little use. It will tempt you to walk in search of food or water which is not good.",
+        "a 2 quart flask 180-proof vodka. Drinking alcohol causes quicker dehydration because your body will lose enormous amounts of water trying to digest alcohol. 2 to 3 ounces of water is required to digest one ounce of alcohol approximately. Even though it may have secondary uses such as starting a fire and using empty bottle as container, drinking vodka will be lethal in this situation.",
+        "a plastic raincoat. By digging a hole and placing the raincoat over it, a solar still can be constructed to obtain water. However, this will give you very little water compared to the effort you put in digging the hole. Hence, it will not significantly increase your chances of survival."
 
     ];
+    const script3 = ["a map of New Mexico. Map can be used to start a fire, ummm..... as a toilet paper I think and to cover head.",
+        "the book - Edible Animals of the Desert. The book may be used to search for food, to start a fire and and and like..... a toilet paper.",
+        "a pair of sunglasses. People may avoid ummm sunlight by wearing sunglasses..... I guess. So that eyes don't burn",
+        "a first aid kit. People may use gauze as rope, I suppose and and as ..... sun protection or may be in case they get hurt.",
+        "a cosmetic mirror. People may use cosmetic mirror to reflect sunlight to far-off distance to seek help. Ummm..... That's it.",
+        "a flashlight of four battery size. People may use flashlight to seek help at night and see in the dark.  What else? What else? .... Oh, it may be used as a container, signaling device and fire starter.",
+        "a magnetic compass. The shiny surface of the magnetic compass may be used to signal for help. Later if no help comes, hmmm I don't know... people can navigate with it.",
+        "a 2 quart flask 180-proof vodka. Vodka can catch fire. Ummm. People can put water in empty bottle. Yeah. That's all.",
+        "a plastic raincoat. You know coats stop dry air to prevent sweating. That means less dehydration. Ummm..... Like people can gather dew at night to drink and they can suck water out of ground by making solar still with the coat."
 
-    const script4 = ["Map is not as good as people think because it may make people want to leave that place. Yeah!",
-        "The book is not useful because people should save their energy by not hunting and people do not even need food really.",
-        "People may avoid sunlight by wearing glasses but only like during the day. No use at night.",
-        "No body is hurt so no need of first aid thing. There is little chance of getting hurt in the desert. People can use gauze for other reasons, (Long pause) I suppose.",
-        "Cosmetic mirror can reflect sunlight but like only in the daylight. No other use, I guess.",
-        "People may use flashlight to seek help at night, uhhh but it may bring dangerous animals out too, I think.",
-        "Apart from using the shiny surface of the magnetic compass to signal, (long pause) no use. People will go to look for food and water with that compass. Isn’t a good idea, I say.",
-        "I mean drinking alcohol feels good, but it will make people lose water in their body. Not good. (Pause) I guess people could use it for starting a fire or storing water.",
-        "People can gather dew at night to drink and they can suck water out of ground by making solar still. But (pause) that’s like too much work for so little water. Not that good for staying alive."
+    ];
+
+    const script4 = ["a map of New Mexico. Map is not as good as people think, ummm..... because I think it may make people want to leave that place.",
+        "the book - Edible Animals of the Desert. The book is not useful because people should save their energy by not hunting and and like..... people do not even need food really.",
+        "a pair of sunglasses. People may avoid ummm sunlight by wearing sunglasses..... but only during the day I guess. No use at night.",
+        "a first aid kit. No body is hurt so no need of first aid thing. There is little chance of getting hurt in the desert. And and ..... people can use gauze for other reasons, I suppose.",
+        "a cosmetic mirror. Cosmetic mirror can reflect sunlight but only in the daylight.... Ummm that's it. No other use.",
+        "a flashlight of four battery size. People may use flashlight to seek help at night, what else what else? but oh, it may bring dangerous animals out too.",
+        "a magnetic compass. Apart from using the shiny surface of the magnetic compass to signal, no use. Hmmm. I don't know..... People will go to look for food and water with that compass. That isn’t a good idea",
+        "a 2 quart flask 180-proof vodka. Ummm, I mean drinking alcohol feels good, but it will make people lose water in their body. Not good. I guess people could use it for starting a fire or storing water. Yeah. That's all.",
+        "a plastic raincoat. People can gather dew at night to drink and ummm, they can suck water out of ground by making solar still. But..... that’s like too much work for so little water. Not that good for staying alive."
     ];
 
     //var PulseLoader = VueSpinner.PulseLoader
@@ -231,7 +231,7 @@
         var files2 = ['https://dl.dropbox.com/s/e679nywcj7al2vn/elizabeth_talking.fbx', 'https://dl.dropbox.com/s/rgbldp983aez9ry/kate_talking.fbx', 'https://dl.dropbox.com/s/d9x6yomz6cmmenx/lewis_talking.fbx', 'https://dl.dropbox.com/s/iw2methdom8s2yb/nathan_talking.fbx'];
         switch (Number(store.getters.getGender)) {
             case 1:
-                selectedVoice = 1;
+                //selectedVoice = 1;
                 value1 = 0;
                 value2 = 1;
                 index = Math.random() < 0.5 ? value1 : value2;
@@ -243,7 +243,7 @@
                 break;
             case 3:
             case 4:
-                selectedVoice = 1;
+                //selectedVoice = 1;
                 value1 = 0;
                 value2 = 3;
                 break;
@@ -257,15 +257,19 @@
         switch (index) {
             case 0:
                 agentName = "Elizabeth";
+                selectedVoice = 1;
                 break;
             case 1:
                 agentName = "Kate";
+                selectedVoice = 1;
                 break;
             case 2:
                 agentName = "Lewis";
+                selectedVoice = 0;
                 break;
             case 3:
                 agentName = "Nathan";
+                selectedVoice = 0;
                 break;
         }
         var fileLoad = files[index];
@@ -429,13 +433,13 @@
                     },
                     {
                         id: 2,
-                        name: "The book- Edible Animals of the Desert",
+                        name: "the book- Edible Animals of the Desert",
                         avatar: "https://p0.pxfuel.com/preview/962/798/408/book-book-pages-novel-paperback.jpg"
                     },
                     {
                         id: 3,
-                        name: "duct tape",
-                        avatar: "https://upload.wikimedia.org/wikipedia/commons/2/2b/Duct_tape_2016.jpg"
+                        name: "a pair of sunglasses per person",
+                        avatar: "https://columbia.scene7.com/is/image/ColumbiaSportswear2/C110SP_022_f?$x1_grid$&v=1624997482"
                     },
                     {
                         id: 4,
@@ -463,13 +467,13 @@
                     },
                     {
                         id: 8,
-                        name: "vodka 2 quart flask",
+                        name: "vodka 180-proof 2 quart flask per person",
                         avatar:
                             "https://p1.pxfuel.com/preview/555/831/622/vodka-ruska-alcohol-drunkenness.jpg"
                     },
                     {
                         id: 9,
-                        name: "plastic raincoat",
+                        name: "a plastic raincoat per person",
                         avatar:
                             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9pownnssrFIBSPhzUKilGR_2SEfuuy53q-A&usqp=CAU"
                     }
@@ -482,13 +486,13 @@
                         },
                     {
                         id: 2,
-                        name: "The book- Edible Animals of the Desert",
+                        name: "the book- Edible Animals of the Desert",
                         avatar: "https://p0.pxfuel.com/preview/962/798/408/book-book-pages-novel-paperback.jpg",
                         },
                     {
                         id: 3,
-                        name: "A pair of sunglasses per person",
-                        avatar: "https://upload.wikimedia.org/wikipedia/commons/2/2b/Duct_tape_2016.jpg",
+                        name: "a pair of sunglasses per person",
+                        avatar: "https://columbia.scene7.com/is/image/ColumbiaSportswear2/C110SP_022_f?$x1_grid$&v=1624997482",
                        },
                     {
                         id: 4,
@@ -512,12 +516,12 @@
                         },
                     {
                         id: 8,
-                        name: "180-proof vodka 2 quart flask",
+                        name: "vodka 180-proof 2 quart flask per person",
                         avatar: "https://p1.pxfuel.com/preview/555/831/622/vodka-ruska-alcohol-drunkenness.jpg",
                        },
                     {
                         id: 9,
-                        name: "plastic raincoat",
+                        name: "a plastic raincoat per person",
                         avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9pownnssrFIBSPhzUKilGR_2SEfuuy53q-A&usqp=CAU",
                         }
                 ]
@@ -574,19 +578,20 @@
                 var tempStr;
                 var avatarIndex = counter;
                 //alert(this.avatarList[counter].id);
-                var userIndex = this.users.findIndex(x => x.id = this.avatarList[counter].id); // gotta fix this
-                alert(avatarIndex + "   " + userIndex);
-                if (avatarIndex < userIndex) {
+                var finding = this.avatarList[counter].id;
+                var userIndex = this.users.findIndex(x => x.id === finding); // gotta fix this
+                //alert(avatarIndex + "   " + userIndex);
+                if (userIndex > avatarIndex) {
                     if (condition == 1) {// Expert
                         tempStr = script1[this.avatarList[counter].id - 1];
                     }
                     else {
-                        tempStr = script2[this.avatarList[counter].id - 1];
+                        tempStr = script3[this.avatarList[counter].id - 1];
                     }
                 }
                 else {
                     if (condition == 1) {// Expert
-                        tempStr = script3[this.avatarList[counter].id - 1];
+                        tempStr = script2[this.avatarList[counter].id - 1];
                     }
                     else {
                         tempStr = script4[this.avatarList[counter].id - 1];
@@ -670,24 +675,28 @@
                 setAction(actions[1]);
                 var inst = document.getElementById("drag_inst");
                 inst.style.display = "inline-block";
-                var say = "Hi. I am " + agentName + ". Here is my list. I'll discuss my rankings with you item by item. Let's start with the first item on the list. " + this.returnText(1);
-                inst.textContent = say ;
+                var say = "Hi. I am " + agentName + ". Here is my list. I'll discuss my rankings with you item by item...";
+                var say2 = "Let's start with the first item on the list. " + this.returnText(condition);
+                inst.textContent = say +say2 ;
                 //counter += 1;
                 
                 
-                setTimeout(function () {
-                    const greetingSpeech = new window.SpeechSynthesisUtterance();
-                    greetingSpeech.text = say ;
-                    greet(greetingSpeech);
-                    greetingSpeech.addEventListener('end', function () {
-                        var btn = document.getElementById("drag");
-                        btn.style.display = "inline-block";
-                        btn = document.getElementById("noDrag");
-                        btn.style.display = "inline-block";
-                        setAction(actions[0]);
-                    });
+               // setTimeout(function () {
+                const greetingSpeech = new window.SpeechSynthesisUtterance();
+                greetingSpeech.text = say+say2 ;
+                greet(greetingSpeech);
+                greetingSpeech.addEventListener('end', function () {
                     
-                }, 100);
+                    var btn = document.getElementById("drag");
+                    synth.cancel();
+                    btn.style.display = "inline-block";
+                    btn = document.getElementById("noDrag");
+                    btn.style.display = "inline-block";
+                    setAction(actions[0]);
+                   
+                });
+                    
+              //  }, 100);
                 
                 
                 
@@ -744,93 +753,97 @@
                             this.enable();
                         }
                         
-                        setTimeout(function () {
+                        //setTimeout(function () {
                             
                             
-                            const greetingSpeech = new window.SpeechSynthesisUtterance();
-                            greetingSpeech.text = "Glad we agree on some items on our list";
-                            greet(greetingSpeech);
-                            //alert(counter);
+                        const greetingSpeech = new window.SpeechSynthesisUtterance();
+                        greetingSpeech.text = "Glad we agree on some items on our list";
+                        inst.textContent = "Glad we agree on some items on our list";
+                        greet(greetingSpeech);
+                        //alert(counter);
+                        if (counter < 9) {
+                            var say = "Next I have " +  this.returnText(condition);
+                        }
+                        greetingSpeech.addEventListener('end', function () {
                             
-                            greetingSpeech.addEventListener('end', function () {
-                                
-                                if (counter == 9) {
-                                    //alert("I am here " + counter);
-                                    setAction(actions[0]);
+                            if (counter == 9) {
+                                //alert("I am here " + counter);
+                                setAction(actions[0]);
 
-                                    setTimeout(function () {
-                                        inst = document.getElementById("drag_inst");
-                                        inst.textContent = "Please finalize and submit your rankings before concluding the study";
-                                        btn = document.getElementById("submit");
-                                        btn.style.display = "inline-block";
+                                //  setTimeout(function () {
+                                inst = document.getElementById("drag_inst");
+                                inst.textContent = "Please finalize and submit your rankings before concluding the study";
+                                btn = document.getElementById("submit");
+                                btn.style.display = "inline-block";
 
-                                    }, 100);
-                                }
+                                //  }, 100);
+                            }
 
-                                else if (counter < 9) {
-                                    setAction(actions[1]);
-                                    
-                                    setTimeout(function () {
-                                        const greetingSpeech = new window.SpeechSynthesisUtterance();
-                                        var say = "Let's move on to the next item on the list. " + this.returnText(1);
-                                        //inst.textContent = "The agent tries to convince the participant about item " + JSON.stringify(counter + 1);
-                                        inst.textContent = say;
-                                        greetingSpeech.text = say;
-                                        greet(greetingSpeech);
-                                        greetingSpeech.addEventListener('end', function () {
-                                            btn = document.getElementById("drag");
-                                            btn.style.display = "inline-block";
-                                            btn = document.getElementById("noDrag");
-                                            btn.style.display = "inline-block";
-                                            setAction(actions[0]);
-                                        });
-
-                                    }, 100);
-
-                                }
-                                /*else {
-                                    //alert("I am here in the end " + counter);
-                                    this.enable();
-                                    setAction(actions[0]);
-                                    inst = document.getElementById("drag_inst");
-                                    inst.textContent = "Please finalize and submit your rankings before concluding the study";
-                                    btn = document.getElementById("submit");
-                                    btn.style.display = "inline-block";
-                                }*/
-                            });
-                       
-                        }, 100);
-                    }
-                    else if ((counter - temp) == 0) {
-                            if (counter < 9) {
+                            else if (counter < 9) {
                                 setAction(actions[1]);
-                                setTimeout(function () {
-                                    const greetingSpeech = new window.SpeechSynthesisUtterance();
-                                    var say = "Let's move on to the next item on the list. " + this.returnText(1);
-                                    //inst.textContent = "The agent tries to convince the participant about item " + JSON.stringify(counter + 1);
-                                    //greetingSpeech.text = "I'll try to convince you about item " + JSON.stringify(counter + 1);
-                                    inst.textContent = say;
-                                    greetingSpeech.text = say;
-                                    greet(greetingSpeech);
-                                    greetingSpeech.addEventListener('end', function () {
-                                        btn = document.getElementById("drag");
-                                        btn.style.display = "inline-block";
-                                        btn = document.getElementById("noDrag");
-                                        btn.style.display = "inline-block";
-                                        setAction(actions[0]);
-                                    });
+             
+                                // setTimeout(function () {
+                                const greetingSpeech2 = new window.SpeechSynthesisUtterance();
+                                //var say = "Let's move on to the next item on the list. " + this.returnText(condition);
+                                //inst.textContent = "The agent tries to convince the participant about item " + JSON.stringify(counter + 1);
+                                inst.textContent = say;
+                                greetingSpeech2.text = say;
+                                greet(greetingSpeech2);
+                                greetingSpeech2.addEventListener('end', function () {
+                                    btn = document.getElementById("drag");
+                                    btn.style.display = "inline-block";
+                                    btn = document.getElementById("noDrag");
+                                    btn.style.display = "inline-block";
+                                    setAction(actions[0]);
+                                });
+                                    
 
-                                }, 100);
+                                //   }, 100);
 
                             }
-                            else {
+                            /*else {
+                                //alert("I am here in the end " + counter);
                                 this.enable();
                                 setAction(actions[0]);
                                 inst = document.getElementById("drag_inst");
                                 inst.textContent = "Please finalize and submit your rankings before concluding the study";
                                 btn = document.getElementById("submit");
                                 btn.style.display = "inline-block";
-                            }
+                            }*/
+                        });
+                       
+                        //}, 100);
+                    }
+                    else if ((counter - temp) == 0) {
+                        if (counter < 9) {
+                            setAction(actions[1]);
+                            //setTimeout(function () {
+                            const greetingSpeech = new window.SpeechSynthesisUtterance();
+                            say = "Next I have " + this.returnText(condition);
+                            //inst.textContent = "The agent tries to convince the participant about item " + JSON.stringify(counter + 1);
+                            //greetingSpeech.text = "I'll try to convince you about item " + JSON.stringify(counter + 1);
+                            inst.textContent = say;
+                            greetingSpeech.text = say;
+                            greet(greetingSpeech);
+                            greetingSpeech.addEventListener('end', function () {
+                                btn = document.getElementById("drag");
+                                btn.style.display = "inline-block";
+                                btn = document.getElementById("noDrag");
+                                btn.style.display = "inline-block";
+                                setAction(actions[0]);
+                            });
+
+                            //}, 100);
+
+                        }
+                        else {
+                            this.enable();
+                            setAction(actions[0]);
+                            inst = document.getElementById("drag_inst");
+                            inst.textContent = "Please finalize and submit your rankings before concluding the study";
+                            btn = document.getElementById("submit");
+                            btn.style.display = "inline-block";
+                        }
                            
                     }
                     
@@ -855,8 +868,8 @@
 
 <style>
     body {
-        margin-right: 15vw;
-        margin-left: 15vw;
+        margin-right: 5vw;
+        margin-left: 5vw;
         max-width: 100%;
         max-height: 100%;
         padding-right: 10px;
@@ -875,7 +888,7 @@
 
     .column2 {
         float: left;
-        width: 70vw;
+        width: 90vw;
         height: 12.5vw;
         padding: 1px;
         align-content: center;
@@ -887,7 +900,7 @@
 
     .column {
         float: left;
-        width: 70vw;
+        width: 90vw;
         height: 12.5vw;
         padding: 1px;
         align-content: center;
@@ -906,12 +919,12 @@
         text-align: center;
         position: absolute;
         top: 14vw;
-        right: 10vw;
+        right: 5vw;
     }
 
     .column3 {
         float: left;
-        width: 70vw;
+        width: 90vw;
         height: 12.5vw;
         padding: 1px;
         align-content: center;
@@ -957,9 +970,11 @@
         width: 7vw;
         height: 9.5vw;
         float: left;
-        padding: 1px;
+        position: relative;
+        left: 5vw;
+        padding: 0.5vw;
         margin-left: 5px;
-        margin-bottom: 5px;
+        background-color: #aaa;
         border: solid;
         border-width: 2px;
         align-content: center;
