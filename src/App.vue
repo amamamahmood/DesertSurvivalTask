@@ -3,7 +3,7 @@
         <div class="row">
 
             <div id="avatarRating" class="column" style=" display:none">
-                <h3>Avatar's Rankings</h3>
+                <h3>Agent's Rankings</h3>
                 <ol>
                     <li class="float-child" style="list-style-position: inside" v-for="item in avatarList" :key="item.id">
                         <div class="items">
@@ -16,16 +16,16 @@
 
             </div>
             <div class="column3">
-                <h1 id="heading"> Desert Survival Task </h1>
-                <h2 id="intro" style="max-width:40vw; display:none" class="text">
+                <h1 id="heading"style= "display:none"> Desert Survival Task </h1>
+                <h3 id="intro" style="max-width:70vw; display:none" class="text">
                     Please fill the demographics survey before proceeding.
-                </h2>
+                </h3>
                 <br />
-                <h2 id="introb" style="max-width:40vw; display:none" class="text">
+                <h2 id="introb" style="max-width:50vw; display:none" class="text">
                     
                 </h2>
                 <br />
-                <div id="surveyElement" style="text-align:left">
+                <div id="surveyElement" style="text-align:left; max-height:100vh">
                     <SurveyComponent />
                 </div>
                 <br />
@@ -33,15 +33,15 @@
 
 
             </div>
-            <div id="avatar" class="column3">
+            <div id="avatar" class="column4">
                 
                 <br />
             </div>
             <div class="column3">
 
-                <h2 id="drag_inst" style="display:none; max-width:40vw">The agent tries to convince the participant about next item</h2>
+                <h2 id="drag_inst" style="display:none; max-width:50vw">The agent tries to convince the participant about next item</h2>
                 <br />
-                <h2 id="intro2" class="text" style="display:none; max-width:40vw; ">
+                <h2 id="intro2" class="text" style="display:none; max-width:50vw; ">
                 </h2>
                 <br />
                 <button id="start" class="button" style="display:none" v-on:click="startInitialRanking">See the items</button>
@@ -119,7 +119,7 @@
         "the book - Edible Animals of the Desert. If you are stuck beyond day 3, you will need to find food and water. Additionally, you will be able to use the pages of book as toilet paper and as a fire starter. ",
      "a pair of sunglasses. The intense sunlight of desert may cause Photokeratitis due to sun reflection from sand. It is like having sunburned eyes. This will be prevented by wearing a pair of sunglasses.",
         "a first aid kit. You may use gauze as rope or for protecting your exposed body parts against dehydration and sunlight. In case of injury, it will be useful to have a first aid kit.",
-        "a cosmetic mirror. Cosmetic mirror is most powerful tool to communicate your presence because reflected sunbeam can be seen from a far-off distance. It gives you higher chance of being spotted within 24 hours. Speedy discovery is crucial to survival of your group.",
+        "a cosmetic mirror. Cosmetic mirror is one of the most powerful tools to communicate your presence because reflected sunbeam can be seen from a far-off distance. It gives you higher chance of being spotted within 24 hours. Speedy discovery is crucial to survival of your group.",
         "a flashlight of four battery size. Flashlight is the only quick reliable device for signaling your presence at night. It will help you see at night and stay safer. Additionally, if you remove the batteries, it can be used as a container for digging or collecting water. The reflector and lens can be used as auxiliary signaling device and as a fire starter.",
         "a magnetic compass. The reflective surface of the magnetic compass can be used as an auxiliary signaling device. In later days, if no help arrives, it will help you navigate.",
         "a 2 quart flask 180-proof vodka. Since 180-proof vodka is flammable, you can use it to start a fire. Moreover, the empty bottle may be used to collect water. Even if you do not drink vodka to avoid dehydration, it can be used otherwise. ",
@@ -889,7 +889,7 @@
     .column2 {
         float: left;
         width: 90vw;
-        height: 12.5vw;
+        height: 14vw;
         padding: 1px;
         align-content: center;
         align-items: center;
@@ -901,7 +901,7 @@
     .column {
         float: left;
         width: 90vw;
-        height: 12.5vw;
+        height: 14vw;
         padding: 1px;
         align-content: center;
         align-items: center;
@@ -919,13 +919,23 @@
         text-align: center;
         position: absolute;
         top: 14vw;
-        right: 5vw;
+        right: 2vw;
+        z-index: -1;
     }
 
     .column3 {
         float: left;
         width: 90vw;
         height: 12.5vw;
+        padding: 1px;
+        align-content: center;
+        align-items: center;
+        text-align: center;
+    }
+    .column4 {
+        float: left;
+        width: 90vw;
+        height: 8vw;
         padding: 1px;
         align-content: center;
         align-items: center;
@@ -943,7 +953,7 @@
         align-content: center;
         text-align: center;
         font-family: Arial;
-        font-size: 40px;
+        font-size: 20px;
         max-width: 80%;
     }
 
@@ -968,7 +978,7 @@
 
     .float-child {
         width: 7vw;
-        height: 9.5vw;
+        height: 10.5vw;
         float: left;
         position: relative;
         left: 5vw;

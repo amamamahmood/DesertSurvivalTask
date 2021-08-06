@@ -37,7 +37,8 @@
                 sect.textContent = "You will be presented with a task.";
                 sect = document.getElementById("surveyElement");
                 sect.style.display = "none";
-                
+                sect = document.getElementById("heading");
+                sect.style.display = "block";
                 var btn = document.getElementById("home");
                 btn.style.display = "inline-block";
                 //btn.disabled = true;
