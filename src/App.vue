@@ -931,7 +931,7 @@
     .column3 {
         float: left;
         width: 90vw;
-        height: 12.5vw;
+        height: 14vw;
         padding: 1px;
         align-content: center;
         align-items: center;
