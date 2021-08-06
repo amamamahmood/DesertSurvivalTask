@@ -911,8 +911,8 @@
     }
     .columnAvatar {
         float: right;
-        width: 20vw;
-        height: 20vw;
+        width: 25vw;
+        height: 25vw;
         padding: 1px;
         align-content: center;
         align-items: center;
