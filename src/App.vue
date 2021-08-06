@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div id="app" class="unselectable">
         <div class="row">
 
             <div id="avatarRating" class="column" style=" display:none">
@@ -155,7 +155,7 @@
         "a flashlight of four battery size. People may use flashlight to seek help at night, what else what else? but oh, it may bring dangerous animals out too.",
         "a magnetic compass. Apart from using the shiny surface of the magnetic compass to signal, no use. Hmmm. I don't know..... People will go to look for food and water with that compass. That isn’t a good idea",
         "a 2 quart flask 180-proof vodka. Ummm, I mean drinking alcohol feels good, but it will make people lose water in their body. Not good. I guess people could use it for starting a fire or storing water. Yeah. That's all.",
-        "a plastic raincoat. People can gather dew at night to drink and ummm, they can suck water out of ground by making solar still. But..... that’s like too much work for so little water. Not that good for staying alive."
+        "a plastic raincoat. People can gather dew at night to drink and ummm, they can suck water out of ground by making solar still. But..... that's like too much work for so little water. Not that good for staying alive."
     ];
 
     //var PulseLoader = VueSpinner.PulseLoader
@@ -271,6 +271,7 @@
                 selectedVoice = 0;
                 break;
         }
+        condition = Math.floor(Math.random() * (2 - 1 + 1)) + 1;
         var fileLoad = files[index];
         var fileLoad2 = files2[index];
         const loader = new FBXLoader();
@@ -676,23 +677,28 @@
                 inst.style.display = "inline-block";
                 var say = "Hi. I am " + agentName + ". Here is my list. I'll discuss my rankings with you item by item...";
                 var say2 = "Let's start with the first item on the list. " + this.returnText(condition);
-                inst.textContent = say +say2 ;
+                inst.textContent = say;
+
                 //counter += 1;
                 
                 
                // setTimeout(function () {
                 const greetingSpeech = new window.SpeechSynthesisUtterance();
-                greetingSpeech.text = say+say2 ;
+                greetingSpeech.text = say ;
                 greet(greetingSpeech);
                 greetingSpeech.addEventListener('end', function () {
-                    
+                    inst.textContent = say2;
+                    const greetingSpeech2 = new window.SpeechSynthesisUtterance();
+                    greetingSpeech2.text = say2;
+                    greet(greetingSpeech2);
+                    greetingSpeech2.addEventListener('end', function () {
                     var btn = document.getElementById("drag");
                     synth.cancel();
                     btn.style.display = "inline-block";
                     btn = document.getElementById("noDrag");
                     btn.style.display = "inline-block";
                     setAction(actions[0]);
-                   
+                    });
                 });
                     
               //  }, 100);
@@ -989,6 +995,13 @@
         align-content: center;
         align-items: center;
         text-align: center;
+    }
+    .unselectable {
+        -webkit-user-select: none;
+        -webkit-touch-callout: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
     }
 </style>
 
