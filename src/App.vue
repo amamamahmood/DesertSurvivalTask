@@ -932,7 +932,7 @@
     .column3 {
         float: left;
         width: 90vw;
-        height: 20vw;
+        height: 15vw;
         padding: 1px;
         align-content: center;
         align-items: center;
@@ -941,7 +941,7 @@
     .column4 {
         float: left;
         width: 90vw;
-        height: 5vw;
+        height: 10vw;
         padding: 1px;
         align-content: center;
         align-items: center;
