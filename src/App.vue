@@ -31,7 +31,7 @@
 
 
             </div>
-            <div id="avatar" class="column4">
+            <div id="avatar" style="display:none;" class="column4">
             </div>
             <div class="column3">
 
@@ -964,7 +964,7 @@
         text-align: center;
         font-family: Arial;
         font-size: 20px;
-        max-width: 80%;
+        max-width: 100%;
     }
 
 
