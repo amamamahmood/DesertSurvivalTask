@@ -984,7 +984,7 @@
 
     .float-child {
         width: 7vw;
-        height: 11vw;
+        height: 13vw;
         float: left;
         position: relative;
         left: 5vw;
