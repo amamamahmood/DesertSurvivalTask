@@ -145,7 +145,7 @@
         "a first aid kit. No body is hurt so no need of first aid thing. There is little chance of getting hurt in the desert. And and ..... people can use gauze for other reasons, I suppose.",
         "a cosmetic mirror. Cosmetic mirror can reflect sunlight but only in the daylight.... Ummm that's it. No other use.",
         "a flashlight of four battery size. People may use flashlight to seek help at night, what else what else? but oh, it may bring dangerous animals out too.",
-        "a magnetic compass. Apart from using the shiny surface of the magnetic compass to signal, no use. Hmmm. I don't know..... People will go to look for food and water with that compass. That isn’t a good idea",
+        "a magnetic compass. Apart from using the shiny surface of the magnetic compass to signal, no use. Hmmm. I don't know..... People will go to look for food and water with that compass. That isn't a good idea",
         "a 2 quart flask 180-proof vodka. Ummm, I mean drinking alcohol feels good, but it will make people lose water in their body. Not good. I guess people could use it for starting a fire or storing water. Yeah. That's all.",
         "a plastic raincoat. People can gather dew at night to drink and ummm, they can suck water out of ground by making solar still. But..... that's like too much work for so little water. Not that good for staying alive."
     ];
@@ -1011,7 +1011,7 @@
         height: 12.5vw;
         float: left;
         position: relative;
-        left: 5vw;
+        left: 2.5vw;
         padding: 0.1vw;
         margin-left: 5px;
         background-color: #aaa;
