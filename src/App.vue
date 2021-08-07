@@ -36,7 +36,6 @@
             <div class="column3">
 
                 <h2 id="drag_inst" style="display:none; max-width:50vw">The agent tries to convince the participant about next item</h2>
-                <br />
                 <h2 id="intro2" class="text" style="display:none; max-width:50vw; ">
                 </h2>
                 <br />
@@ -46,14 +45,10 @@
                 <button id="drag" class="button" style="display:none" width="100px" v-on:click="makeDraggable">Update your ranking</button>
                 &emsp;&emsp;&emsp;&emsp;
                 <button id="noDrag" class="button" style="display:none" width="100px" v-on:click="skipUpdating">Continue without updating</button>
-                <br />
                 <button id="begin" class="button" style="display:none;" v-on:click="doneInitialRanking">Done Ranking? Continue</button>
-                <br />
 
                 <button id="interact" class="button" style="display:none;" v-on:click="beginInteraction">Start Interaction</button>
-                <br />
                 <button id="done_drag" class="button" style="display:none;" v-on:click="doneDragging">Done Updating? Continue</button>
-                <br />
                 <button id="submit" class="button" style="display:none" v-on:click="submitRankings">Submit Final Rankings</button>
 
             </div>
