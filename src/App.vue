@@ -31,7 +31,7 @@
 
 
             </div>
-            <div id="avatar" style="display:none;" class="column4">
+            <div id="avatar" class="column4">
             </div>
             <div class="column3">
 
@@ -895,25 +895,25 @@
     .column2 {
         float: left;
         width: 90vw;
-        height: 15vw;
+        height: 17vw;
         padding: 1px;
         align-content: center;
         align-items: center;
         text-align: center;
         position: absolute;
-        bottom: 20px;
+        bottom: 2px;
     }
 
     .column {
         float: left;
         width: 90vw;
-        height: 15vw;
+        height: 17vw;
         padding: 1px;
         align-content: center;
         align-items: center;
         text-align: center;
         position: absolute;
-        top: 20px;
+        top: 2px;
     }
     .columnAvatar {
         float: right;
@@ -941,7 +941,7 @@
     .column4 {
         float: left;
         width: 90vw;
-        height: 2vw;
+        height: 5vw;
         padding: 1px;
         align-content: center;
         align-items: center;
@@ -984,7 +984,7 @@
 
     .float-child {
         width: 7vw;
-        height: 13vw;
+        height: 12vw;
         float: left;
         position: relative;
         left: 5vw;
