@@ -380,20 +380,20 @@
     }
     //var doneSpeaking = false;
     var synth = window.speechSynthesis;
-    
-   
+    var voices = synth.getVoices();
+    let voice;
+    if (selectedVoice == 1) {
+        voice = voices.find(voice => voice.name.includes('Zira'));
+
+        if (voice == null) {
+            voice = voices.find(voice => voice.name.includes('Samantha'));
+        }
+    }
     function greet(greetingSpeech) {
         //speechSynthesis.cancel();
-        var voices = synth.getVoices();
-        if (selectedVoice == 1) {
-            var voice = voices.find(voice => voice.name.includes('Zira'));
-
-            if (voice == null) {
-                voice = voices.find(voice => voice.name.includes('Samantha'));
-            }
+        
             greetingSpeech.voice = voice;
             //alert(voice.name);
-        }
         
         //greetingSpeech.voice = voiceList[selectedVoice];
         //doneSpeaking = false;
