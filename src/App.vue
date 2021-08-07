@@ -918,7 +918,7 @@
 
     .column2 {
         float: left;
-        width: 90vw;
+        width: 95vw;
         height: 17vw;
         padding: 1px;
         align-content: center;
@@ -930,7 +930,7 @@
 
     .column {
         float: left;
-        width: 90vw;
+        width: 95vw;
         height: 17vw;
         padding: 1px;
         align-content: center;
@@ -1007,12 +1007,12 @@
     }
 
     .float-child {
-        width: 7vw;
-        height: 13vw;
+        width: 8vw;
+        height: 12.5vw;
         float: left;
         position: relative;
         left: 5vw;
-        padding: 0.2vw;
+        padding: 0.1vw;
         margin-left: 5px;
         background-color: #aaa;
         border: solid;
