@@ -958,6 +958,7 @@
         width: 90vw;
         height: 15vw;
         padding: 1px;
+        margin-left: 2vw;
         align-content: center;
         align-items: center;
         text-align: center;
@@ -967,6 +968,7 @@
         width: 90vw;
         height: 10vw;
         padding: 1px;
+        margin-left: 2vw;
         align-content: center;
         align-items: center;
         text-align: center;
