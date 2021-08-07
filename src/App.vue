@@ -387,6 +387,7 @@
         var voices = synth.getVoices();
         if (selectedVoice == 1) {
             var voice = voices.find(voice => voice.name.includes('Zira'));
+
             if (voice == null) {
                 voice = voices.find(voice => voice.name.includes('Samantha'));
             }
