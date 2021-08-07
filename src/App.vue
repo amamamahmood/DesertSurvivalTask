@@ -620,7 +620,7 @@
                 var sect = document.getElementById("user_list");
                 sect.style.display = "block";
                 event.target.style.display = "none";
-                var sect = document.getElementById("intro");
+                sect = document.getElementById("intro");
                 sect.style.display = "none";
                 sect = document.getElementById("introb");
                 sect.style.display = "none";
