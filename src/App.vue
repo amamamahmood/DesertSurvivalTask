@@ -39,8 +39,7 @@
                 <h2 id="intro2" class="text" style="display:none; max-width:50vw; ">
                 </h2>
                 <br />
-                <button id="start" class="button" style="display:none" v-on:click="startInitialRanking">See the items</button>
-                <br />
+
                 <button id="home" class="button" style="display:none" v-on:click="atHome">Continue</button>
                 <button id="drag" class="button" style="display:none" width="100px" v-on:click="makeDraggable">Update your ranking</button>
                 &emsp;&emsp;&emsp;&emsp;
@@ -51,7 +50,8 @@
                 <button id="interact" class="button" style="display:none;" v-on:click="beginInteraction">Start Interaction</button>
                 <button id="done_drag" class="button" style="display:none;" v-on:click="doneDragging">Done Updating? Continue</button>
                 <button id="submit" class="button" style="display:none" v-on:click="submitRankings">Submit Final Rankings</button>
-
+                <button id="start" class="button" style="display:none" v-on:click="startInitialRanking">See the items</button>
+                <br />
             </div>
             <div id="user_list" class="column2" style=" display:none;">
                 <h3 class="text">Your Rankings</h3>
@@ -932,7 +932,7 @@
     .column3 {
         float: left;
         width: 90vw;
-        height: 18vw;
+        height: 20vw;
         padding: 1px;
         align-content: center;
         align-items: center;
