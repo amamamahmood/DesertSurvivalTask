@@ -34,12 +34,11 @@
             <div id="avatar" class="column4">
             </div>
             <div class="column3">
-
+                <br />
                 <h2 id="drag_inst" style="display:none; max-width:50vw">The agent tries to convince the participant about next item</h2>
                 <h2 id="intro2" class="text" style="display:none; max-width:50vw; ">
                 </h2>
                 <br />
-
                 <button id="home" class="button" style="display:none" v-on:click="atHome">Continue</button>
                 <button id="drag" class="button" style="display:none" width="100px" v-on:click="makeDraggable">Update your ranking</button>
                 &emsp;&emsp;&emsp;&emsp;
