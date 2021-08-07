@@ -6,7 +6,7 @@
                 <h3>Agent's Rankings</h3>
                 <ol>
                     <li class="float-child" style="list-style-position: inside" v-for="item in avatarList" :key="item.id">
-                        <div class="items">
+                        <div >
                             <img class="image" :src="item.avatar" alt="item.name" width="70" heigth="70" style="width: 6vw;height:6vw;">
                             <br />
                             <p class="text">{{item.name}}</p>
@@ -24,18 +24,14 @@
                 <h2 id="introb" style="max-width:70vw; display:none" class="text">
                     
                 </h2>
-                <br />
                 <div id="surveyElement" style="text-align:left; max-height:100vh">
                     <SurveyComponent />
                 </div>
-                <br />
 
 
 
             </div>
             <div id="avatar" class="column4">
-                
-                <br />
             </div>
             <div class="column3">
 
@@ -629,9 +625,12 @@
                 var inst = document.getElementById("drag_inst");
                 inst.style.display = "inline-block";
                 inst.textContent = "Drag and drop the items to order the list";
+                sect = document.getElementById("avatar");
+                sect.style.display = "none";
                 sect = document.getElementById("begin");
                 sect.style.display = "inline-block";
                 sect.disabled = true;
+                
                 
 
                 setTimeout(function () {
@@ -672,8 +671,8 @@
                 //sect.style.display = "none";
                 //sect = document.getElementById("introb");
                 //sect.style.display = "none";
-                //sect = document.getElementById("intro2");
-                //sect.style.display = "none";
+                sect = document.getElementById("intro2");
+                sect.style.display = "none";
                 var sect = document.getElementById("heading");
                 sect.style.display = "none";
                 sect = document.getElementById("avatarRating");
@@ -912,7 +911,7 @@
     .column {
         float: left;
         width: 90vw;
-        height: 14vw;
+        height: 15vw;
         padding: 1px;
         align-content: center;
         align-items: center;
@@ -937,7 +936,7 @@
     .column3 {
         float: left;
         width: 90vw;
-        height: 14vw;
+        height: 20vw;
         padding: 1px;
         align-content: center;
         align-items: center;
@@ -946,7 +945,7 @@
     .column4 {
         float: left;
         width: 90vw;
-        height: 8vw;
+        height: 2vw;
         padding: 1px;
         align-content: center;
         align-items: center;
