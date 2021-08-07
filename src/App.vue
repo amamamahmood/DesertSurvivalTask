@@ -900,6 +900,7 @@
     body {
         margin-right: 5px;
         margin-left: 5px;
+        padding-left: 5vw;
         max-width: 100%;
         max-height: 100%;
         align-content: center;
@@ -919,7 +920,6 @@
         width: 95vw;
         height: 17vw;
         padding: 1px;
-        margin-left: 2vw;
         align-content: center;
         align-items: center;
         text-align: center;
@@ -931,8 +931,6 @@
         float: left;
         width: 95vw;
         height: 17vw;
-        padding: 1px;
-        margin-left: 2vw;
         align-content: center;
         align-items: center;
         text-align: center;
@@ -943,7 +941,6 @@
         float: right;
         width: 25vw;
         height: 25vw;
-        padding: 1px;
         align-content: center;
         align-items: center;
         text-align: center;
@@ -958,7 +955,6 @@
         width: 90vw;
         height: 15vw;
         padding: 1px;
-        margin-left: 2vw;
         align-content: center;
         align-items: center;
         text-align: center;
@@ -968,7 +964,6 @@
         width: 90vw;
         height: 10vw;
         padding: 1px;
-        margin-left: 2vw;
         align-content: center;
         align-items: center;
         text-align: center;
@@ -1009,13 +1004,10 @@
     }
 
     .float-child {
-        width: 9vw;
+        width: 8.5vw;
         height: 12vw;
         float: left;
         position: relative;
-        left: 2.5vw;
-        padding: 0.1vw;
-        margin-left: 5px;
         background-color: #aaa;
         border: solid;
         border-width: 2px;
