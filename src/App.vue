@@ -380,12 +380,12 @@
     }
     //var doneSpeaking = false;
     var synth = window.speechSynthesis;
-    var voices = synth.getVoices();
-    let voice;
+    
     
     function greet(greetingSpeech) {
         //speechSynthesis.cancel();
-        
+        var voices = synth.getVoices();
+        let voice;
             
             //alert(voice.name);
         if (selectedVoice == 1 && voice == null) {
