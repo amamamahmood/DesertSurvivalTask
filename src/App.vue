@@ -100,6 +100,7 @@
     var avatar_order = [4, 5, 0, 1, 2, 7, 3, 8, 6];
     let camera, scene, renderer, scene2;
     let agentName;
+    let avatarReady = false;
     //var avatarState = "idle";
     let actions;
     const clock = new THREE.Clock();
@@ -299,6 +300,7 @@
                 if (object.animations.length == 3) {
                     //alert("All files loaded");
                     scene.add(object);
+                    avatarReady = true;
                     //let object = scene.getObjectByName("avatar_animation");
                     //alert("Size of object after pushing is" + object.animations.length)
                     actions = [mixer.clipAction(object.animations[0]), mixer.clipAction(object.animations[2])];
@@ -673,7 +675,13 @@
                 sect.style.display = "none";
                 sect = document.getElementById("avatarRating");
                 sect.style.display = "block";
-                setAction(actions[1]);
+                if (avatarReady) {
+                    setAction(actions[1]);
+                }
+                else {
+                    setAction(actions[0]);
+                }
+                
                 var inst = document.getElementById("drag_inst");
                 inst.style.display = "inline-block";
                 var say = "Hi. I am " + agentName + ". Here is my list. I'll discuss my rankings with you item by item...";
@@ -754,7 +762,13 @@
                     }
                     //alert("Difference " + (counter-temp));
                     if ((counter - temp) > 0) {
-                        setAction(actions[1]);
+                        if (avatarReady) {
+                            setAction(actions[1]);
+                        }
+                        else {
+                            setAction(actions[0]);
+                        }
+                        //setAction(actions[1]);
                         if (counter == 9) {
                             this.enable();
                         }
@@ -786,8 +800,13 @@
                             }
 
                             else if (counter < 9) {
-                                setAction(actions[1]);
-             
+                                //setAction(actions[1]);
+                                if (avatarReady) {
+                                    setAction(actions[1]);
+                                }
+                                else {
+                                    setAction(actions[0]);
+                                }
                                 // setTimeout(function () {
                                 const greetingSpeech2 = new window.SpeechSynthesisUtterance();
                                 //var say = "Let's move on to the next item on the list. " + this.returnText(condition);
@@ -822,7 +841,13 @@
                     }
                     else if ((counter - temp) == 0) {
                         if (counter < 9) {
-                            setAction(actions[1]);
+                            if (avatarReady) {
+                                setAction(actions[1]);
+                            }
+                            else {
+                                setAction(actions[0]);
+                            }
+                            //setAction(actions[1]);
                             //setTimeout(function () {
                             const greetingSpeech = new window.SpeechSynthesisUtterance();
                             say = "Next I have " + this.returnText(condition);
