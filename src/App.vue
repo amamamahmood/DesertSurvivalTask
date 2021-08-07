@@ -898,12 +898,10 @@
 
 <style>
     body {
-        margin-right: 5vw;
-        margin-left: 5vw;
+        margin-right: 5px;
+        margin-left: 5px;
         max-width: 100%;
         max-height: 100%;
-        padding-right: 10px;
-        padding-left: 10px;
         align-content: center;
         align-items: center;
         text-align: center;
@@ -921,6 +919,7 @@
         width: 95vw;
         height: 17vw;
         padding: 1px;
+        margin-left: 2vw;
         align-content: center;
         align-items: center;
         text-align: center;
@@ -933,6 +932,7 @@
         width: 95vw;
         height: 17vw;
         padding: 1px;
+        margin-left: 2vw;
         align-content: center;
         align-items: center;
         text-align: center;
@@ -948,7 +948,7 @@
         align-items: center;
         text-align: center;
         position: absolute;
-        top: 10vw;
+        top:15%;
         right: 2vw;
         z-index: -1;
     }
@@ -1007,8 +1007,8 @@
     }
 
     .float-child {
-        width: 8vw;
-        height: 12.5vw;
+        width: 9vw;
+        height: 12vw;
         float: left;
         position: relative;
         left: 2.5vw;
