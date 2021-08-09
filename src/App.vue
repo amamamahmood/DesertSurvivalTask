@@ -3,7 +3,7 @@
         <div class="row">
 
             <div id="avatarRating" class="column" style=" display:none">
-                <h3>Agent's Rankings</h3>
+                <h3 class="smallerText" >Agent's Rankings</h3>
                 <ol>
                     <li class="float-child" style="list-style-position: inside" v-for="item in avatarList" :key="item.id">
                         <div >
@@ -15,11 +15,10 @@
 
             </div>
             <div class="column3">
-                <h1 id="heading" style= "display:none"> Desert Survival Task </h1>
-                <h3 id="intro" style="max-width:70vw; display:none" class="text">
+                <h1 id="heading" class="LargerText" style= "display:none"> Desert Survival Task </h1>
+                <h3 id="intro" class="smallerText" style="max-width:70vw; display:none" >
                     Please fill the demographics survey before proceeding.
                 </h3>
-                <br />
                 <h2 id="introb" style="max-width:70vw; display:none" class="text">
                     
                 </h2>
@@ -34,17 +33,17 @@
             </div>
             <div class="column3">
                 <br />
-                <h2 id="drag_inst" style="display:none; max-width:50vw">The agent tries to convince the participant about next item</h2>
-                <h2 id="intro2" class="text" style="display:none; max-width:50vw; ">
+                <h2 class="smallerText" id="drag_inst" style="display:none; max-width:50vw">The agent tries to convince the participant about next item</h2>
+                <h2 class="smallerText" id="intro2" style="display:none; max-width:50vw; ">
                 </h2>
                 <br />
-                <button id="home" class="button" style="display:none" v-on:click="atHome">Continue</button>
+                
                 <button id="drag" class="button" style="display:none" width="100px" v-on:click="makeDraggable">Update your ranking</button>
                 &emsp;&emsp;&emsp;&emsp;
                 <button id="noDrag" class="button" style="display:none" width="100px" v-on:click="skipUpdating">Continue without updating</button>
                 <br />
                 <button id="begin" class="button" style="display:none;" v-on:click="doneInitialRanking">Done Ranking? Continue</button>
-
+                <button id="home" class="button" style="display:none" v-on:click="atHome">Continue</button>
                 <button id="interact" class="button" style="display:none;" v-on:click="beginInteraction">Start Interaction</button>
                 <button id="done_drag" class="button" style="display:none;" v-on:click="doneDragging">Done Updating? Continue</button>
                 <button id="submit" class="button" style="display:none" v-on:click="submitRankings">Submit Final Rankings</button>
@@ -52,7 +51,7 @@
                 <br />
             </div>
             <div id="user_list" class="column2" style=" display:none;">
-                <h3 class="text">Your Rankings</h3>
+                <h3 class="smallerText">Your Rankings</h3>
 
                 <draggable id="items_list"
                            :list="users"
@@ -994,7 +993,19 @@
         font-family: Arial;
         font-size: 1.8vmin;
     }
+    largerText {
+        align-content: center;
+        text-align: center;
+        font-family: Arial;
+        font-size: 3vmin;
+    }
 
+    smallerText {
+        align-content: center;
+        text-align: center;
+        font-family: Arial;
+        font-size: 2vmin;
+    }
 
     button {
         align-content: center;
