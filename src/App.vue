@@ -7,7 +7,7 @@
                 <ol>
                     <li class="float-child" style="list-style-position: inside" v-for="item in avatarList" :key="item.id">
                         <div >
-                            <img  :src="item.avatar" alt="item.name" width="70" heigth="70" style="width: 6vw;height:6vw;">
+                            <img  :src="item.avatar" alt="item.name" width="70" heigth="70" style="width: 6vw; height: 6vw; display: block; margin: auto;">
                             <p class="text" style="display:block;">{{item.name}}</p>
                         </div>
                     </li>

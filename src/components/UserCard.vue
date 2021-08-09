@@ -1,7 +1,7 @@
 <template>
     <li class="float-child" style="list-style-position: inside">
-        <div class="item">
-            <img  :src="user.avatar" alt="user.name" style="width: 6vw;height:6vw;">
+        <div >
+            <img  :src="user.avatar" alt="user.name" style="width: 6vw; height:6vw; display:block; margin:auto;">
             <p class="text" style="display:block;">{{user.name}}</p>
         </div>
     </li>
