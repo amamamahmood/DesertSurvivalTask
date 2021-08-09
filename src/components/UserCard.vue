@@ -30,7 +30,7 @@
         align-content: center;
         text-align: center;
         font-family: Arial;
-        font-size: 1.5vw;
+        font-size: 10vw;
     }
 
     image {
@@ -44,17 +44,19 @@
         height: 9.5vw;
     }
 
+    
     .float-child {
-        width: 7vw;
-        height: 9.5vw;
+        width: 8.5vw;
+        height: 12vw;
         float: left;
-        padding: 1px;
-        margin-left: 5px;
-        margin-bottom: 5px;
+        position: relative;
+        background-color: #aaa;
         border: solid;
         border-width: 2px;
         align-content: center;
         align-items: center;
         text-align: center;
-    } 
+        margin-left: 5px;
+        margin-bottom: 5px;
+    }
 </style>

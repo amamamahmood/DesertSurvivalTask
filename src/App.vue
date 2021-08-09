@@ -993,8 +993,7 @@
         align-content: center;
         text-align: center;
         font-family: Arial;
-        font-size: 20px;
-        max-width: 100%;
+        font-size: 15px;
     }
 
 
@@ -1027,6 +1026,8 @@
         align-content: center;
         align-items: center;
         text-align: center;
+        margin-left: 5px;
+        margin-bottom: 5px;
     }
     .unselectable {
         -webkit-user-select: none;
