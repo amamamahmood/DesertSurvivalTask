@@ -1,8 +1,7 @@
 <template>
     <li class="float-child" style="list-style-position: inside">
-        <div class="items">
-            <img class="image" :src="user.avatar" alt="user.name" width="70" heigth="70" style="width: 6vw;height:6vw;">
-            <br />
+        <div >
+            <img class="image" :src="user.avatar" alt="user.name" style="width: 6vw;height:6vw;">
             <p class="text">{{user.name}}</p>
         </div>
     </li>
@@ -34,6 +33,7 @@
     }
 
     image {
+        margin:1px;
     }
 
     items {
@@ -56,7 +56,7 @@
         align-content: center;
         align-items: center;
         text-align: center;
-        margin-left: 5px;
-        margin-bottom: 5px;
+        margin-left: 2px;
+        margin-bottom: 2px;
     }
 </style>

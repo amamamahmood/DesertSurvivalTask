@@ -8,8 +8,7 @@
                     <li class="float-child" style="list-style-position: inside" v-for="item in avatarList" :key="item.id">
                         <div >
                             <img class="image" :src="item.avatar" alt="item.name" width="70" heigth="70" style="width: 6vw;height:6vw;">
-                            <br />
-                            <p class="text">{{item.name}}</p>
+                            <p class="text" style="display:block;">{{item.name}}</p>
                         </div>
                     </li>
                 </ol>
@@ -1026,8 +1025,8 @@
         align-content: center;
         align-items: center;
         text-align: center;
-        margin-left: 5px;
-        margin-bottom: 5px;
+        margin-left: 2px;
+        margin-bottom: 2px;
     }
     .unselectable {
         -webkit-user-select: none;
