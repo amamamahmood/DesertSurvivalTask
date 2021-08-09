@@ -24,7 +24,7 @@
                 <h2 id="introb" style="max-width:70vw; display:none" class="text">
                     
                 </h2>
-                <div id="surveyElement" style="text-align:left; max-height:100vh">
+                <div id="surveyElement" class="columnSurvey">
                     <SurveyComponent />
                 </div>
 
@@ -931,7 +931,15 @@
         position: absolute;
         bottom: 2px;
     }
-
+    .columnSurvey {
+        float: left;
+        width: 80vw;
+        align-content: center;
+        align-items: center;
+        text-align: left;
+        position: absolute;
+        top: 2px;
+    }
     .column {
         float: left;
         width: 95vw;
