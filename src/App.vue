@@ -7,7 +7,7 @@
                 <ol>
                     <li class="float-child" style="list-style-position: inside" v-for="item in avatarList" :key="item.id">
                         <div >
-                            <img class="image" :src="item.avatar" alt="item.name" width="70" heigth="70" style="width: 6vw;height:6vw;">
+                            <img  :src="item.avatar" alt="item.name" width="70" heigth="70" style="width: 6vw;height:6vw;">
                             <p class="text" style="display:block;">{{item.name}}</p>
                         </div>
                     </li>
@@ -904,7 +904,7 @@
     body {
         margin-right: 5px;
         margin-left: 5px;
-        padding-left: 5vw;
+        padding-left: 10vw;
         max-width: 100%;
         max-height: 100%;
         align-content: center;
@@ -918,18 +918,6 @@
         background: #F7FAFC;
         border: 1px solid #4299e1;
     }
-
-    .column2 {
-        float: left;
-        width: 95vw;
-        height: 17vw;
-        padding: 1px;
-        align-content: center;
-        align-items: center;
-        text-align: center;
-        position: absolute;
-        bottom: 2px;
-    }
     .columnSurvey {
         float: left;
         width: 80vw;
@@ -939,15 +927,27 @@
         position: absolute;
         top: 2px;
     }
+    .column2 {
+        float: left;
+        width: 80vw;
+        height: 17vw;
+        align-content: center;
+        align-items: center;
+        text-align: center;
+        position: absolute;
+        bottom: 2px;
+    }
+    
     .column {
         float: left;
-        width: 95vw;
+        width: 80vw;
         height: 17vw;
         align-content: center;
         align-items: center;
         text-align: center;
         position: absolute;
         top: 2px;
+        
     }
     .columnAvatar {
         float: right;
@@ -964,7 +964,7 @@
 
     .column3 {
         float: left;
-        width: 90vw;
+        width: 80vw;
         height: 15vw;
         padding: 1px;
         align-content: center;
@@ -973,7 +973,7 @@
     }
     .column4 {
         float: left;
-        width: 90vw;
+        width: 80vw;
         height: 10vw;
         padding: 1px;
         align-content: center;
@@ -992,9 +992,7 @@
         align-content: center;
         text-align: center;
         font-family: Arial;
-        font-size: 1vmin;
-        margin:1px;
-        padding:0;
+        font-size: 2vmin;
     }
 
 
@@ -1005,19 +1003,11 @@
         font-size: 20px;
     }
 
-    image {
-    }
 
-    items {
-        align-content: center;
-        align-items: center;
-        text-align: center;
-        width: 7vw;
-        height: 9.5vw;
-    }
+
 
     .float-child {
-        width: 8.5vw;
+        width: 8vw;
         height: 12vw;
         float: left;
         position: relative;
@@ -1029,7 +1019,7 @@
         text-align: center;
         margin-left: 2px;
         margin-bottom: 2px;
-        font-size: 1.5vmin;
+        font-size: 2vmin;
     }
     .unselectable {
         -webkit-user-select: none;
