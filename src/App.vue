@@ -992,7 +992,7 @@
         align-content: center;
         text-align: center;
         font-family: Arial;
-        font-size: 2vmin;
+        font-size: 1.8vmin;
     }
 
 
@@ -1019,7 +1019,7 @@
         text-align: center;
         margin-left: 2px;
         margin-bottom: 2px;
-        font-size: 2vmin;
+        font-size: 1.8vmin;
     }
     .unselectable {
         -webkit-user-select: none;
