@@ -2,7 +2,7 @@
     <li class="float-child" style="list-style-position: inside">
         <div >
             <img class="image" :src="user.avatar" alt="user.name" style="width: 6vw;height:6vw;">
-            <p class="text">{{user.name}}</p>
+            <p class="text" style="display:block;">{{user.name}}</p>
         </div>
     </li>
 </template>
@@ -29,11 +29,10 @@
         align-content: center;
         text-align: center;
         font-family: Arial;
-        font-size: 10vw;
+        font-size: 3vw;
     }
 
     image {
-        margin:1px;
     }
 
     items {

@@ -992,7 +992,7 @@
         align-content: center;
         text-align: center;
         font-family: Arial;
-        font-size: 15px;
+        font-size: 3vw;
     }
 
 
