@@ -125,27 +125,27 @@
         "a plastic raincoat. By digging a hole and placing the raincoat over it, a solar still can be constructed to obtain water. However, this will give you very little water compared to the effort you put in digging the hole. Hence, it will not significantly increase your chances of survival."
 
     ];
-    const script3 = ["a map of New Mexico. Map can be used to start a fire, ummm ..... as a toilet paper I think and to cover head.",
-        "the book - Edible Animals of the Desert. The book may be used to search for food, to start a fire and. and. like..... a toilet paper.",
-        "a pair of sunglasses. People may avoid ummm sunlight by wearing sunglasses..... I guess. So that eyes don't burn",
-        "a first aid kit. People may use gauze as rope, I suppose and. and as ..... sun protection or may be in case they get hurt.",
-        "a cosmetic mirror. People may use cosmetic mirror to reflect sunlight to far-off distance to seek help. Ummm ..... That's it.",
+    const script3 = ["a map of New Mexico. Map can be used to start a fire, Ummm, ..... as a toilet paper I think and to cover head.",
+        "the book - Edible Animals of the Desert. The book may be used to search for food, to start a fire And, And. like..... a toilet paper.",
+        "a pair of sunglasses. People may avoid Ummm, sunlight by wearing sunglasses..... I guess. So that eyes don't burn",
+        "a first aid kit. People may use gauze as rope, I suppose And, And as ..... sun protection or may be in case they get hurt.",
+        "a cosmetic mirror. People may use cosmetic mirror to reflect sunlight to far-off distance to seek help. Ummm, ..... That's it.",
         "a flashlight of four battery size. People may use flashlight to seek help at night and see in the dark.  What else? What else? .... Oh, it may be used as a container, signaling device and fire starter.",
         "a magnetic compass. The shiny surface of the magnetic compass may be used to signal for help. Later if no help comes, hmmm I don't know... people can navigate with it.",
-        "a 2 quart flask 180-proof vodka. Vodka can catch fire. Ummm. People can put water in empty bottle. Yeah. That's all.",
-        "a plastic raincoat. You know coats stop dry air to prevent sweating. That means less dehydration. Ummm ..... Like people can gather dew at night to drink and they can suck water out of ground by making solar still with the coat."
+        "a 2 quart flask 180-proof vodka. Vodka can catch fire. Ummm, People can put water in empty bottle. Yeah. That's all.",
+        "a plastic raincoat. You know coats stop dry air to prevent sweating. That means less dehydration. Ummm, ..... Like people can gather dew at night to drink and they can suck water out of ground by making solar still with the coat."
 
     ];
 
-    const script4 = ["a map of New Mexico. Map is not as good as people think, ummm ..... because I think it may make people want to leave that place.",
-        "the book - Edible Animals of the Desert. The book is not useful because people should save their energy by not hunting and. and like..... people do not even need food really.",
-        "a pair of sunglasses. People may avoid ummm sunlight by wearing sunglasses..... but only during the day I guess. No use at night.",
-        "a first aid kit. No body is hurt so no need of first aid thing. There is little chance of getting hurt in the desert. And. and ..... people can use gauze for other reasons, I suppose.",
-        "a cosmetic mirror. Cosmetic mirror can reflect sunlight but only in the daylight.... Ummm that's it. No other use.",
+    const script4 = ["a map of New Mexico. Map is not as good as people think, Ummm, ..... because I think it may make people want to leave that place.",
+        "the book - Edible Animals of the Desert. The book is not useful because people should save their energy by not hunting And, And like..... people do not even need food really.",
+        "a pair of sunglasses. People may avoid Ummm, sunlight by wearing sunglasses..... but only during the day I guess. No use at night.",
+        "a first aid kit. No body is hurt so no need of first aid thing. There is little chance of getting hurt in the desert. And, And ..... people can use gauze for other reasons, I suppose.",
+        "a cosmetic mirror. Cosmetic mirror can reflect sunlight but only in the daylight.... Ummm, that's it. No other use.",
         "a flashlight of four battery size. People may use flashlight to seek help at night, what else what else? but oh, it may bring dangerous animals out too.",
         "a magnetic compass. Apart from using the shiny surface of the magnetic compass to signal, no use. Hmmm. I don't know..... People will go to look for food and water with that compass. That isn't a good idea",
         "a 2 quart flask 180-proof vodka. Ummm, I mean drinking alcohol feels good, but it will make people lose water in their body. Not good. I guess people could use it for starting a fire or storing water. Yeah. That's all.",
-        "a plastic raincoat. People can gather dew at night to drink and ummm, they can suck water out of ground by making solar still. But..... that's like too much work for so little water. Not that good for staying alive."
+        "a plastic raincoat. People can gather dew at night to drink and Ummm, they can suck water out of ground by making solar still. But..... that's like too much work for so little water. Not that good for staying alive."
     ];
 
     //var PulseLoader = VueSpinner.PulseLoader
