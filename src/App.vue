@@ -187,7 +187,7 @@
         lights.position.set(0, 50, 0);
         scene.add(lights);
 
-        const light = new THREE.AmbientLight(0xffffff); // soft white light
+        const light = new THREE.AmbientLight(0x808080); // soft white light
         scene.add(light);
 
         const dirLight = new THREE.DirectionalLight(0xffffff);
@@ -216,8 +216,8 @@
         var value1, value2, index = 0;
         //var files = ['1HO3rpCGMt2nnjV-Jy6Au2a8vMvGTQE7k', '18wHICliIbeBCwP65SIpE7XPal0gZsYzC', '1RWXsLMO9JeE0ArhYYZpqIYFtUU42EtjQ', '125Xo_QFfYHiQaRvu3m--DaO34XR2v2AT', '1BZTFPjLQKtAjxYrIRs6dxfL-0C8SYDtF', '1vflsr84P9qswXBuCCjFLj8g5TiBtdaLk', '1EatzbwRE3-J3_oCgbwns4cz0VdzutO2y', '1-cOAhmO7G7o5T3oA9ydmjO5coOBjtFrd']; //FB,FW,MB,MW
         //var files = ['elizabeth', 'kate', 'lewis', 'nathan']; //FB,FW,MB,MW
-        var files = ['https://dl.dropbox.com/s/0ngyvwy61na05rr/elizabeth_idle.fbx', 'https://dl.dropbox.com/s/iu9un8heefn8z8t/kate_idle.fbx', 'https://dl.dropbox.com/s/7su1zkawg6fh3oi/lewis_idle.fbx', 'https://dl.dropbox.com/s/5gdgq3nsrwdm00w/nathan_idle.fbx'];
-        var files2 = ['https://dl.dropbox.com/s/e679nywcj7al2vn/elizabeth_talking.fbx', 'https://dl.dropbox.com/s/rgbldp983aez9ry/kate_talking.fbx', 'https://dl.dropbox.com/s/d9x6yomz6cmmenx/lewis_talking.fbx', 'https://dl.dropbox.com/s/iw2methdom8s2yb/nathan_talking.fbx'];
+        var files = ['https://dl.dropbox.com/s/0ngyvwy61na05rr/elizabeth_idle.fbx', 'https://dl.dropbox.com/s/iu9un8heefn8z8t/kate_idle.fbx', 'https://dl.dropbox.com/s/7su1zkawg6fh3oi/lewis_idle.fbx', 'https://dl.dropbox.com/s/4cbg6cy934v6ob9/brian_idle.fbx'];
+        var files2 = ['https://dl.dropbox.com/s/e679nywcj7al2vn/elizabeth_talking.fbx', 'https://dl.dropbox.com/s/rgbldp983aez9ry/kate_talking.fbx', 'https://dl.dropbox.com/s/d9x6yomz6cmmenx/lewis_talking.fbx', 'https://dl.dropbox.com/s/cvbhz2271gfbnxe/brian_talking.fbx'];
         switch (Number(store.getters.getGender)) {
             case 1:
                 //selectedVoice = 1;
@@ -257,7 +257,7 @@
                 selectedVoice = 0;
                 break;
             case 3:
-                agentName = "Nathan";
+                agentName = "Brian";
                 selectedVoice = 0;
                 break;
         }
