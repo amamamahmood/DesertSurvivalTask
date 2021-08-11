@@ -57,7 +57,7 @@
                 //    survey.sendResult('27fc25d9-e5bb-45f8-9388-54a834bb67ce');
                 //alert("The results are:" + JSON.stringify(survey.data));
 
-                alert(JSON.stringify(user_data));
+                //alert(JSON.stringify(user_data));
                 $.ajax({
                     url: url,
                     method: "GET",
