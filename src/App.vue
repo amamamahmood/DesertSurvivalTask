@@ -412,7 +412,7 @@
         //doneSpeaking = false;
 
         greetingSpeech.pitch = 1;
-        greetingSpeech.rate = 5;// change after testing
+        greetingSpeech.rate = 0.75;// change after testing
         synth.speak(greetingSpeech);  
 
 
