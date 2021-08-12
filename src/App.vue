@@ -85,11 +85,23 @@
     import { store } from './components/store';
     import draggable from "vuedraggable";
     import UserCard from "./components/UserCard";
-    //import { modelFbx } from 'vue-3d-model'
     import * as THREE from 'three';
     import SurveyComponent from "./components/SurveyComponent";
     import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
     import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
+
+    var user_initial_rankings = [];
+    var avatar_rankings = [];
+    /*class item_state {
+        constructor(updates, matched, rankings) {
+            this.updates = updates;
+            this.matched = matched;
+            this.rankings = rankings;
+        }
+    }*/
+    var total_updates = 0;
+    var total_matched = 0;
+    var user_final_rankings = [];
     //import Stats from 'three/examples/jsm/libs/stats.module';
     var selectedVoice = 0;
     let counter = 0; // which item on its list will the agent talk about
@@ -549,12 +561,16 @@
             },
             reorder_avatarList: function () {
                 this.avatarList = avatar_order.map(i => this.users[i]);
+                avatar_rankings = this.returnRankings('avatar');
+                alert(avatar_rankings);
                 //alert(JSON.stringify(this.avatarList));
 
             },
             compare_lists: function () {
                 //alert(JSON.stringify(this.users[counter]))
                 if (this.users[counter].id == this.avatarList[counter].id) {
+                    total_matched += 1;
+                    alert(total_matched);
                     counter += 1;
                     return true;
 
@@ -608,6 +624,20 @@
                 alert(`Prnting ${JSON.stringify(this.users)}`);
 
             },
+            returnRankings: function (userAvatar = 'user') {
+                var ranking = [];
+                if (userAvatar == 'user') {
+                    for (let i = 0; i < this.users.length; i++) {
+                        ranking.push(this.users[i].id);
+                    }
+                }
+                else {
+                    for (let i = 0; i < this.avatarList.length; i++) {
+                        ranking.push(this.avatarList[i].id);
+                    }
+                }
+                return ranking;
+            },
             startInitialRanking: function (event) {
                 //init();
                 
@@ -639,6 +669,9 @@
                 
             },
             doneInitialRanking: function (event) {
+                user_initial_rankings = this.returnRankings();
+                alert(user_initial_rankings);
+                alert(avatar_rankings);
                 this.disable();
                 event.target.style.display = "none";
                 var inst = document.getElementById("drag_inst");
@@ -720,7 +753,8 @@
                 
             },
             makeDraggable: function (event) {
-                
+                total_updates += 1;
+                alert(total_updates);
                 var inst = document.getElementById("drag_inst");
                 inst.style.display = "inline-block"
                 inst.textContent = "Update your list by dragging and dropping the items";
@@ -888,6 +922,7 @@
 
             },
             submitRankings: function (event) {
+                user_final_rankings = this.returnRankings();
                 event.target.style.display = "none";
                 this.disable();
                 var inst = document.getElementById("drag_inst");
