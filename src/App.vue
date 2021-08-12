@@ -3,11 +3,11 @@
         <div class="row">
 
             <div id="avatarRating" class="column" style=" display:none">
-                <h3 class="smallerText" >Agent's Rankings</h3>
+                <h3 class="smallerText">Agent's Rankings</h3>
                 <ol>
                     <li class="float-child" style="list-style-position: inside" v-for="item in avatarList" :key="item.id">
-                        <div >
-                            <img  :src="item.avatar" alt="item.name" width="70" heigth="70" style="width: 6vw; height: 6vw; display: block; margin: auto;">
+                        <div>
+                            <img :src="item.avatar" alt="item.name" width="70" heigth="70" style="width: 6vw; height: 6vw; display: block; margin: auto;">
                             <p class="text" style="display:block;">{{item.name}}</p>
                         </div>
                     </li>
@@ -15,12 +15,11 @@
 
             </div>
             <div class="column3">
-                <h1 id="heading" class="LargerText" style= "display:none"> Desert Survival Task </h1>
-                <h3 id="intro" class="smallerText" style="max-width:70vw; display:none" >
+                <h1 id="heading" class="LargerText" style="display:none"> Desert Survival Task </h1>
+                <h3 id="intro" class="smallerText" style="max-width:70vw; display:none">
                     Please fill the demographics survey before proceeding.
                 </h3>
                 <h2 id="introb" style="max-width:70vw; display:none" class="text">
-                    
                 </h2>
                 <div id="surveyElement" class="columnSurvey">
                     <SurveyComponent />
@@ -37,7 +36,7 @@
                 <h2 class="smallerText" id="intro2" style="display:none; max-width:50vw; ">
                 </h2>
                 <br />
-                
+
                 <button id="drag" class="button" style="display:none" width="100px" v-on:click="makeDraggable">Update your ranking</button>
                 &emsp;&emsp;&emsp;&emsp;
                 <button id="noDrag" class="button" style="display:none" width="100px" v-on:click="skipUpdating">Continue without updating</button>
@@ -66,10 +65,7 @@
 
                     <user-card v-for="user in users"
                                :key="user.id"
-                               :user="user"
-                               @upate="update"
-                               @on-edit="onEdit"
-                               @on-delete="onDelete"></user-card>
+                               :user="user"></user-card>
 
                 </draggable>
 
@@ -80,6 +76,7 @@
     </div>
 
 </template>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>
     import { store } from './components/store';
@@ -89,19 +86,25 @@
     import SurveyComponent from "./components/SurveyComponent";
     import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
     import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
-
-    var user_initial_rankings = [];
-    var avatar_rankings = [];
-    /*class item_state {
-        constructor(updates, matched, rankings) {
-            this.updates = updates;
+    var url = 'https://script.google.com/macros/s/AKfycby4CgcVBKI471bkIYxrKr6GEY35345TXDlnWrH6-KyXhcZ7St9sAyLKbHumTPQXaME9cQ/exec';
+    var user_initial_rankings;
+    var avatar_rankings ;
+    class item_state {
+        constructor(updated = 0, matched = 0, rankings = "") {
+            this.updates = updated;
             this.matched = matched;
             this.rankings = rankings;
         }
-    }*/
+    }
+    let items = [];
+    for (var i = 0; i < 9; i++) {
+        items.push(new item_state());
+    }
+    //alert(items.length);
     var total_updates = 0;
     var total_matched = 0;
-    var user_final_rankings = [];
+    var actual_total_matched = 0;
+    var user_final_rankings;
     //import Stats from 'three/examples/jsm/libs/stats.module';
     var selectedVoice = 0;
     let counter = 0; // which item on its list will the agent talk about
@@ -110,7 +113,6 @@
     let camera, scene, renderer, scene2;
     let agentName;
     let avatarReady = false;
-    //var avatarState = "idle";
     let actions;
     const clock = new THREE.Clock();
     let activeAction, lastAction;
@@ -118,7 +120,7 @@
     var condition = 1;
     const script1 = ["a map of New Mexico. Map will be useful to start a fire with. It can be used as toilet paper. You can also use it as a shade for your head to avoid exposure to direct sunlight.",
         "the book - Edible Animals of the Desert. If you are stuck beyond day 3, you will need to find food and water. Additionally, you will be able to use the pages of book as toilet paper and as a fire starter. ",
-     "a pair of sunglasses. The intense sunlight of desert may cause Photokeratitis due to sun reflection from sand. It is like having sunburned eyes. This will be prevented by wearing a pair of sunglasses.",
+        "a pair of sunglasses. The intense sunlight of desert may cause Photokeratitis due to sun reflection from sand. It is like having sunburned eyes. This will be prevented by wearing a pair of sunglasses.",
         "a first aid kit. You may use gauze as rope or for protecting your exposed body parts against dehydration and sunlight. In case of injury, it will be useful to have a first aid kit.",
         "a cosmetic mirror. Cosmetic mirror is one of the most powerful tools to communicate your presence because reflected sunbeam can be seen from a far-off distance. It gives you higher chance of being spotted within 24 hours. Speedy discovery is crucial to survival of your group.",
         "a flashlight of four battery size. Flashlight is the only quick reliable device for signaling your presence at night. It will help you see at night and stay safer. Additionally, if you remove the batteries, it can be used as a container for digging or collecting water. The reflector and lens can be used as auxiliary signaling device and as a fire starter.",
@@ -171,14 +173,14 @@
         container.classList.add("columnAvatar");
 
         container.id = "avatardiv";
-        
+
         document.body.appendChild(container);
         //var cont = document.getElementById('avatardiv');
         //cont.style.display = "none";
         camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 1, 2000);
         camera.zoom = 0.75;
         camera.position.set(50, 150, 250);
-        
+
         const fullWidth = container.clientWidth * 3;
         const fullHeight = container.clientHeight * 2;
         camera.setViewOffset(fullWidth, fullHeight, container.clientWidth * 1, container.clientHeight * 0, container.clientWidth, container.clientHeight);
@@ -221,7 +223,7 @@
 
         //const grid = new THREE.GridHelper(2000, 20, 0x000000, 0x000000);
         //grid.material.opacity = 0.2;
-       // grid.material.transparent = true;
+        // grid.material.transparent = true;
         //scene.add(grid);
 
         // model
@@ -277,7 +279,7 @@
         var fileLoad = files[index];
         var fileLoad2 = files2[index];
         const loader = new FBXLoader();
-        
+
         /*if (avatarState == "talking") {
             fileLoad = 'david_talking.fbx';
         }
@@ -286,12 +288,12 @@
         }*/
         loader.load(fileLoad, function (object) {
 
-            
-            
+
+
             mixer = new THREE.AnimationMixer(object);
             const loader2 = new FBXLoader();
-            
-           
+
+
             loader2.load(fileLoad2, function (object2) {
                 object.animations.push(object2.animations[0]);
                 //alert("Length of object" + object.animations.length)
@@ -325,16 +327,16 @@
 
 
             });
-            
+
         });
-        
+
         renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(container.clientWidth, container.clientHeight);
         renderer.shadowMap.enabled = true;
         renderer.setClearColor(0xffffff, 0);
         renderer.domElement.id = "avatardivelement";
-        renderer.render(scene2,camera);
+        renderer.render(scene2, camera);
         container.appendChild(renderer.domElement);
 
         const controls = new OrbitControls(camera, renderer.domElement);
@@ -390,14 +392,14 @@
     }
     //var doneSpeaking = false;
     var synth = window.speechSynthesis;
-    
-    
+
+
     function greet(greetingSpeech) {
         //speechSynthesis.cancel();
         var voices = synth.getVoices();
         let voice;
-            
-            //alert(voice.name);
+
+        //alert(voice.name);
         if (selectedVoice == 1 && voice == null) {
             voice = voices.find(voice => voice.name.includes('Zira'));
 
@@ -408,17 +410,17 @@
         greetingSpeech.voice = voice;
         //greetingSpeech.voice = voiceList[selectedVoice];
         //doneSpeaking = false;
-        
+
         greetingSpeech.pitch = 1;
-        greetingSpeech.rate = 0.75;
-        synth.speak(greetingSpeech);
-        
-        
+        greetingSpeech.rate = 5;// change after testing
+        synth.speak(greetingSpeech);  
+
+
         //greetingSpeech.onend = function () {
-          //  return true;
+        //  return true;
         //}
     }
-    
+
     export default {
         name: "App",
         components: {
@@ -491,47 +493,47 @@
                         id: 1,
                         name: "a map of New Mexico",
                         avatar: "https://p1.pxfuel.com/preview/963/223/786/map-usa-map-usa-united.jpg",
-                        },
+                    },
                     {
                         id: 2,
                         name: "the book- Edible Animals of the Desert",
                         avatar: "https://p0.pxfuel.com/preview/962/798/408/book-book-pages-novel-paperback.jpg",
-                        },
+                    },
                     {
                         id: 3,
                         name: "a pair of sunglasses per person",
                         avatar: "https://columbia.scene7.com/is/image/ColumbiaSportswear2/C110SP_022_f?$x1_grid$&v=1624997482",
-                       },
+                    },
                     {
                         id: 4,
                         name: "first aid kit",
                         avatar: "https://cdn.pixabay.com/photo/2018/09/22/05/32/first-aid-3694546_1280.jpg",
-                       },
+                    },
                     {
                         id: 5,
                         name: "cosmetic mirror",
                         avatar: "https://www.maxpixel.net/static/photo/1x/Silvery-Cosmetics-Mirror-Make-Up-Reflection-1472857.jpg",
-                        },
+                    },
                     {
                         id: 6,
                         name: "flashlight (four-battery size)",
                         avatar: "https://cdn.pixabay.com/photo/2018/05/11/17/07/flashlight-3391057_1280.jpg",
-                        },
+                    },
                     {
                         id: 7,
                         name: "magnetic compass",
                         avatar: "https://upload.wikimedia.org/wikipedia/commons/f/f6/Magnetic_compass_-_school_laboratory.jpg",
-                        },
+                    },
                     {
                         id: 8,
                         name: "vodka 180-proof 2 quart flask per person",
                         avatar: "https://p1.pxfuel.com/preview/555/831/622/vodka-ruska-alcohol-drunkenness.jpg",
-                       },
+                    },
                     {
                         id: 9,
                         name: "a plastic raincoat per person",
                         avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9pownnssrFIBSPhzUKilGR_2SEfuuy53q-A&usqp=CAU",
-                        }
+                    }
                 ]
 
             };
@@ -562,7 +564,7 @@
             reorder_avatarList: function () {
                 this.avatarList = avatar_order.map(i => this.users[i]);
                 avatar_rankings = this.returnRankings('avatar');
-                alert(avatar_rankings);
+                //alert(avatar_rankings);
                 //alert(JSON.stringify(this.avatarList));
 
             },
@@ -570,16 +572,27 @@
                 //alert(JSON.stringify(this.users[counter]))
                 if (this.users[counter].id == this.avatarList[counter].id) {
                     total_matched += 1;
-                    alert(total_matched);
+                    items[counter].matched = 1;
+                    items[counter].rankings =this.returnRankings();
+                   // alert(counter + "printing item to check matching " + JSON.stringify(items[counter]));
                     counter += 1;
                     return true;
 
-                    //alert("Glad we agree on nth item on our lists");                   
+                    //alert("Glad we agree on nth item on our lists");
                 }
                 else {
                     return false;
                 }
             },
+
+            actual_match: function () {
+                for (let i = 0; i < this.users.length; i++) {
+                    if (this.users[i].id == this.avatarList[i].id) {
+                        actual_total_matched += 1;
+                    }
+                }
+            },
+
             disable() {
                 this.enabled = false;
             },
@@ -609,20 +622,9 @@
                         tempStr = script4[this.avatarList[counter].id - 1];
                     }
                 }
-                       
-               
+
+
                 return tempStr;
-            },
-            onEdit(user) {
-                alert(`Editing ${user.name}`);
-            },
-            onDelete(user) {
-                alert(`Deleting ${user.name}`);
-            },
-            update() {
-
-                alert(`Prnting ${JSON.stringify(this.users)}`);
-
             },
             returnRankings: function (userAvatar = 'user') {
                 var ranking = [];
@@ -636,11 +638,11 @@
                         ranking.push(this.avatarList[i].id);
                     }
                 }
-                return ranking;
+                return JSON.stringify(ranking);
             },
             startInitialRanking: function (event) {
                 //init();
-                
+
                 this.enable();
                 this.random_userList();
                 var sect = document.getElementById("user_list");
@@ -660,18 +662,18 @@
                 sect = document.getElementById("begin");
                 sect.style.display = "inline-block";
                 sect.disabled = true;
-                
-                
+
+
 
                 setTimeout(function () {
                     sect.disabled = false;
                 }, 10000);
-                
+
             },
             doneInitialRanking: function (event) {
                 user_initial_rankings = this.returnRankings();
-                alert(user_initial_rankings);
-                alert(avatar_rankings);
+                //alert(user_initial_rankings);
+                //alert(avatar_rankings);
                 this.disable();
                 event.target.style.display = "none";
                 var inst = document.getElementById("drag_inst");
@@ -691,11 +693,13 @@
                 setTimeout(function () {
                     btn.disabled = false;
                 }, 3000);
-                
-                
+
+
 
             },
             beginInteraction: function (event) {
+                //let item1 = new item_state(0, 0, JSON.stringify(this.returnRankings()));
+                
                 //var temp = document.getElementById("temp");
                 //temp.style.display = "none";
                 this.reorder_avatarList();
@@ -716,7 +720,7 @@
                 else {
                     setAction(actions[0]);
                 }
-                
+
                 var inst = document.getElementById("drag_inst");
                 inst.style.display = "inline-block";
                 var say = "Hi. I am " + agentName + ". Here is my list. I'll discuss my rankings with you item by item...";
@@ -724,11 +728,11 @@
                 inst.textContent = say;
 
                 //counter += 1;
-                
-                
-               // setTimeout(function () {
+
+
+                // setTimeout(function () {
                 const greetingSpeech = new window.SpeechSynthesisUtterance();
-                greetingSpeech.text = say ;
+                greetingSpeech.text = say;
                 greet(greetingSpeech);
                 greetingSpeech.addEventListener('end', function () {
                     inst.textContent = say2;
@@ -736,29 +740,30 @@
                     greetingSpeech2.text = say2;
                     greet(greetingSpeech2);
                     greetingSpeech2.addEventListener('end', function () {
-                    var btn = document.getElementById("drag");
-                    synth.cancel();
-                    btn.style.display = "inline-block";
-                    btn = document.getElementById("noDrag");
-                    btn.style.display = "inline-block";
-                    setAction(actions[0]);
+                        var btn = document.getElementById("drag");
+                        synth.cancel();
+                        btn.style.display = "inline-block";
+                        btn = document.getElementById("noDrag");
+                        btn.style.display = "inline-block";
+                        setAction(actions[0]);
                     });
                 });
-                    
-              //  }, 100);
-                
-                
-                
-                
-                
+
+                //  }, 100);
+
+
+
+
+
             },
             makeDraggable: function (event) {
+                items[counter].updates = 1;
                 total_updates += 1;
-                alert(total_updates);
+                //alert(total_updates);
                 var inst = document.getElementById("drag_inst");
                 inst.style.display = "inline-block"
                 inst.textContent = "Update your list by dragging and dropping the items";
-                
+
                 event.target.style.display = "none";
                 var btn = document.getElementById("noDrag");
                 btn.style.display = "none";
@@ -773,6 +778,8 @@
                 this.doneDragging();
             },
             doneDragging: function () {
+                items[counter].rankings = this.returnRankings();
+                //alert(counter + "printing item "+ JSON.stringify(items[counter]));
                 
                 var btn = document.getElementById("done_drag");
                 btn.style.display = "none";
@@ -808,20 +815,20 @@
                         if (counter == 9) {
                             this.enable();
                         }
-                        
+
                         //setTimeout(function () {
-                            
-                            
+
+
                         const greetingSpeech = new window.SpeechSynthesisUtterance();
                         greetingSpeech.text = "Glad we agree on some items on our list";
                         inst.textContent = "Glad we agree on some items on our list";
                         greet(greetingSpeech);
                         //alert(counter);
                         if (counter < 9) {
-                            var say = "Next I have " +  this.returnText(condition);
+                            var say = "Next I have " + this.returnText(condition);
                         }
                         greetingSpeech.addEventListener('end', function () {
-                            
+
                             if (counter == 9) {
                                 //alert("I am here " + counter);
                                 setAction(actions[0]);
@@ -857,7 +864,7 @@
                                     btn.style.display = "inline-block";
                                     setAction(actions[0]);
                                 });
-                                    
+
 
                                 //   }, 100);
 
@@ -872,7 +879,7 @@
                                 btn.style.display = "inline-block";
                             }*/
                         });
-                       
+
                         //}, 100);
                     }
                     else if ((counter - temp) == 0) {
@@ -911,9 +918,9 @@
                             btn = document.getElementById("submit");
                             btn.style.display = "inline-block";
                         }
-                           
+
                     }
-                    
+
 
 
                 }
@@ -927,6 +934,32 @@
                 this.disable();
                 var inst = document.getElementById("drag_inst");
                 inst.textContent = "Thank you for taking the time to complete the study. Please proceed to post-study questionnaires";
+                this.actual_match();
+                var user_data = store.getters.getUserData;
+                var state = JSON.stringify(items);
+                //alert("user_data " + JSON.stringify(user_data));
+                var json_obj = {
+                    user_initial_rankings: user_initial_rankings,
+                    avatar_rankings: avatar_rankings,
+                    user_final_rankings: user_final_rankings,
+                    total_updates: total_updates,
+                    total_matched: total_matched,
+                    actual_total_matched: actual_total_matched,
+                    state: state
+                };
+                //alert("json_obj " + JSON.stringify(json_obj));
+                //json_obj.putAll(JSON.parse(user_data));
+                let store_data = {
+                    ...user_data,
+                    ...json_obj
+                };
+                //alert("Write data " + JSON.stringify(store_data));
+                $.ajax({
+                    url: url,
+                    method: "GET",
+                    dataType: "json",
+                    data: store_data  //$form.serializeObject()
+                });
             }
 
         }
@@ -952,6 +985,7 @@
         background: #F7FAFC;
         border: 1px solid #4299e1;
     }
+
     .columnSurvey {
         float: left;
         width: 80vw;
@@ -961,6 +995,7 @@
         position: absolute;
         top: 2px;
     }
+
     .column2 {
         float: left;
         width: 80vw;
@@ -971,7 +1006,7 @@
         position: absolute;
         bottom: 2px;
     }
-    
+
     .column {
         float: left;
         width: 80vw;
@@ -981,8 +1016,8 @@
         text-align: center;
         position: absolute;
         top: 2px;
-        
     }
+
     .columnAvatar {
         float: right;
         width: 25vw;
@@ -991,7 +1026,7 @@
         align-items: center;
         text-align: center;
         position: absolute;
-        top:15%;
+        top: 15%;
         right: 2vw;
         z-index: -1;
     }
@@ -1005,6 +1040,7 @@
         align-items: center;
         text-align: center;
     }
+
     .column4 {
         float: left;
         width: 80vw;
@@ -1028,6 +1064,7 @@
         font-family: Arial;
         font-size: 1.8vmin;
     }
+
     largerText {
         align-content: center;
         text-align: center;
@@ -1067,6 +1104,7 @@
         margin-bottom: 2px;
         font-size: 1.8vmin;
     }
+
     .unselectable {
         -webkit-user-select: none;
         -webkit-touch-callout: none;

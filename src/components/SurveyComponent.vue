@@ -1,9 +1,7 @@
 <template>
     <survey :survey="survey" />
 </template>
-<head>
 
-</head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>
@@ -15,7 +13,7 @@
     import "survey-vue/modern.css";
     //import "./index.css";
     const { v4: uuidv4 } = require('uuid');
-    var url = 'https://script.google.com/macros/s/AKfycby4CgcVBKI471bkIYxrKr6GEY35345TXDlnWrH6-KyXhcZ7St9sAyLKbHumTPQXaME9cQ/exec';
+    //var url = 'https://script.google.com/macros/s/AKfycby4CgcVBKI471bkIYxrKr6GEY35345TXDlnWrH6-KyXhcZ7St9sAyLKbHumTPQXaME9cQ/exec';
     Survey.StylesManager.applyTheme("modern");
 
     export default {
@@ -32,12 +30,12 @@
                 var u_id = uuidv4();
                 store.commit('storeUid', u_id);
                 var user_data = {
-                    "uid": u_id,
-                    "gender" : survey.data['gender'],
-                    "education" : survey.data['education'],
-                    "major" : survey.data['major']
+                    uid: u_id,
+                    gender : survey.data['gender'],
+                    education : survey.data['education'],
+                    major : survey.data['major']
                 };
-                
+                store.commit('storeUserData', user_data);
                 //survey.data["uid"] = u_id;
                 if (survey.data['gender'] == 'other') {
                     store.commit('storeGender', 4);
@@ -58,12 +56,12 @@
                 //alert("The results are:" + JSON.stringify(survey.data));
 
                 //alert(JSON.stringify(user_data));
-                $.ajax({
+                /*$.ajax({
                     url: url,
                     method: "GET",
                     dataType: "json",
                     data: user_data //$form.serializeObject()
-                });
+                });*/
                 //alert(jqxhr);
 
                 //alert("modified gender: " + store.getters.getGender);
