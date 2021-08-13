@@ -1,5 +1,8 @@
 <template>
     <div id="app" class="unselectable">
+        <div id="surveyElement2">
+            <PostSurvey />
+        </div>
         <div class="row">
 
 
@@ -9,7 +12,7 @@
                     <li class="float-child" style="list-style-position: inside; font-size:1.8vmin;" v-for="item in avatarList" :key="item.id">
                         <div>
                             <img :src="item.avatar" alt="item.name" width="70" heigth="70" style="width: 6vw; height: 6vw; display: block; margin: auto;">
-                            <p  style="display: block; font-size: 1.8vmin;">{{item.name}}</p>
+                            <p style="display: block; font-size: 1.8vmin;">{{item.name}}</p>
                         </div>
                     </li>
                 </ol>
@@ -25,9 +28,7 @@
 
 
             </div>
-            <div id="surveyElement" class="columnSurvey">
-                <SurveyComponent />
-            </div>
+
             <div id="surveyElement2" style="display:none;" class="columnSurvey2">
                 <PostSurvey id="postSurvey" />
             </div>
@@ -79,8 +80,9 @@
 
 
         </div>
-    </div>
 
+    </div>
+    
 </template>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
