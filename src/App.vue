@@ -25,9 +25,9 @@
 
 
             </div>
-            <div id="surveyElement" class="columnSurvey">
+            <div id="surveyElement" class="columnSurvey2">
 
-                <SurveyComponent />
+                <PostSurvey />
             </div>
             <div id="surveyElement2" style="display:none;" class="columnSurvey2">
                 <PostSurvey id="postSurvey" />
@@ -1028,11 +1028,11 @@
     }
     .columnSurvey2 {
         float:left;
-        width: 95vw;
+        width: 100%;
         text-align: center;
         position: absolute;
-        top: 2px;
-        left: 2vw;
+        top: 0;
+        left: 0;
         align-items:center;
         text-align:center;
         align-content:center;
@@ -1168,4 +1168,5 @@
         user-select: none;
     }
 </style>
+
 
