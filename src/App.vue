@@ -25,8 +25,8 @@
 
 
             </div>
-            <div id="surveyElement" class="columnSurvey2">
-                <PostSurvey />
+            <div id="surveyElement" class="columnSurvey">
+                <SurveyComponent />
             </div>
             <div id="surveyElement2" style="display:none;" class="columnSurvey2">
                 <PostSurvey id="postSurvey" />
