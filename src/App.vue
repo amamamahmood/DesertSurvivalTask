@@ -1,6 +1,6 @@
 <template>
     <div id="app" class="unselectable">
-        <div id="surveyElement2">
+        <div id="surveyElement">
             <PostSurvey />
         </div>
         <div class="row">
