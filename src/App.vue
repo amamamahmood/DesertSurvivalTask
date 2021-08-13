@@ -1,7 +1,7 @@
 <template>
     <div id="app" class="unselectable">
         <div class="row">
-            
+
 
             <div id="avatarRating" class="column" style=" display:none">
                 <h3 class="smallerText">Agent's Rankings</h3>
@@ -17,20 +17,23 @@
             <div id="headingColumn" class="column3">
                 <h1 id="heading" class="LargerText" style="display:none"> Desert Survival Task </h1>
                 <h3 id="intro" class="smallerText" style="max-width:70vw; display:none">
-                    Please fill the demographics survey before proceeding.
                 </h3>
                 <h2 id="introb" style="max-width:70vw; display:none" class="text">
                 </h2>
-                <div id="surveyElement" class="columnSurvey">
-
-                    <SurveyComponent />
-                </div>
-                <div id="surveyElement2" style="display:none;" class="columnSurvey2">
-                    
-                </div>
 
 
 
+
+            </div>
+            <div id="surveyElement" class="columnSurvey">
+
+                <SurveyComponent />
+            </div>
+            <div id="surveyElement2" style="display:none;" class="columnSurvey2">
+                <PostSurvey id="postSurvey" />
+            </div>
+            <div id="surveyElement3" style="display:none;" class="columnSurvey3">
+                <ThankYou id="thankyou" />
             </div>
             <div id="avatar" class="column4">
             </div>
@@ -89,6 +92,7 @@
     import * as THREE from 'three';
     import SurveyComponent from "./components/SurveyComponent";
     import PostSurvey from './components/PostSurvey';
+    import ThankYou from './components/ThankYou';
     import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
     import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
     var url = 'https://script.google.com/macros/s/AKfycby4CgcVBKI471bkIYxrKr6GEY35345TXDlnWrH6-KyXhcZ7St9sAyLKbHumTPQXaME9cQ/exec';
@@ -432,7 +436,8 @@
             draggable,
             UserCard,
             SurveyComponent,
-            PostSurvey
+            PostSurvey,
+            ThankYou
             //modelFbx
         },
 
@@ -960,12 +965,13 @@
                     ...json_obj
                 };
                 //alert("Write data " + JSON.stringify(store_data));
-                $.ajax({
+                /*$.ajax({
                     url: url,
                     method: "GET",
                     dataType: "json",
                     data: store_data  //$form.serializeObject()
-                });
+                });*/
+                store.commit('storeUserData', store_data);
                 document.body.style.paddingLeft = '0vw';
                 var temp = document.getElementById("avatarRating");
                 temp.style.display = "none";
@@ -979,11 +985,13 @@
                 temp.style.display = "none";
                 temp = document.getElementById("avatardiv");
                 temp.style.display = "none";
-                alert("Adding the form here. Some errors. Working on those!");
+                //alert("Adding the form here. Some errors. Working on those!");
                 temp = document.getElementById("surveyElement2");
-                temp.style.display = "block";
-                var tag = document.createElement("PostSurvey");
-                temp.appendChild(tag);
+                temp.style.display = "inline-block";
+                //temp = document.getElementById("postSurvey");
+                //temp.style.display = "block";
+                //var tag = document.createElement("PostSurvey");
+                //temp.appendChild(tag);
 
             }
 
@@ -1014,19 +1022,31 @@
     .columnSurvey {
         float: left;
         width: 80vw;
-        align-content: center;
-        align-items: center;
         text-align: left;
         position: absolute;
         top: 2px;
     }
     .columnSurvey2 {
-        float: left;
+        float:left;
         width: 95vw;
-        text-align: left;
+        text-align: center;
         position: absolute;
         top: 2px;
         left: 2vw;
+        align-items:center;
+        text-align:center;
+        align-content:center;
+        
+    }
+    .columnSurvey3 {
+        width: 80vw;
+        position: absolute;
+        top: 2px;
+        left: 10vw;
+        align-items: center;
+        text-align: center;
+        align-content: center;
+        
     }
 
     .column2 {

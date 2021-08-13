@@ -14,6 +14,7 @@ export const store = new Vuex.Store({
             education: 0,
             major: null
         }
+        //post_survey: {},
     },
     getters: {
         getGender: state => {
@@ -25,6 +26,9 @@ export const store = new Vuex.Store({
         getUserData: state => {
             return state.user_data;
         }
+        //getPostSurvey: state => {
+        //    return state.post_survey;
+       // }
     },
     mutations: {
         storeGender(state, genderA) {
@@ -36,5 +40,8 @@ export const store = new Vuex.Store({
         storeUserData(state, user_data) {
             state.user_data = user_data;
         }
+      //  storePostSurvey(state, post_survey) {
+      //      state.post_survey = post_survey;
+      //  }
     }
 });
