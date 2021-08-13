@@ -26,7 +26,6 @@
 
             </div>
             <div id="surveyElement" class="columnSurvey2">
-
                 <PostSurvey />
             </div>
             <div id="surveyElement2" style="display:none;" class="columnSurvey2">
@@ -1027,7 +1026,7 @@
         top: 2px;
     }
     .columnSurvey2 {
-        float:left;
+
         width: 100%;
         text-align: center;
         position: absolute;
