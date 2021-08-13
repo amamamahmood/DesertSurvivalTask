@@ -75,13 +75,6 @@
     };
 </script>
 
-<style>
-    .sv_q_rating  {
-        text-align: center;
-        align-content:center;
-        align-items:center;
-    }
-</style>
 
 <style scoped>
 </style>

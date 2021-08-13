@@ -8,12 +8,7 @@ export const store = new Vuex.Store({
     state: {
         gender: 0,
         u_id: null,
-        user_data : {
-            uid: null,
-            gender: 0,
-            education: 0,
-            major: null
-        }
+        user_data : {}
         //post_survey: {},
     },
     getters: {

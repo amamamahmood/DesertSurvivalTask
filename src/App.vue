@@ -1006,10 +1006,11 @@
         margin-left: 5px;
         max-width: 100%;
         max-height: 100%;
-        padding-left:10vw;
+        padding-left: 10vw;
         align-content: center;
         align-items: center;
         text-align: center;
+        font-size: 1.8vmin;
     }
     /* Unfortunately @apply cannot be setup in codesandbox,
     but you'd use "@apply border opacity-50 border-blue-500 bg-gray-200" here */
@@ -1058,6 +1059,7 @@
         text-align: center;
         position: absolute;
         bottom: 2px;
+        font-size:1.8vmin;
     }
 
     .column {
@@ -1069,6 +1071,7 @@
         text-align: center;
         position: absolute;
         top: 2px;
+        font-size: 1.8vmin;
     }
 
     .columnAvatar {
@@ -1155,7 +1158,7 @@
         text-align: center;
         margin-left: 2px;
         margin-bottom: 2px;
-        font-size: 1.8vmin;
+        font-size: 10px;
     }
 
     .unselectable {
