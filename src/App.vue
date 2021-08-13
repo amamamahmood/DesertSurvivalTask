@@ -1026,15 +1026,13 @@
         top: 2px;
     }
     .columnSurvey2 {
-
+        all: initial;
         width: 100%;
-        text-align: center;
+        text-align: left;
         position: absolute;
         top: 0;
         left: 0;
-        align-items:center;
-        text-align:center;
-        align-content:center;
+       
         
     }
     .columnSurvey3 {
