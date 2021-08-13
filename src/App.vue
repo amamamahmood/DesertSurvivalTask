@@ -6,10 +6,10 @@
             <div id="avatarRating" class="column" style=" display:none">
                 <h3 class="smallerText">Agent's Rankings</h3>
                 <ol>
-                    <li class="float-child" style="list-style-position: inside" v-for="item in avatarList" :key="item.id">
+                    <li class="float-child" style="list-style-position: inside; font-size:1.8vmin;" v-for="item in avatarList" :key="item.id">
                         <div>
                             <img :src="item.avatar" alt="item.name" width="70" heigth="70" style="width: 6vw; height: 6vw; display: block; margin: auto;">
-                            <p class="text" style="display:block;">{{item.name}}</p>
+                            <p  style="display: block; font-size: 1.8vmin;">{{item.name}}</p>
                         </div>
                     </li>
                 </ol>
@@ -1010,7 +1010,6 @@
         align-content: center;
         align-items: center;
         text-align: center;
-        font-size: 1.8vmin;
     }
     /* Unfortunately @apply cannot be setup in codesandbox,
     but you'd use "@apply border opacity-50 border-blue-500 bg-gray-200" here */
@@ -1158,7 +1157,7 @@
         text-align: center;
         margin-left: 2px;
         margin-bottom: 2px;
-        font-size: 10px;
+        font-size: 1.8vmin;
     }
 
     .unselectable {
