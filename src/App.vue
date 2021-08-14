@@ -175,66 +175,6 @@
     //animate();
 
     function init() {
-
-        var container = document.createElement('div');
-        //var avatar = document.getElementById('avatar');
-        container.classList.add("columnAvatar");
-
-        container.id = "avatardiv";
-
-        document.body.appendChild(container);
-        //var cont = document.getElementById('avatardiv');
-        //cont.style.display = "none";
-        camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 1, 2000);
-        camera.zoom = 0.75;
-        camera.position.set(50, 150, 250);
-
-        const fullWidth = container.clientWidth * 3;
-        const fullHeight = container.clientHeight * 2;
-        camera.setViewOffset(fullWidth, fullHeight, container.clientWidth * 1, container.clientHeight * 0, container.clientWidth, container.clientHeight);
-
-        scene = new THREE.Scene();
-        scene.background = new THREE.Color(0xffffff);
-
-        scene2 = new THREE.Scene();
-        scene2.background = new THREE.Color(0xffffff);
-
-        scene.fog = new THREE.Fog(0xffffff, 200, 1000);
-
-        const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444);
-        hemiLight.position.set(0, 200, 0);
-        scene.add(hemiLight);
-
-        const lights = new THREE.DirectionalLight(0xfffacd, 1, 0);
-        lights.position.set(0, 50, 0);
-        scene.add(lights);
-
-        const light = new THREE.AmbientLight(0x808080); // soft white light
-        scene.add(light);
-
-        const dirLight = new THREE.DirectionalLight(0xffffff);
-        dirLight.position.set(0, 200, 100);
-        dirLight.castShadow = true;
-        dirLight.shadow.camera.top = 180;
-        dirLight.shadow.camera.bottom = - 100;
-        dirLight.shadow.camera.left = - 120;
-        dirLight.shadow.camera.right = 120;
-        scene.add(dirLight);
-
-        // scene.add( new THREE.CameraHelper( dirLight.shadow.camera ) );
-
-        // ground
-        const mesh = new THREE.Mesh(new THREE.PlaneGeometry(2000, 2000), new THREE.MeshPhongMaterial({ color: 0x999999, depthWrite: false }));
-        mesh.rotation.x = - Math.PI / 2;
-        mesh.receiveShadow = true;
-        scene.add(mesh);
-
-        //const grid = new THREE.GridHelper(2000, 20, 0x000000, 0x000000);
-        //grid.material.opacity = 0.2;
-        // grid.material.transparent = true;
-        //scene.add(grid);
-
-        // model
         var value1, value2, index = 0;
         //var files = ['1HO3rpCGMt2nnjV-Jy6Au2a8vMvGTQE7k', '18wHICliIbeBCwP65SIpE7XPal0gZsYzC', '1RWXsLMO9JeE0ArhYYZpqIYFtUU42EtjQ', '125Xo_QFfYHiQaRvu3m--DaO34XR2v2AT', '1BZTFPjLQKtAjxYrIRs6dxfL-0C8SYDtF', '1vflsr84P9qswXBuCCjFLj8g5TiBtdaLk', '1EatzbwRE3-J3_oCgbwns4cz0VdzutO2y', '1-cOAhmO7G7o5T3oA9ydmjO5coOBjtFrd']; //FB,FW,MB,MW
         //var files = ['elizabeth', 'kate', 'lewis', 'nathan']; //FB,FW,MB,MW
@@ -283,7 +223,77 @@
                 selectedVoice = 0;
                 break;
         }
-        condition = Math.floor(Math.random() * (2 - 1 + 1)) + 1;
+        var container = document.createElement('div');
+        //var avatar = document.getElementById('avatar');
+        container.classList.add("columnAvatar");
+
+        container.id = "avatardiv";
+
+        document.body.appendChild(container);
+        //var cont = document.getElementById('avatardiv');
+        //cont.style.display = "none";
+        camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 1, 2000);
+        camera.zoom = 0.75;
+        camera.position.set(50, 150, 250);
+
+        const fullWidth = container.clientWidth * 3;
+        const fullHeight = container.clientHeight * 2;
+        camera.setViewOffset(fullWidth, fullHeight, container.clientWidth * 1, container.clientHeight * 0, container.clientWidth, container.clientHeight);
+
+        scene = new THREE.Scene();
+        scene.background = new THREE.Color(0xffffff);
+
+        scene2 = new THREE.Scene();
+        scene2.background = new THREE.Color(0xffffff);
+
+        scene.fog = new THREE.Fog(0xffffff, 200, 1000);
+
+        const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444);
+        hemiLight.position.set(0, 200, 0);
+        scene.add(hemiLight);
+
+        
+        if (index == 0 || index == 2) {
+            const light = new THREE.AmbientLight(0x808080); // soft white light
+            scene.add(light);
+            const lights = new THREE.DirectionalLight(0xfffacd, 1, 0);
+            lights.position.set(0, 50, 0);
+            scene.add(lights);
+        }
+        else {
+            const light = new THREE.AmbientLight(0xffffff); // soft white light
+            scene.add(light);
+            //const lights = new THREE.DirectionalLight(0xfffacd, 1, 0);
+            //lights.position.set(0, 100, 0);
+            //scene.add(lights);
+        }
+        
+
+        const dirLight = new THREE.DirectionalLight(0xffffff);
+        dirLight.position.set(0, 200, 100);
+        dirLight.castShadow = true;
+        dirLight.shadow.camera.top = 180;
+        dirLight.shadow.camera.bottom = - 100;
+        dirLight.shadow.camera.left = - 120;
+        dirLight.shadow.camera.right = 120;
+        scene.add(dirLight);
+
+        // scene.add( new THREE.CameraHelper( dirLight.shadow.camera ) );
+
+        // ground
+        const mesh = new THREE.Mesh(new THREE.PlaneGeometry(2000, 2000), new THREE.MeshPhongMaterial({ color: 0x999999, depthWrite: false }));
+        mesh.rotation.x = - Math.PI / 2;
+        mesh.receiveShadow = true;
+        scene.add(mesh);
+
+        //const grid = new THREE.GridHelper(2000, 20, 0x000000, 0x000000);
+        //grid.material.opacity = 0.2;
+        // grid.material.transparent = true;
+        //scene.add(grid);
+
+        // model
+        
+        //condition = Math.floor(Math.random() * (2 - 1 + 1)) + 1;
         var fileLoad = files[index];
         var fileLoad2 = files2[index];
         const loader = new FBXLoader();
