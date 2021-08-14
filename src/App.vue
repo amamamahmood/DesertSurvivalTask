@@ -126,6 +126,7 @@
     let activeAction, lastAction;
     let mixer;
     var condition = 1;
+    var index = 0;
     const script1 = ["a map of New Mexico. Map will be useful to start a fire with. It can be used as toilet paper. You can also use it as a shade for your head to avoid exposure to direct sunlight.",
         "the book - Edible Animals of the Desert. If you are stuck beyond day 3, you will need to find food and water. Additionally, you will be able to use the pages of book as toilet paper and as a fire starter. ",
         "a pair of sunglasses. The intense sunlight of desert may cause Photokeratitis due to sun reflection from sand. It is like having sunburned eyes. This will be prevented by wearing a pair of sunglasses.",
@@ -175,7 +176,8 @@
     //animate();
 
     function init() {
-        var value1, value2, index = 0;
+        var value1, value2;
+        condition = Math.floor(Math.random() * (2 - 1 + 1)) + 1;
         //var files = ['1HO3rpCGMt2nnjV-Jy6Au2a8vMvGTQE7k', '18wHICliIbeBCwP65SIpE7XPal0gZsYzC', '1RWXsLMO9JeE0ArhYYZpqIYFtUU42EtjQ', '125Xo_QFfYHiQaRvu3m--DaO34XR2v2AT', '1BZTFPjLQKtAjxYrIRs6dxfL-0C8SYDtF', '1vflsr84P9qswXBuCCjFLj8g5TiBtdaLk', '1EatzbwRE3-J3_oCgbwns4cz0VdzutO2y', '1-cOAhmO7G7o5T3oA9ydmjO5coOBjtFrd']; //FB,FW,MB,MW
         //var files = ['elizabeth', 'kate', 'lewis', 'nathan']; //FB,FW,MB,MW
         var files = ['https://dl.dropbox.com/s/0ngyvwy61na05rr/elizabeth_idle.fbx', 'https://dl.dropbox.com/s/iu9un8heefn8z8t/kate_idle.fbx', 'https://dl.dropbox.com/s/7su1zkawg6fh3oi/lewis_idle.fbx', 'https://dl.dropbox.com/s/4cbg6cy934v6ob9/brian_idle.fbx'];
@@ -293,7 +295,7 @@
 
         // model
         
-        //condition = Math.floor(Math.random() * (2 - 1 + 1)) + 1;
+        
         var fileLoad = files[index];
         var fileLoad2 = files2[index];
         const loader = new FBXLoader();
@@ -965,7 +967,9 @@
                     total_updates: total_updates,
                     total_matched: total_matched,
                     actual_total_matched: actual_total_matched,
-                    state: state
+                    state: state,
+                    condition: condition,
+                    agent_index: index
                 };
                 //alert("json_obj " + JSON.stringify(json_obj));
                 //json_obj.putAll(JSON.parse(user_data));
