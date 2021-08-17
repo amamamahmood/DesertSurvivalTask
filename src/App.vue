@@ -114,7 +114,8 @@
     var actual_total_matched = 0;
     var user_final_rankings;
     //import Stats from 'three/examples/jsm/libs/stats.module';
-    var selectedVoice = 0;
+    //var selectedVoice = 0;
+    let gen;
     let counter = 0; // which item on its list will the agent talk about
     var item_order = [0, 1, 2, 3, 4, 5, 6, 7, 8];
     var avatar_order = [4, 5, 0, 1, 2, 7, 3, 8, 6];
@@ -210,19 +211,23 @@
         switch (index) {
             case 0:
                 agentName = "Elizabeth";
-                selectedVoice = 1;
+                gen = "f";
+                //selectedVoice = 1;
                 break;
             case 1:
                 agentName = "Kate";
-                selectedVoice = 1;
+                //selectedVoice = 1;
+                gen = "f";
                 break;
             case 2:
                 agentName = "Lewis";
-                selectedVoice = 0;
+                //selectedVoice = 0;
+                gen = "m";
                 break;
             case 3:
                 agentName = "Brian";
-                selectedVoice = 0;
+                //selectedVoice = 0;
+                gen = "m";
                 break;
         }
         var container = document.createElement('div');
@@ -411,10 +416,10 @@
         }
     }
     //var doneSpeaking = false;
-    var synth = window.speechSynthesis;
+    //var synth = window.speechSynthesis;
 
 
-    function greet(greetingSpeech) {
+    /*function greet(greetingSpeech) {
         //speechSynthesis.cancel();
         var voices = synth.getVoices();
         let voice;
@@ -439,7 +444,7 @@
         //greetingSpeech.onend = function () {
         //  return true;
         //}
-    }
+    }*/
 
     export default {
         name: "App",
@@ -596,7 +601,7 @@
                     total_matched += 1;
                     items[counter].matched = 1;
                     items[counter].rankings =this.returnRankings();
-                   // alert(counter + "printing item to check matching " + JSON.stringify(items[counter]));
+                   //alert(counter + "printing item to check matching " + JSON.stringify(items[counter]));
                     counter += 1;
                     return true;
 
@@ -624,6 +629,7 @@
             returnText: function (condition) {
                 var tempStr;
                 var avatarIndex = counter;
+                let audio_src;
                 //alert(this.avatarList[counter].id);
                 var finding = this.avatarList[counter].id;
                 var userIndex = this.users.findIndex(x => x.id === finding); // gotta fix this
@@ -631,22 +637,26 @@
                 if (userIndex > avatarIndex) {
                     if (condition == 1) {// Expert
                         tempStr = script1[this.avatarList[counter].id - 1];
+                        audio_src = "audio1_" + this.avatarList[counter].id + gen + ".mp3";
                     }
                     else {
                         tempStr = script3[this.avatarList[counter].id - 1];
+                        audio_src = "audio3_" + this.avatarList[counter].id + gen + ".mp3";
                     }
                 }
                 else {
                     if (condition == 1) {// Expert
                         tempStr = script2[this.avatarList[counter].id - 1];
+                        audio_src = "audio2_" + this.avatarList[counter].id + gen + ".mp3";
                     }
                     else {
                         tempStr = script4[this.avatarList[counter].id - 1];
+                        audio_src = "audio4_" + this.avatarList[counter].id + gen + ".mp3";
                     }
                 }
 
 
-                return tempStr;
+                return [ tempStr, audio_src ];
             },
             returnRankings: function (userAvatar = 'user') {
                 var ranking = [];
@@ -745,15 +755,16 @@
 
                 var inst = document.getElementById("drag_inst");
                 inst.style.display = "inline-block";
-                var say = "Hi. I am " + agentName + ". Here is my list. I'll discuss my rankings with you item by item...";
-                var say2 = "Let's start with the first item on the list. " + this.returnText(condition);
+                var say = "Hi. I am " + agentName + ". Here is my list. I'll discuss my rankings with you item by item... Let's start with the first item on the list.";
+                const [ say2, audio_src ] = this.returnText(condition);
+                //alert(JSON.stringify(say2));
                 inst.textContent = say;
 
                 //counter += 1;
 
 
                 // setTimeout(function () {
-                const greetingSpeech = new window.SpeechSynthesisUtterance();
+                /*const greetingSpeech = new window.SpeechSynthesisUtterance();
                 greetingSpeech.text = say;
                 greet(greetingSpeech);
                 greetingSpeech.addEventListener('end', function () {
@@ -769,12 +780,25 @@
                         btn.style.display = "inline-block";
                         setAction(actions[0]);
                     });
-                });
+                });*/
 
                 //  }, 100);
-
-
-
+                const sound = new Audio();
+                sound.src = "intro"+index+".mp3";
+                sound.play();
+                sound.addEventListener('ended', function () {
+                    inst.textContent = say2;
+                    const greetingSpeech2 = new Audio();
+                    greetingSpeech2.src = audio_src;
+                    greetingSpeech2.play();
+                    greetingSpeech2.addEventListener('ended', function () {
+                        var btn = document.getElementById("drag");
+                        btn.style.display = "inline-block";
+                        btn = document.getElementById("noDrag");
+                        btn.style.display = "inline-block";
+                        setAction(actions[0]);
+                    });
+                });
 
 
             },
@@ -800,6 +824,8 @@
                 this.doneDragging();
             },
             doneDragging: function () {
+                let say, tempStr;
+                let audio_src;
                 items[counter].rankings = this.returnRankings();
                 //alert(counter + "printing item "+ JSON.stringify(items[counter]));
                 
@@ -841,15 +867,16 @@
                         //setTimeout(function () {
 
 
-                        const greetingSpeech = new window.SpeechSynthesisUtterance();
-                        greetingSpeech.text = "Glad we agree on some items on our list";
+                        const greetingSpeech = new Audio();
+                        greetingSpeech.src = gen + "_agree.mp3";
+                        greetingSpeech.play();
                         inst.textContent = "Glad we agree on some items on our list";
-                        greet(greetingSpeech);
                         //alert(counter);
                         if (counter < 9) {
-                            var say = "Next I have " + this.returnText(condition);
+                            [tempStr, audio_src] = this.returnText(condition);
+                            say = "Next I have " + tempStr;
                         }
-                        greetingSpeech.addEventListener('end', function () {
+                        greetingSpeech.addEventListener('ended', function () {
 
                             if (counter == 9) {
                                 //alert("I am here " + counter);
@@ -872,37 +899,29 @@
                                 else {
                                     setAction(actions[0]);
                                 }
-                                // setTimeout(function () {
-                                const greetingSpeech2 = new window.SpeechSynthesisUtterance();
+
+                                const greetingSpeech2 = new Audio();
                                 //var say = "Let's move on to the next item on the list. " + this.returnText(condition);
                                 //inst.textContent = "The agent tries to convince the participant about item " + JSON.stringify(counter + 1);
                                 inst.textContent = say;
-                                greetingSpeech2.text = say;
-                                greet(greetingSpeech2);
-                                greetingSpeech2.addEventListener('end', function () {
-                                    btn = document.getElementById("drag");
-                                    btn.style.display = "inline-block";
-                                    btn = document.getElementById("noDrag");
-                                    btn.style.display = "inline-block";
-                                    setAction(actions[0]);
+                                greetingSpeech2.src = gen+"_next.mp3";
+                                greetingSpeech2.play()
+                                const greetingSpeech3 = new Audio();
+                                greetingSpeech3.src = audio_src;
+                                greetingSpeech2.addEventListener('ended', function () {
+                                    
+                                    greetingSpeech3.play();
+                                    greetingSpeech3.addEventListener('ended', function () {
+                                        btn = document.getElementById("drag");
+                                        btn.style.display = "inline-block";
+                                        btn = document.getElementById("noDrag");
+                                        btn.style.display = "inline-block";
+                                        setAction(actions[0]);
+                                    });
                                 });
-
-
-                                //   }, 100);
-
                             }
-                            /*else {
-                                //alert("I am here in the end " + counter);
-                                this.enable();
-                                setAction(actions[0]);
-                                inst = document.getElementById("drag_inst");
-                                inst.textContent = "Please finalize and submit your rankings before concluding the study";
-                                btn = document.getElementById("submit");
-                                btn.style.display = "inline-block";
-                            }*/
+                      
                         });
-
-                        //}, 100);
                     }
                     else if ((counter - temp) == 0) {
                         if (counter < 9) {
@@ -914,19 +933,26 @@
                             }
                             //setAction(actions[1]);
                             //setTimeout(function () {
-                            const greetingSpeech = new window.SpeechSynthesisUtterance();
-                            say = "Next I have " + this.returnText(condition);
+                            const greetingSpeech = new Audio();
+                            [tempStr, audio_src] = this.returnText(condition);
+                            say = "Next I have " + tempStr;
                             //inst.textContent = "The agent tries to convince the participant about item " + JSON.stringify(counter + 1);
                             //greetingSpeech.text = "I'll try to convince you about item " + JSON.stringify(counter + 1);
                             inst.textContent = say;
-                            greetingSpeech.text = say;
-                            greet(greetingSpeech);
-                            greetingSpeech.addEventListener('end', function () {
-                                btn = document.getElementById("drag");
-                                btn.style.display = "inline-block";
-                                btn = document.getElementById("noDrag");
-                                btn.style.display = "inline-block";
-                                setAction(actions[0]);
+                            greetingSpeech.src = gen+"_next.mp3";
+                            greetingSpeech.play();
+                            const greetingSpeech2 = new Audio();
+                            greetingSpeech2.src = audio_src;
+                            greetingSpeech.addEventListener('ended', function () {
+                                
+                                greetingSpeech2.play();
+                                greetingSpeech2.addEventListener('ended', function () {
+                                    btn = document.getElementById("drag");
+                                    btn.style.display = "inline-block";
+                                    btn = document.getElementById("noDrag");
+                                    btn.style.display = "inline-block";
+                                    setAction(actions[0]);
+                                });
                             });
 
                             //}, 100);
