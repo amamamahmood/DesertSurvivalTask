@@ -39,8 +39,8 @@
             <div id="centerColumn" class="column3">
                 <br />
                 <h3 class="smallerText" id="drag_inst" style="display:none; max-width:55vw;">The agent tries to convince the participant about next item</h3>
-                <h2 class="smallerText" id="intro2" style="display:none; max-width:50vw; ">
-                </h2>
+                <h3 class="smallerText" id="intro2" style="display:none; max-width:55vw;  ">
+                </h3>
                 <br />
 
                 <button id="drag" class="button" style="display:none" width="100px" v-on:click="makeDraggable">Update your ranking</button>
