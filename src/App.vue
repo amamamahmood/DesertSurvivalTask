@@ -38,7 +38,7 @@
             </div>
             <div id="centerColumn" class="column3">
                 <br />
-                <h2 class="smallerText" id="drag_inst" style="display:none; max-width:50vw">The agent tries to convince the participant about next item</h2>
+                <h3 class="smallerText" id="drag_inst" style="display:none; max-width:55vw;">The agent tries to convince the participant about next item</h3>
                 <h2 class="smallerText" id="intro2" style="display:none; max-width:50vw; ">
                 </h2>
                 <br />
@@ -126,7 +126,7 @@
     const clock = new THREE.Clock();
     let activeAction, lastAction;
     let mixer;
-    var condition = 1;
+    var condition = 0;
     var index = 0;
     const script1 = ["a map of New Mexico. Map will be useful to start a fire with. It can be used as toilet paper. You can also use it as a shade for your head to avoid exposure to direct sunlight.",
         "the book - Edible Animals of the Desert. If you are stuck beyond day 3, you will need to find food and water. Additionally, you will be able to use the pages of book as toilet paper and as a fire starter. ",
