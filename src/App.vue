@@ -189,21 +189,25 @@
                 value1 = 0;
                 value2 = 1;
                 //index = Math.random() < 0.5 ? value1 : value2;
+                index = Math.floor(Math.random() * (value2 - value1 + 1)) + value1;
                 break;
             case 2:
                 value1 = 2;
                 value2 = 3;
-                //index = Math.random() < 0.5 ? value1 : value2;
+                index = 3;
+                condition = 2;
                 break;
             case 3:
             case 4:
                 //selectedVoice = 1;
                 value1 = 0;
                 value2 = 3;
+                index = 3;
+                condition = 2;
                 break;
 
         }
-        index = Math.floor(Math.random() * (value2 - value1 + 1)) + value1;
+        
         //var fileLoad = files[index]+'_idle.fbx';
         //var fileLoad2 = files[index] + '_talking.fbx';
         //var fileLoad = 'https://drive.google.com/uc?export=view&id=' + files[index];
