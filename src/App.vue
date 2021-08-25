@@ -188,8 +188,8 @@
                 //selectedVoice = 1;
                 value1 = 0;
                 value2 = 1;
-                //index = Math.random() < 0.5 ? value1 : value2;
-                index = Math.floor(Math.random() * (value2 - value1 + 1)) + value1;
+                index = Math.random() < 0.6 ? value1 : value2;
+                //index = Math.floor(Math.random() * (value2 - value1 + 1)) + value1;
                 break;
             case 2:
                 value1 = 2;
