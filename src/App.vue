@@ -9,6 +9,7 @@
                     <li class="float-child" style="list-style-position: inside; font-size:1.8vmin;" v-for="item in avatarList" :key="item.id">
                         <div>
                             <img :src="item.avatar" alt="item.name" width="70" heigth="70" style="width: 6vw; height: 6vw; display: block; margin: auto;">
+                            <br />
                             <p  style="display: block; font-size: 1.8vmin;">{{item.name}}</p>
                         </div>
                     </li>
@@ -94,7 +95,8 @@
     import ThankYou from './components/ThankYou';
     import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
     import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
-    var url = 'https://script.google.com/macros/s/AKfycby4CgcVBKI471bkIYxrKr6GEY35345TXDlnWrH6-KyXhcZ7St9sAyLKbHumTPQXaME9cQ/exec';
+    //var url = 'https://script.google.com/macros/s/AKfycby4CgcVBKI471bkIYxrKr6GEY35345TXDlnWrH6-KyXhcZ7St9sAyLKbHumTPQXaME9cQ/exec';
+    var url = '';
     var user_initial_rankings;
     var avatar_rankings ;
     class item_state {
@@ -1100,13 +1102,13 @@
 
     .column {
         float: left;
-        width: 80vw;
-        height: 17vw;
+        width: 10vw;
+        height: 80vw;
         align-content: center;
         align-items: center;
         text-align: center;
         position: absolute;
-        top: 2px;
+        top: 10vw;
         font-size: 1.8vmin;
     }
 

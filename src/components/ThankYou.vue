@@ -12,7 +12,8 @@
     import "survey-vue/modern.css";
     //import "./index.css";
     //const { v4: uuidv4 } = require('uuid');
-    var url = 'https://script.google.com/macros/s/AKfycbzqKPezKCmCUGpP6-l_x5xez1dWqnXSrzyL9jOtHTxtEC5y73IUOzrrR0hdbsYjDW4/exec';
+    //var url = 'https://script.google.com/macros/s/AKfycbzqKPezKCmCUGpP6-l_x5xez1dWqnXSrzyL9jOtHTxtEC5y73IUOzrrR0hdbsYjDW4/exec';
+    var url = '';
     Survey.StylesManager.applyTheme("modern");
 
     export default {
