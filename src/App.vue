@@ -2,19 +2,33 @@
     <div id="app" class="unselectable">
         <div class="row">
 
-
+            <h3 class="smallerTextLeft">Agent's Rankings</h3>
             <div id="avatarRating" class="column" style=" display:none">
-                <h3 class="smallerText">Agent's Rankings</h3>
+
                 <ol>
-                    <li class="float-child" style="list-style-position: inside; font-size:1.8vmin;" v-for="item in avatarList" :key="item.id">
+                    <li class="float-child-agent" style="list-style-position: inside; font-size:1vh;" v-for="item in avatarList" :key="item.id">
                         <div>
-                            <img :src="item.avatar" alt="item.name" width="70" heigth="70" style="width: 6vw; height: 6vw; display: block; margin: auto;">
-                            <br />
-                            <p  style="display: block; font-size: 1.8vmin;">{{item.name}}</p>
+                            <img :src="item.avatar" alt="item.name" style="width: 5vh; height: 5vh; display: block; margin: auto;">
+                            <p style="display: inline-block; font-size: 1vh;">{{item.name}}</p>
+
                         </div>
                     </li>
                 </ol>
             </div>
+
+            <div id="avatarRating2" class="column_right" style=" display:none">
+
+                <ol>
+                    <li class="float-child-agent-right" style="list-style-position: inside; font-size:1vh;" v-for="item in avatarList" :key="item.id">
+                        <div>
+                            <img :src="item.avatar" alt="item.name" style="width: 5vh; height: 5vh; display: block; margin: auto;">
+                            <p style="display: inline-block; font-size: 1vh;">{{item.name}}</p>
+
+                        </div>
+                    </li>
+                </ol>
+            </div>
+
             <div id="headingColumn" class="column3">
                 <h1 id="heading" class="LargerText" style="display:none"> Desert Survival Task </h1>
                 <h3 id="intro" class="smallerText" style="max-width:70vw; display:none">
@@ -748,6 +762,8 @@
                 sect.style.display = "none";
                 sect = document.getElementById("avatarRating");
                 sect.style.display = "block";
+                sect = document.getElementById("avatarRating2");
+                sect.style.display = "block";
                 if (avatarReady) {
                     setAction(actions[1]);
                 }
@@ -1016,6 +1032,8 @@
                 document.body.style.paddingLeft = '0vw';
                 var temp = document.getElementById("avatarRating");
                 temp.style.display = "none";
+                temp = document.getElementById("avatarRating2");
+                temp.style.display = "none";
                 temp = document.getElementById("centerColumn");
                 temp.style.display = "none";
                 temp = document.getElementById("user_list");
@@ -1047,7 +1065,7 @@
         margin-left: 5px;
         max-width: 100%;
         max-height: 100%;
-        padding-left: 10vw;
+        padding-left: 2vw;
         align-content: center;
         align-items: center;
         text-align: center;
@@ -1090,8 +1108,9 @@
 
     .column2 {
         float: left;
-        width: 80vw;
+        width: 60vw;
         height: 17vw;
+        padding-left: 18vw;
         align-content: center;
         align-items: center;
         text-align: center;
@@ -1102,14 +1121,27 @@
 
     .column {
         float: left;
-        width: 10vw;
-        height: 80vw;
+        width: 6vh;
+        height: 95vh;
         align-content: center;
         align-items: center;
         text-align: center;
         position: absolute;
-        top: 10vw;
-        font-size: 1.8vmin;
+        top: 2vh;
+        font-size: 1vh;
+    }
+
+    .column_right {
+        float: right;
+        width: 6vh;
+        height: 95vh;
+        align-content: center;
+        align-items: center;
+        text-align: center;
+        position: absolute;
+        top: 2vh;
+        right:2vw;
+        font-size: 1vh;
     }
 
     .columnAvatar {
@@ -1121,8 +1153,9 @@
         text-align: center;
         position: absolute;
         top: 15%;
-        right: 2vw;
+        right: 10vw;
         z-index: -1;
+        
     }
 
     .column3 {
@@ -1133,6 +1166,7 @@
         align-content: center;
         align-items: center;
         text-align: center;
+        padding-left: 8vw;
     }
 
     .column4 {
@@ -1143,6 +1177,7 @@
         align-content: center;
         align-items: center;
         text-align: center;
+        padding-left: 8vw;
     }
     /* Clear floats after the columns */
     .row:after {
@@ -1172,6 +1207,11 @@
         font-family: Arial;
         font-size: 2vmin;
     }
+    smallerTextLeft {
+        text-align: left;
+        font-family: Arial;
+        font-size: 2vw;
+    }
 
     button {
         align-content: center;
@@ -1180,12 +1220,9 @@
         font-size: 20px;
     }
 
-
-
-
-    .float-child {
+    .float-child-agent {
         width: 8vw;
-        height: 12vw;
+        height: 10vh;
         float: left;
         position: relative;
         background-color: #aaa;
@@ -1196,7 +1233,40 @@
         text-align: center;
         margin-left: 2px;
         margin-bottom: 2px;
-        font-size: 1.8vmin;
+        font-size: 1vh;
+    }
+
+    .float-child-agent-right {
+        width: 8vw;
+        height: 10vh;
+        float: right;
+        position: relative;
+        background-color: #aaa;
+        border: solid;
+        border-width: 2px;
+        align-content: center;
+        align-items: center;
+        text-align: center;
+        margin-right: 2px;
+        margin-bottom: 2px;
+        font-size: 1vh;
+    }
+
+
+    .float-child {
+        width: 6vw;
+        height: 9vw;
+        float: left;
+        position: relative;
+        background-color: #aaa;
+        border: solid;
+        border-width: 2px;
+        align-content: center;
+        align-items: center;
+        text-align: center;
+        margin-left: 2px;
+        margin-bottom: 2px;
+        font-size: 1.5vmin;
     }
 
     .unselectable {
