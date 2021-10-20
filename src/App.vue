@@ -133,15 +133,15 @@
     let counter = 0; // which item on its list will the agent talk about
     var item_order = [0, 1, 2, 3, 4, 5, 6, 7, 8];
     var avatar_order = [4, 5, 0, 1, 2, 7, 3, 8, 6];
-    let camera, scene, renderer, renderer2, scene2, scene_left, scene_left2;
+    let camera, camera_left, scene, renderer, renderer_left, scene2, scene_left, scene2_left;
     let agentName, agentName2;
-    let avatarReady = false;
-    let actions;
+    let avatarReady = false, avatarReady_left = false;
+    let actions, actions_left;
     const clock = new THREE.Clock();
-    let activeAction, lastAction;
-    let mixer;
+    let activeAction, lastAction, activeAction_left, lastAction_left;
+    let mixer,mixer_left;
     var condition = 0;
-    var index = 0;
+    var index = 0,index2 = 1;
     const script1 = ["a map of New Mexico. Map will be useful to start a fire with. It can be used as toilet paper. You can also use it as a shade for your head to avoid exposure to direct sunlight.",
         "the book - Edible Animals of the Desert. If you are stuck beyond day 3, you will need to find food and water. Additionally, you will be able to use the pages of book as toilet paper and as a fire starter. ",
         "a pair of sunglasses. The intense sunlight of desert may cause Photokeratitis due to sun reflection from sand. It is like having sunburned eyes. This will be prevented by wearing a pair of sunglasses.",
@@ -227,6 +227,7 @@
                 agentName = "Elizabeth";
                 agentName2 = "Kate";
                 gen = "f";
+                index2 = 1;
                 //selectedVoice = 1;
                 break;
             case 1:
@@ -234,18 +235,21 @@
                 agentName = "Elizabeth";
                 //selectedVoice = 1;
                 gen = "f";
+                index2 = 0;
                 break;
             case 2:
                 agentName = "Lewis";
                 agentName2 = "Brian";
                 //selectedVoice = 0;
                 gen = "m";
+                index2 = 3;
                 break;
             case 3:
                 agentName = "Brian";
                 agentName2 = "Lewis";
                 //selectedVoice = 0;
                 gen = "m";
+                index2 = 2;
                 break;
         }
         var container = document.createElement('div');
@@ -258,13 +262,13 @@
 
         //For agent 2
 
-        var container2 = document.createElement('div');
+        var container_left = document.createElement('div');
         //var avatar = document.getElementById('avatar');
-        container2.classList.add("columnAvatar-left");
+        container_left.classList.add("columnAvatar-left");
 
-        container2.id = "avatardiv2";
+        container_left.id = "avatardiv_left";
 
-        document.body.appendChild(container2);
+        document.body.appendChild(container_left);
 
         // for agent 2 ended
 
@@ -274,33 +278,54 @@
         camera.zoom = 0.75;
         camera.position.set(50, 150, 250);
 
+
         const fullWidth = container.clientWidth * 3;
         const fullHeight = container.clientHeight * 2;
         camera.setViewOffset(fullWidth, fullHeight, container.clientWidth * 1, container.clientHeight * 0, container.clientWidth, container.clientHeight);
-
+        camera_left = camera;
         scene = new THREE.Scene();
         scene.background = new THREE.Color(0xffffff);
+
+        scene_left = new THREE.Scene();
+        scene_left.background = new THREE.Color(0xffffff);
 
         scene2 = new THREE.Scene();
         scene2.background = new THREE.Color(0xffffff);
 
-        scene.fog = new THREE.Fog(0xffffff, 200, 1000);
+        scene2_left = new THREE.Scene();
+        scene2_left.background = new THREE.Color(0xffffff);
 
+        scene.fog = new THREE.Fog(0xffffff, 200, 1000);
         const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444);
         hemiLight.position.set(0, 200, 0);
         scene.add(hemiLight);
 
-        
+        scene_left.fog = new THREE.Fog(0xffffff, 200, 1000);
+        scene_left.add(hemiLight);
+
         if (index == 0 || index == 2) {
             const light = new THREE.AmbientLight(0x808080); // soft white light
             scene.add(light);
+            //scene_left.add(light);
             const lights = new THREE.DirectionalLight(0xfffacd, 1, 0);
             lights.position.set(0, 50, 0);
             scene.add(lights);
+            //scene_left.add(lights);
+            const light_left = new THREE.AmbientLight(0xffffff); // soft white light
+            scene_left.add(light_left);
         }
         else {
-            const light = new THREE.AmbientLight(0xffffff); // soft white light
-            scene.add(light);
+            const light = new THREE.AmbientLight(0x808080); // soft white light
+            scene_left.add(light);
+            //scene_left.add(light);
+            const lights = new THREE.DirectionalLight(0xfffacd, 1, 0);
+            lights.position.set(0, 50, 0);
+            scene_left.add(lights);
+            //scene_left.add(lights);
+            const light_left = new THREE.AmbientLight(0xffffff); // soft white light
+            scene.add(light_left);
+            //scene.add(light);
+            
             //const lights = new THREE.DirectionalLight(0xfffacd, 1, 0);
             //lights.position.set(0, 100, 0);
             //scene.add(lights);
@@ -315,7 +340,7 @@
         dirLight.shadow.camera.left = - 120;
         dirLight.shadow.camera.right = 120;
         scene.add(dirLight);
-
+        scene_left.add(dirLight);
         // scene.add( new THREE.CameraHelper( dirLight.shadow.camera ) );
 
         // ground
@@ -323,25 +348,25 @@
         mesh.rotation.x = - Math.PI / 2;
         mesh.receiveShadow = true;
         scene.add(mesh);
-
+        scene_left.add(mesh);
         //const grid = new THREE.GridHelper(2000, 20, 0x000000, 0x000000);
         //grid.material.opacity = 0.2;
         // grid.material.transparent = true;
         //scene.add(grid);
 
         // model
-        
-        
-        var fileLoad = files[index];
-        var fileLoad2 = files2[index];
-        const loader = new FBXLoader();
-
         /*if (avatarState == "talking") {
             fileLoad = 'david_talking.fbx';
         }
         else if (avatarState == "idle") {
             fileLoad = 'david_idle.fbx';
         }*/
+        
+        var fileLoad = files[index];
+        var fileLoad2 = files2[index];
+        const loader = new FBXLoader();
+
+        
         loader.load(fileLoad, function (object) {
 
 
@@ -386,6 +411,60 @@
 
         });
 
+        // for agent on left
+
+        var fileLoad_left = files[index2];
+        var fileLoad2_left = files2[index2];
+        const loader_left = new FBXLoader();
+
+
+        loader_left.load(fileLoad_left, function (object_left) {
+
+
+
+            mixer_left = new THREE.AnimationMixer(object_left);
+            const loader2_left = new FBXLoader();
+
+
+            loader2_left.load(fileLoad2_left, function (object2_left) {
+                object_left.animations.push(object2_left.animations[0]);
+                //alert("Length of object" + object.animations.length)
+                object_left.traverse(function (child_left) {
+
+                    if (child_left.isMesh) {
+
+                        child_left.castShadow = true;
+                        child_left.receiveShadow = true;
+
+                    }
+
+                });
+
+                if (object_left.animations.length == 3) {
+                    //alert("All files loaded");
+                    scene_left.add(object_left);
+                    avatarReady_left = true;
+                    //let object = scene.getObjectByName("avatar_animation");
+                    //alert("Size of object after pushing is" + object.animations.length)
+                    actions_left = [mixer_left.clipAction(object_left.animations[0]), mixer_left.clipAction(object_left.animations[2])];
+                    //alert(actions);
+                    actions_left[0].timeScale = 0.75;
+                    //actions[1].timeScale = 0.75;
+                    //alert(actions[0].timeScale);
+                    actions_left[0].play();
+                    activeAction_left = actions_left[0];
+                    lastAction_left = actions_left[0];
+                    //alert(actions);
+                }
+
+
+            });
+
+        });
+
+
+        // end for agent on left
+
         renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(container.clientWidth, container.clientHeight);
@@ -394,24 +473,24 @@
         // renderer.domElement.id = "avatardivelement";
         renderer.render(scene2, camera);
 
-        renderer2 = new THREE.WebGLRenderer({ antialias: true });
-        renderer2.setPixelRatio(window.devicePixelRatio);
-        renderer2.setSize(container.clientWidth, container.clientHeight);
-        renderer2.shadowMap.enabled = true;
-        renderer2.setClearColor(0xffffff, 0);
+        renderer_left = new THREE.WebGLRenderer({ antialias: true });
+        renderer_left.setPixelRatio(window.devicePixelRatio);
+        renderer_left.setSize(container_left.clientWidth, container_left.clientHeight);
+        renderer_left.shadowMap.enabled = true;
+        renderer_left.setClearColor(0xffffff, 0);
         // renderer.domElement.id = "avatardivelement";
-        renderer2.render(scene2, camera);
+        renderer_left.render(scene2_left, camera_left);
 
         container.appendChild(renderer.domElement);
-        container2.appendChild(renderer2.domElement);
+        container_left.appendChild(renderer_left.domElement);
         const controls = new OrbitControls(camera, renderer.domElement);
         controls.target.set(0, 100, 0);
         controls.enabled = false;
         controls.update();
-        const controls2 = new OrbitControls(camera, renderer2.domElement);
-        controls2.target.set(0, 100, 0);
-        controls2.enabled = false;
-        controls2.update();
+        const controls_left = new OrbitControls(camera, renderer_left.domElement);
+        controls_left.target.set(0, 100, 0);
+        controls_left.enabled = false;
+        controls_left.update();
 
         window.addEventListener('resize', onWindowResize);
 
@@ -428,6 +507,12 @@
 
         renderer.setSize(container.clientWidth, container.clientHeight);
 
+        var container_left = document.getElementById("avatardiv_left")
+        camera_left.aspect = container_left.clientWidth / container_left.clientHeight;
+        camera_left.updateProjectionMatrix();
+        // for agent on left
+
+        renderer_left.setSize(container.clientWidth, container.clientHeight);
     }
 
     //
@@ -439,9 +524,9 @@
         const delta = clock.getDelta();
 
         if (mixer) mixer.update(delta);
-
+        if (mixer_left) mixer_left.update(delta);
         renderer.render(scene, camera);
-        renderer2.render(scene, camera);
+        renderer_left.render(scene_left, camera_left);
 
         //stats.update();
 
@@ -460,6 +545,21 @@
             activeAction.play();
         }
     }
+
+    function setAction_left(toAction_left) {
+        if (toAction_left != activeAction_left) {
+            lastAction_left = activeAction_left;
+            activeAction_left = toAction_left;
+            //lastAction.stop()
+            lastAction_left.fadeOut(1);
+            activeAction_left.reset();
+            activeAction_left.timeScale = 0.8;
+            activeAction_left.fadeIn(1);
+            activeAction_left.timeScale = 0.8;
+            activeAction_left.play();
+        }
+    }
+
     //var doneSpeaking = false;
     //var synth = window.speechSynthesis;
 
@@ -744,7 +844,7 @@
 
                 setTimeout(function () {
                     sect.disabled = false;
-                }, 10000);
+                }, 20000);
 
             },
             doneInitialRanking: function (event) {
@@ -769,7 +869,7 @@
                 btn.disabled = true;
                 setTimeout(function () {
                     btn.disabled = false;
-                }, 3000);
+                }, 5000);
 
 
 
@@ -793,11 +893,13 @@
                 sect.style.display = "block";
                 sect = document.getElementById("avatarRating2");
                 sect.style.display = "block";
-                if (avatarReady) {
+                if (avatarReady && avatarReady_left) {
                     setAction(actions[1]);
+                    setAction_left(actions_left[0])
                 }
                 else {
                     setAction(actions[0]);
+                    setAction_left(actions_left[0])
                 }
 
                 var inst = document.getElementById("drag_inst");
@@ -1072,6 +1174,8 @@
                 temp = document.getElementById("headingColumn");
                 temp.style.display = "none";
                 temp = document.getElementById("avatardiv");
+                temp.style.display = "none";
+                temp = document.getElementById("avatardiv_left");
                 temp.style.display = "none";
                 //alert("Adding the form here. Some errors. Working on those!");
                 temp = document.getElementById("surveyElement2");
