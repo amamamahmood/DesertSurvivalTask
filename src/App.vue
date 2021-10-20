@@ -133,7 +133,7 @@
     let counter = 0; // which item on its list will the agent talk about
     var item_order = [0, 1, 2, 3, 4, 5, 6, 7, 8];
     var avatar_order = [4, 5, 0, 1, 2, 7, 3, 8, 6];
-    let camera, camera_left, scene, renderer, renderer_left, scene2, scene_left, scene2_left;
+    let camera, scene, renderer, renderer_left, scene2, scene_left, scene2_left;
     let agentName, agentName2;
     let avatarReady = false, avatarReady_left = false;
     let actions, actions_left;
@@ -277,55 +277,53 @@
         camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 1, 2000);
         camera.zoom = 0.75;
         camera.position.set(50, 150, 250);
-
-
         const fullWidth = container.clientWidth * 3;
         const fullHeight = container.clientHeight * 2;
         camera.setViewOffset(fullWidth, fullHeight, container.clientWidth * 1, container.clientHeight * 0, container.clientWidth, container.clientHeight);
-        camera_left = camera;
+        //camera_left = camera;
+        /* for left agent
+        camera_left = new THREE.PerspectiveCamera(45, container_left.clientWidth / container_left.clientHeight, 1, 2000);
+        camera_left.zoom = 0.75;
+        camera_left.position.set(50, 150, 250);
+        const fullWidth_left = container_left.clientWidth * 3;
+        const fullHeight_left = container_left.clientHeight * 2;
+        camera_left.setViewOffset(fullWidth_left, fullHeight_left, container_left.clientWidth * 1, container_left.clientHeight * 0, container_left.clientWidth, container_left.clientHeight);
+    // end for left agent*/
+
         scene = new THREE.Scene();
         scene.background = new THREE.Color(0xffffff);
-
-        scene_left = new THREE.Scene();
-        scene_left.background = new THREE.Color(0xffffff);
-
         scene2 = new THREE.Scene();
         scene2.background = new THREE.Color(0xffffff);
-
-        scene2_left = new THREE.Scene();
-        scene2_left.background = new THREE.Color(0xffffff);
-
         scene.fog = new THREE.Fog(0xffffff, 200, 1000);
         const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444);
         hemiLight.position.set(0, 200, 0);
         scene.add(hemiLight);
 
+
+        scene_left = new THREE.Scene();
+        scene_left.background = new THREE.Color(0xffffff);
+        scene2_left = new THREE.Scene();
+        scene2_left.background = new THREE.Color(0xffffff);
         scene_left.fog = new THREE.Fog(0xffffff, 200, 1000);
         scene_left.add(hemiLight);
 
         if (index == 0 || index == 2) {
             const light = new THREE.AmbientLight(0x808080); // soft white light
             scene.add(light);
-            //scene_left.add(light);
             const lights = new THREE.DirectionalLight(0xfffacd, 1, 0);
             lights.position.set(0, 50, 0);
             scene.add(lights);
-            //scene_left.add(lights);
             const light_left = new THREE.AmbientLight(0xffffff); // soft white light
             scene_left.add(light_left);
         }
         else {
-            const light = new THREE.AmbientLight(0x808080); // soft white light
-            scene_left.add(light);
-            //scene_left.add(light);
-            const lights = new THREE.DirectionalLight(0xfffacd, 1, 0);
-            lights.position.set(0, 50, 0);
-            scene_left.add(lights);
-            //scene_left.add(lights);
-            const light_left = new THREE.AmbientLight(0xffffff); // soft white light
-            scene.add(light_left);
-            //scene.add(light);
-            
+            const light2 = new THREE.AmbientLight(0xffffff); // soft white light
+            scene.add(light2);
+            const light2_left = new THREE.AmbientLight(0x808080); // soft white light
+            scene_left.add(light2_left);
+            const lights_left = new THREE.DirectionalLight(0xfffacd, 1, 0);
+            lights_left.position.set(0, 50, 0);
+            scene_left.add(lights_left);
             //const lights = new THREE.DirectionalLight(0xfffacd, 1, 0);
             //lights.position.set(0, 100, 0);
             //scene.add(lights);
@@ -479,7 +477,7 @@
         renderer_left.shadowMap.enabled = true;
         renderer_left.setClearColor(0xffffff, 0);
         // renderer.domElement.id = "avatardivelement";
-        renderer_left.render(scene2_left, camera_left);
+        renderer_left.render(scene2_left, camera);
 
         container.appendChild(renderer.domElement);
         container_left.appendChild(renderer_left.domElement);
@@ -507,9 +505,9 @@
 
         renderer.setSize(container.clientWidth, container.clientHeight);
 
-        var container_left = document.getElementById("avatardiv_left")
+       /* var container_left = document.getElementById("avatardiv_left")
         camera_left.aspect = container_left.clientWidth / container_left.clientHeight;
-        camera_left.updateProjectionMatrix();
+        camera_left.updateProjectionMatrix();*/
         // for agent on left
 
         renderer_left.setSize(container.clientWidth, container.clientHeight);
@@ -526,7 +524,7 @@
         if (mixer) mixer.update(delta);
         if (mixer_left) mixer_left.update(delta);
         renderer.render(scene, camera);
-        renderer_left.render(scene_left, camera_left);
+        renderer_left.render(scene_left, camera);
 
         //stats.update();
 
