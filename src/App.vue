@@ -2,9 +2,8 @@
     <div id="app" class="unselectable">
         <div class="row">
 
-            
+
             <div id="avatarRating" class="column" style=" display:none">
-                <h3 class="smallerTextLeft" style="text-align:left; padding-left:1vh;">Agent 1 Rankings</h3>
                 <ol>
                     <li class="float-child-agent" style="list-style-position: inside; font-size:1.5vh;" v-for="item in avatarList" :key="item.id">
                         <div>
@@ -15,9 +14,8 @@
                     </li>
                 </ol>
             </div>
-            
+
             <div id="avatarRating2" class="column_right" style=" display:none">
-                <h3 class="smallerTextLeft" style="text-align:left; ">Agent 2 Rankings</h3>
                 <ol>
                     <li class="float-child-agent-right" style="list-style-position: inside; font-size:1.5vh;" v-for="item in avatarList" :key="item.id">
                         <div>
@@ -135,8 +133,8 @@
     let counter = 0; // which item on its list will the agent talk about
     var item_order = [0, 1, 2, 3, 4, 5, 6, 7, 8];
     var avatar_order = [4, 5, 0, 1, 2, 7, 3, 8, 6];
-    let camera, scene, renderer, scene2;
-    let agentName;
+    let camera, scene, renderer, renderer2, scene2, scene_left, scene_left2;
+    let agentName, agentName2;
     let avatarReady = false;
     let actions;
     const clock = new THREE.Clock();
@@ -227,21 +225,25 @@
         switch (index) {
             case 0:
                 agentName = "Elizabeth";
+                agentName2 = "Kate";
                 gen = "f";
                 //selectedVoice = 1;
                 break;
             case 1:
                 agentName = "Kate";
+                agentName = "Elizabeth";
                 //selectedVoice = 1;
                 gen = "f";
                 break;
             case 2:
                 agentName = "Lewis";
+                agentName2 = "Brian";
                 //selectedVoice = 0;
                 gen = "m";
                 break;
             case 3:
                 agentName = "Brian";
+                agentName2 = "Lewis";
                 //selectedVoice = 0;
                 gen = "m";
                 break;
@@ -253,6 +255,19 @@
         container.id = "avatardiv";
 
         document.body.appendChild(container);
+
+        //For agent 2
+
+        var container2 = document.createElement('div');
+        //var avatar = document.getElementById('avatar');
+        container2.classList.add("columnAvatar-left");
+
+        container2.id = "avatardiv2";
+
+        document.body.appendChild(container2);
+
+        // for agent 2 ended
+
         //var cont = document.getElementById('avatardiv');
         //cont.style.display = "none";
         camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 1, 2000);
@@ -376,14 +391,27 @@
         renderer.setSize(container.clientWidth, container.clientHeight);
         renderer.shadowMap.enabled = true;
         renderer.setClearColor(0xffffff, 0);
-        renderer.domElement.id = "avatardivelement";
+        // renderer.domElement.id = "avatardivelement";
         renderer.render(scene2, camera);
-        container.appendChild(renderer.domElement);
 
+        renderer2 = new THREE.WebGLRenderer({ antialias: true });
+        renderer2.setPixelRatio(window.devicePixelRatio);
+        renderer2.setSize(container.clientWidth, container.clientHeight);
+        renderer2.shadowMap.enabled = true;
+        renderer2.setClearColor(0xffffff, 0);
+        // renderer.domElement.id = "avatardivelement";
+        renderer2.render(scene2, camera);
+
+        container.appendChild(renderer.domElement);
+        container2.appendChild(renderer2.domElement);
         const controls = new OrbitControls(camera, renderer.domElement);
         controls.target.set(0, 100, 0);
         controls.enabled = false;
         controls.update();
+        const controls2 = new OrbitControls(camera, renderer2.domElement);
+        controls2.target.set(0, 100, 0);
+        controls2.enabled = false;
+        controls2.update();
 
         window.addEventListener('resize', onWindowResize);
 
@@ -413,6 +441,7 @@
         if (mixer) mixer.update(delta);
 
         renderer.render(scene, camera);
+        renderer2.render(scene, camera);
 
         //stats.update();
 
@@ -1150,10 +1179,23 @@
         align-items: center;
         text-align: center;
         position: absolute;
-        top: 15%;
+        top: 25%;
         right: 10vw;
         z-index: -1;
         
+    }
+
+    .columnAvatar-left {
+        float: left;
+        width: 25vw;
+        height: 25vw;
+        align-content: center;
+        align-items: center;
+        text-align: center;
+        position: absolute;
+        top: 25%;
+        left: 10vw;
+        z-index: -1;
     }
 
     .column3 {
